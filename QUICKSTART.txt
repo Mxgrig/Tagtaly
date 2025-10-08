@@ -1,0 +1,85 @@
+═══════════════════════════════════════════════════════
+  TAGTALY - QUICK START GUIDE
+  UK News, Counted & Charted
+═══════════════════════════════════════════════════════
+
+📁 STEP 1: You're already in the right folder!
+   ✓ ~/Projects/Tagtaly/
+
+📦 STEP 2: Install dependencies (one-time setup)
+
+   pip install -r requirements.txt
+   python -m textblob.download_corpora
+
+⏱️  This takes 2-3 minutes
+
+🚀 STEP 3: Run your first pipeline
+
+   python main_pipeline.py
+
+⏱️  This takes 3-5 minutes
+
+✅ STEP 4: Check your charts
+
+   ls viral_charts_*/
+
+   You should see:
+   - viral_1_RECORD_ALERT.png
+   - viral_1_RECORD_ALERT_caption.txt
+   - viral_2_POLITICAL_SCORECARD.png
+   - viral_2_POLITICAL_SCORECARD_caption.txt
+   - viral_3_SURGE_ALERT.png
+   - viral_3_SURGE_ALERT_caption.txt
+
+📱 STEP 5: Post to social media
+
+   1. Open the PNG files
+   2. Read the caption.txt files
+   3. Post to Instagram/X/LinkedIn
+
+═══════════════════════════════════════════════════════
+
+DAILY WORKFLOW:
+
+Every morning:
+1. cd ~/Projects/Tagtaly
+2. python main_pipeline.py
+3. Post your favorite chart
+
+That's it! 2 minutes per day.
+
+═══════════════════════════════════════════════════════
+
+TROUBLESHOOTING:
+
+Problem: "pip: command not found"
+Solution: Try pip3 install -r requirements.txt
+
+Problem: "No module named 'feedparser'"
+Solution: Run pip install -r requirements.txt
+
+Problem: "No new articles found"
+Solution: Wait an hour, RSS feeds might be temporarily down
+
+═══════════════════════════════════════════════════════
+
+WHAT'S NEXT:
+
+□ Run daily for 7 days to build data
+□ Post charts to social media
+□ Customize colors in viral_viz.py
+□ Add branding watermark (see BRANDING.md)
+□ Set up GitHub automation (see .github/workflows/)
+
+═══════════════════════════════════════════════════════
+
+NEED HELP?
+
+- Full docs: README.md
+- Setup guide: SETUP.md
+- Branding: BRANDING.md
+- Update names: UPDATE_BRANDING.md
+
+═══════════════════════════════════════════════════════
+
+Good luck! 🚀
