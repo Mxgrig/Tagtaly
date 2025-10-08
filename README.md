@@ -1,6 +1,6 @@
 # 🏷️ Tagtaly
 
-**UK News, Counted & Charted**
+**News That Matters. Data That Shows It.**
 
 Transform daily UK news into viral social media visualizations automatically.
 

@@ -5,7 +5,7 @@
 
 echo "╔════════════════════════════════════════╗"
 echo "║         TAGTALY                        ║"
-echo "║    UK News, Counted & Charted          ║"
+echo "║  News That Matters. Data That Shows It.║"
 echo "╚════════════════════════════════════════╝"
 echo ""
 

@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Tagtaly** is an automated UK news analysis pipeline that transforms 500+ daily articles into viral social media visualizations. The system collects news from RSS feeds, analyzes topics and sentiment, detects dramatic story angles, and generates 3 Instagram-ready charts automatically.
+**Tagtaly** - "News That Matters. Data That Shows It."
+
+An automated UK news analysis pipeline that transforms 500+ daily articles into viral social media visualizations. The system collects news from RSS feeds, analyzes topics and sentiment, detects dramatic story angles, and generates 3 Instagram-ready charts automatically.
 
 **Tech Stack:** Python 3.10+, SQLite, pandas, matplotlib, TextBlob, feedparser
 

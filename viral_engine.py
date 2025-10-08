@@ -59,7 +59,7 @@ def generate_caption(story):
     }
 
     caption = f"{emoji_map.get(story['type'], '📊')} {story['headline']}\n\n"
-    caption += "UK news, counted & charted. Follow @tagtaly for daily insights.\n\n"
+    caption += "News that matters. Data that shows it. Follow @tagtaly\n\n"
     caption += "#Tagtaly #UKNews #DataViz #UKPolitics"
 
     return caption
