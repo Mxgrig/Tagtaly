@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="News that matters. Data that shows it. UK news analyzed daily, visualized dramatically.">
+    <meta name="keywords" content="UK news, data visualization, news charts, UK politics, media analysis">
+    <title>Tagtaly - News That Matters. Data That Shows It.</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>🏷️ Tagtaly</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="archive.html">Archive</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2 class="tagline">News That Matters.<br>Data That Shows It.</h2>
+            <p class="subtitle">500+ UK articles analyzed daily. Drama delivered in charts.</p>
+            <div class="cta">
+                <a href="https://twitter.com/tagtaly" class="btn btn-primary" target="_blank">Follow @tagtaly</a>
+                <a href="archive.html" class="btn btn-secondary">View Archive</a>
+            </div>
+        </section>
+
+        <!-- Latest Charts Section -->
+        <section class="latest-charts">
+            <h3>Today's Charts</h3>
+            <p class="date" id="current-date"></p>
+
+            <div class="chart-grid">
+                <!-- Charts will be dynamically loaded here -->
+                <div class="chart-card">
+                    <div class="chart-placeholder">
+                        <p>📊</p>
+                        <p class="placeholder-text">Latest chart loading...</p>
+                        <p class="placeholder-subtext">Run the pipeline to generate charts</p>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-placeholder">
+                        <p>📈</p>
+                        <p class="placeholder-text">Chart 2 pending...</p>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-placeholder">
+                        <p>🚨</p>
+                        <p class="placeholder-text">Chart 3 pending...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- What We Track Section -->
+        <section class="what-we-track">
+            <h3>What We Track</h3>
+            <div class="tracking-grid">
+                <div class="tracking-item">
+                    <span class="icon">🗳️</span>
+                    <h4>Politics</h4>
+                    <p>Who's dominating the headlines</p>
+                </div>
+                <div class="tracking-item">
+                    <span class="icon">📈</span>
+                    <h4>Surges</h4>
+                    <p>Topics exploding week-over-week</p>
+                </div>
+                <div class="tracking-item">
+                    <span class="icon">🏥</span>
+                    <h4>Health</h4>
+                    <p>NHS coverage and trends</p>
+                </div>
+                <div class="tracking-item">
+                    <span class="icon">💰</span>
+                    <h4>Economy</h4>
+                    <p>Financial news that moves markets</p>
+                </div>
+                <div class="tracking-item">
+                    <span class="icon">📰</span>
+                    <h4>Media Bias</h4>
+                    <p>What each outlet really covers</p>
+                </div>
+                <div class="tracking-item">
+                    <span class="icon">🚨</span>
+                    <h4>Records</h4>
+                    <p>Highs, lows, and breaking points</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <h3>How It Works</h3>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Collect</h4>
+                    <p>500+ articles daily from BBC, Guardian, Sky News, Independent</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Analyze</h4>
+                    <p>Topic classification, sentiment analysis, trend detection</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Visualize</h4>
+                    <p>Generate 3 viral-ready charts highlighting the drama</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Deliver</h4>
+                    <p>Posted daily at 7 AM UTC, ready to share</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Tagtaly. News that matters. Data that shows it.</p>
+            <div class="footer-links">
+                <a href="https://twitter.com/tagtaly" target="_blank">Twitter</a>
+                <a href="https://github.com/Mxgrig/Tagtaly" target="_blank">GitHub</a>
+                <a href="about.html">About</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Set current date
+        const dateEl = document.getElementById('current-date');
+        const today = new Date().toLocaleDateString('en-GB', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        dateEl.textContent = today;
+    </script>
+</body>
+</html>
