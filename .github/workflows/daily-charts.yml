@@ -70,8 +70,9 @@ jobs:
         run: |
           git config user.name "Tagtaly Bot"
           git config user.email "noreply@tagtaly.com"
-          git add docs/charts/
-          git add data/tagtaly.db
+
+          # Force add PNG charts (they're in .gitignore but we want them in docs/)
+          git add -f docs/charts/**/*.png 2>/dev/null || true
 
           # Only commit if there are changes
           if git diff --staged --quiet; then
@@ -82,7 +83,6 @@ jobs:
 
             Automated chart generation from GitHub Actions
             - UK, US, and Global charts
-            - Updated database with latest articles
 
             🤖 Generated with GitHub Actions"
             git push
