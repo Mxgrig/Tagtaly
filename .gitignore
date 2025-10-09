@@ -25,9 +25,16 @@ ENV/
 .DS_Store
 
 # Project specific
-# Uncomment if you don't want to track these:
-# uk_news.db
-# viral_charts_*/
+data/*.db
+data/*.db-journal
+output/
+viral_charts_*/
+*.png
+*.jpg
+
+# Old files (unused)
+social_publisher.py
+visualizer.py
 
 # Logs
 *.log

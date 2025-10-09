@@ -178,6 +178,53 @@ section {
     color: var(--gray);
 }
 
+/* Country Tabs */
+.country-tabs {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.tab-btn {
+    background: var(--light-gray);
+    color: var(--black);
+    border: 2px solid transparent;
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    background: var(--black);
+    color: var(--white);
+}
+
+.tab-btn.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--orange);
+}
+
+/* Country Charts Visibility */
+.country-charts {
+    display: none;
+}
+
+.country-charts.active {
+    display: grid;
+}
+
+.date {
+    text-align: center;
+    color: var(--gray);
+    font-size: 1rem;
+    margin: 1rem 0;
+}
+
 /* Chart Grid */
 .chart-grid {
     display: grid;
@@ -196,6 +243,19 @@ section {
 .chart-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.chart-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.chart-caption {
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    color: var(--black);
 }
 
 .chart-placeholder {
@@ -549,5 +609,14 @@ footer {
     .hero {
         padding: 2rem 1rem;
         margin: -1rem -1rem 2rem -1rem;
+    }
+
+    .country-tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tab-btn {
+        width: 100%;
     }
 }
