@@ -1,0 +1,99 @@
+name: Daily Viral Charts
+
+on:
+  schedule:
+    # Run daily at 7 AM UTC (8 AM UK, 2 AM US ET)
+    - cron: '0 7 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  generate-charts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for proper git operations
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install feedparser pandas matplotlib seaborn textblob schedule requests
+          python -m textblob.download_corpora
+
+      - name: Create data directory
+        run: mkdir -p data
+
+      - name: Run news collection
+        run: |
+          cd src
+          python news_collector.py
+
+      - name: Run news analysis
+        run: |
+          cd src
+          python news_analyzer.py
+
+      - name: Generate viral charts
+        run: |
+          cd src
+          python viral_engine.py
+
+      - name: Copy charts to docs
+        run: |
+          # Create country directories
+          mkdir -p docs/charts/uk docs/charts/us docs/charts/global
+
+          # Find today's output folders and copy charts
+          DATE=$(date +%Y%m%d)
+
+          if [ -d "src/output/viral_charts_uk_${DATE}" ]; then
+            cp src/output/viral_charts_uk_${DATE}/*.png docs/charts/uk/ 2>/dev/null || true
+          fi
+
+          if [ -d "src/output/viral_charts_us_${DATE}" ]; then
+            cp src/output/viral_charts_us_${DATE}/*.png docs/charts/us/ 2>/dev/null || true
+          fi
+
+          if [ -d "src/output/viral_charts_global_${DATE}" ]; then
+            cp src/output/viral_charts_global_${DATE}/*.png docs/charts/global/ 2>/dev/null || true
+          fi
+
+      - name: Commit and push charts
+        run: |
+          git config user.name "Tagtaly Bot"
+          git config user.email "noreply@tagtaly.com"
+          git add docs/charts/
+          git add data/tagtaly.db
+
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No new charts to commit"
+          else
+            DATE=$(date +"%Y-%m-%d")
+            git commit -m "Daily viral charts: ${DATE}
+
+            Automated chart generation from GitHub Actions
+            - UK, US, and Global charts
+            - Updated database with latest articles
+
+            🤖 Generated with GitHub Actions"
+            git push
+          fi
+
+      - name: Upload charts as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: viral-charts-${{ github.run_number }}
+          path: |
+            src/output/viral_charts_*
+            docs/charts/
+          retention-days: 30
