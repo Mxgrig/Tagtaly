@@ -44,6 +44,42 @@ jobs:
           cd src
           python news_analyzer.py
 
+      - name: Export data to JSON
+        run: |
+          mkdir -p docs/assets/data
+          python -c "
+          import json
+          import sqlite3
+          from datetime import datetime
+          
+          # Connect to database
+          conn = sqlite3.connect('data/tagtaly.db')
+          conn.row_factory = sqlite3.Row
+          cursor = conn.cursor()
+          
+          # Get all articles
+          cursor.execute('SELECT * FROM articles ORDER BY fetched_at DESC')
+          rows = cursor.fetchall()
+          
+          articles = []
+          for row in rows:
+              articles.append(dict(row))
+          
+          # Create JSON structure
+          data = {
+              'updated_at': datetime.utcnow().isoformat() + 'Z',
+              'date': datetime.utcnow().strftime('%Y-%m-%d'),
+              'total_articles': len(articles),
+              'articles': articles
+          }
+          
+          # Write to JSON file
+          with open('docs/assets/data/articles.json', 'w') as f:
+              json.dump(data, f, indent=2, default=str)
+          
+          print(f'✓ Exported {len(articles)} articles to JSON')
+          "
+
       - name: Generate viral charts
         run: |
           cd src
