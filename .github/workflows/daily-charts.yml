@@ -76,16 +76,21 @@ jobs:
 
           # Force add PNG charts (they're in .gitignore but we want them in docs/)
           git add -f docs/charts/**/*.png 2>/dev/null || true
+          
+          # Add JSON data files
+          git add docs/assets/data/*.json 2>/dev/null || true
 
           # Only commit if there are changes
           if git diff --staged --quiet; then
-            echo "No new charts to commit"
+            echo "No new charts or data to commit"
           else
             DATE=$(date +"%Y-%m-%d")
-            git commit -m "Daily viral charts: ${DATE}
+            git commit -m "Daily viral charts & data: ${DATE}
 
-            Automated chart generation from GitHub Actions
+            Automated chart generation and data collection from GitHub Actions
             - UK, US, and Global charts
+            - Updated articles.json with latest RSS feed data
+            - Updated category analysis
 
             🤖 Generated with GitHub Actions"
             git push
