@@ -250,6 +250,8 @@ section {
     border-radius: 12px;
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    min-width: 0;
 }
 
 .chart-card:hover {
