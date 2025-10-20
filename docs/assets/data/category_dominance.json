@@ -1,10 +1,10 @@
 {
   "categories": [
     {
-      "name": "Stories",
+      "name": "Lifestyle",
       "value": 69,
       "percentage": 40,
-      "color": "#8b5cf6"
+      "color": "#f97316"
     },
     {
       "name": "Money",
@@ -13,10 +13,10 @@
       "color": "#ef4444"
     },
     {
-      "name": "Quality",
+      "name": "Entertainment",
       "value": 42,
       "percentage": 24,
-      "color": "#f97316"
+      "color": "#8b5cf6"
     }
   ]
 }
