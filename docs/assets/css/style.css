@@ -231,9 +231,15 @@ section {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     margin-top: 2rem;
+    min-width: 0;
 }
 
-@media (max-width: 768px) {
+.chart-grid .chart-card {
+    min-width: 0;
+    max-width: 100%;
+}
+
+@media (max-width: 480px) {
     .chart-grid {
         grid-template-columns: 1fr;
     }
