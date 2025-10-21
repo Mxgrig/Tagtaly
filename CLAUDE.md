@@ -10,6 +10,12 @@ An automated UK news analysis pipeline that transforms 500+ daily articles into 
 
 **Tech Stack:** Python 3.10+, SQLite, pandas, matplotlib, TextBlob, feedparser
 
+**Status:** 🚀 **Live in Production** (Phase 2 - Automation Complete)
+- **Live URL:** [www.tagtaly.com](https://www.tagtaly.com) (custom domain)
+- **Backup URL:** [tagtaly.dev.pages](https://tagtaly.dev.pages) (Cloudflare Pages)
+- **Repository:** [GitHub](https://github.com/grig/tagtaly) (public)
+- **Automation:** Cron jobs configured for daily execution (see Deployment section)
+
 ## Common Commands
 
 ### Development
@@ -211,15 +217,35 @@ CREATE TABLE articles (
 
 ## Automation & Deployment
 
-### GitHub Actions (Automated Daily Runs)
-- Workflow file: `daily-workflow.yml`
-- Schedule: 7 AM UTC daily (configurable via cron)
-- Manual trigger: workflow_dispatch event
-- Outputs: Charts uploaded as artifacts, database committed to repo
-- Free tier: 2,000 minutes/month
+### Production Deployment (Live)
+- **Platform:** Cloudflare Pages + Cron Jobs
+- **Primary Domain:** www.tagtaly.com (custom domain configured via Cloudflare)
+- **Backup Domain:** tagtaly.dev.pages (Cloudflare Pages default)
+- **Repository:** Pushed to GitHub (source of truth)
+- **Execution:** Automated via cron jobs on server
 
-### Local Scheduling (Alternative)
-Uncomment scheduler code in `main_pipeline.py`:
+### Cron Job Setup
+Cron jobs configured for automated daily pipeline execution:
+```bash
+# Typical cron configuration (run daily at 7 AM)
+0 7 * * * cd /path/to/tagtaly && python main_pipeline.py >> logs/pipeline.log 2>&1
+```
+
+Details:
+- Schedule: 7 AM daily (adjust time zone as needed)
+- Logs: Stored in `logs/pipeline.log` (recommended for debugging)
+- Output: Generated charts in `output/viral_charts_[country]_[date]/` folders
+- Database: Persisted in repository for version control
+- GitHub sync: Commit and push updates after each run (optional automation)
+
+### GitHub Actions (Backup / Alternative)
+- Workflow file: `daily-workflow.yml`
+- Kept as backup automation option
+- Can re-enable via Actions tab if primary cron fails
+- Manual trigger: workflow_dispatch event available
+
+### Local Development Scheduling
+For testing locally, uncomment scheduler code in `main_pipeline.py`:
 ```python
 # Schedule to run daily at 7 AM
 schedule.every().day.at("07:00").do(daily_job)
@@ -228,6 +254,39 @@ while True:
     schedule.run_pending()
     time.sleep(60)
 ```
+
+## Production Monitoring
+
+### Checking Cron Job Status
+```bash
+# View cron job logs
+tail -f logs/pipeline.log
+
+# Check last execution
+tail -n 50 logs/pipeline.log
+
+# Search for errors
+grep "ERROR\|Exception\|Traceback" logs/pipeline.log
+```
+
+### Verifying Daily Runs
+```bash
+# Check if output folders are being created
+ls -lh output/viral_charts_*/
+
+# List today's output
+ls -lh output/viral_charts_*_$(date +%Y%m%d)/
+
+# Verify database is being updated
+sqlite3 uk_news.db "SELECT MAX(fetched_at) FROM articles;"
+```
+
+### Common Production Issues
+- **Cron not running**: Check server time and timezone
+- **Output not syncing to GitHub**: Verify Git credentials and push configuration
+- **Database locked**: Ensure no multiple cron instances (check `ps aux | grep python`)
+- **Low disk space**: Monitor `logs/` and `output/` directory sizes
+- **Missing dependencies**: SSH to server and run `pip install -r requirements.txt`
 
 ## Troubleshooting
 
@@ -279,22 +338,36 @@ Required Python packages (install via `requirements.txt`):
 - requests (HTTP, optional for social posting)
 
 ### Project Status
-Current phase: **MVP (Phase 1)** - Basic pipeline working locally
-- ✅ News collector (5 sources)
-- ✅ Topic analyzer (9 topics)
-- ✅ Sentiment analysis
-- ✅ Story detector (5 algorithms)
-- ✅ Chart generator (3 types)
-- ⏳ Branding update to "Tagtaly"
-- ⏳ End-to-end testing
+**Current phase: Phase 2 (Automation Complete)** - Live in production ✅
 
-Next phase: **Automation (Phase 2)** - GitHub Actions, zero manual intervention
+**Phase 1 - MVP** (Complete)
+- ✅ News collector (22 RSS feeds, multi-country)
+- ✅ Topic analyzer (global + country-specific topics)
+- ✅ Sentiment analysis (TextBlob integration)
+- ✅ Story detector (5 algorithms with 0-100 virality scoring)
+- ✅ Chart generator (6 visualization types)
+- ✅ Branding update to "Tagtaly"
+- ✅ End-to-end testing
+
+**Phase 2 - Automation & Deployment** (Complete)
+- ✅ GitHub repository (public, source of truth)
+- ✅ Cloudflare Pages deployment (backup domain: tagtaly.dev.pages)
+- ✅ Custom domain configuration (primary: www.tagtaly.com)
+- ✅ Cron job automation (daily execution at 7 AM)
+- ✅ Production monitoring and logging
+
+**Next phase: Phase 3 (Enhancements)** - Real-time publishing, additional features
 
 ## File Locations
 
 **Core scripts:** Root directory (*.py files)
-**Documentation:** README.md, SETUP.md, prd.md, BRANDING.md
-**Database:** uk_news.db (SQLite, created on first run)
-**Output:** viral_charts_YYYYMMD/ folders (created daily)
-**Automation:** daily-workflow.yml (GitHub Actions)
+**Documentation:** README.md, SETUP.md, prd.md, BRANDING.md, CLAUDE.md
+**Configuration:** config/ directory (countries.py, feeds.py, viral_topics.py)
+**Database:** uk_news.db (SQLite, created on first run, synced to GitHub)
+**Output:** output/viral_charts_[country]_[YYYYMMDD]/ (generated daily, synced to GitHub)
+**Logs:** logs/pipeline.log (cron job execution log)
+**Automation:**
+- Cron jobs (server-based, see Deployment section)
+- daily-workflow.yml (GitHub Actions backup)
 **Helper scripts:** setup.sh, run.sh
+**Repository:** [github.com/grig/tagtaly](https://github.com/grig/tagtaly) (public GitHub repo)
