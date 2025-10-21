@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Tagtaly pipeline
-        run: python main_pipeline.py
+        run: cd src && python main_pipeline.py
 
       - name: Create index.html
         run: |
