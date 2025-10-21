@@ -23,6 +23,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Initialize database
+        run: |
+          mkdir -p data
+          cd src && python -c "from news_collector import init_database; init_database()"
+
       - name: Run Tagtaly pipeline
         run: cd src && python main_pipeline.py
 
