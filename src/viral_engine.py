@@ -1,6 +1,6 @@
 # viral_engine.py
 from story_detector import StoryDetector
-from viral_viz import ViralChartMaker
+from json_generator import JSONChartGenerator
 from datetime import datetime
 import os
 import sys
@@ -53,17 +53,17 @@ def generate_caption(story, country):
 
 def create_charts_for_country(country, date_str):
     """
-    Generate charts for a specific country
+    Generate JSON charts for a specific country (ECharts format)
 
     Args:
         country: 'UK', 'US', or None for global
         date_str: Date string for output folder
 
     Returns:
-        int: Number of charts created
+        int: Number of JSON chart pairs created
     """
     detector = StoryDetector(country=country)
-    viz_maker = ViralChartMaker()
+    json_generator = JSONChartGenerator()
 
     country_name = get_country_config(country)['name'] if country else 'Global'
     print(f"\n🔍 Hunting for {country_name} viral story angles...")
@@ -77,60 +77,23 @@ def create_charts_for_country(country, date_str):
     # Rank by virality score
     stories.sort(key=lambda x: x.get('virality_score', 0), reverse=True)
 
-    # Create output directory
-    if country:
-        output_dir = f"output/viral_charts_{country.lower()}_{date_str}"
-    else:
-        output_dir = f"output/viral_charts_global_{date_str}"
+    print(f"   📊 Generating {len(stories[:4])} chart pairs (primary + alternate)...")
 
-    os.makedirs(output_dir, exist_ok=True)
+    # Generate JSON charts for top 4 stories
+    charts_created = json_generator.generate_all_from_stories(stories[:4], country)
 
-    charts_created = 0
-
-    # Create charts for top 3-4 stories
-    for i, story in enumerate(stories[:4]):
-        data = story.get('data')
-        if data is None or (hasattr(data, 'empty') and data.empty):
-            continue
-
-        print(f"   📊 Creating: {story['headline']}")
-
-        # Select appropriate chart type
-        fig = None
-        if story['type'] == 'SURGE_ALERT':
-            fig = viz_maker.create_surge_alert(story, country)
-        elif story['type'] in ['VIRAL_PEOPLE_SCORECARD', 'POLITICAL_SCORECARD']:
-            fig = viz_maker.create_viral_people_race(story, country)
-        elif story['type'] == 'RECORD_ALERT':
-            fig = viz_maker.create_record_highlight(story, country)
-        elif story['type'] == 'SENTIMENT_SHIFT':
-            fig = viz_maker.create_sentiment_shift(story, country)
-        elif story['type'] == 'MEDIA_BIAS':
-            fig = viz_maker.create_media_bias_chart(story, country)
-
-        if fig:
-            filename = f"{output_dir}/viral_{i+1}_{story['type']}.png"
-            fig.savefig(filename, dpi=100, bbox_inches='tight', facecolor=fig.get_facecolor())
-            print(f"   ✅ Saved: {filename}")
-
-            # Generate caption
-            caption = generate_caption(story, country)
-            with open(f"{filename.replace('.png', '_caption.txt')}", 'w') as f:
-                f.write(caption)
-
-            charts_created += 1
-
-    print(f"   🎉 {charts_created} charts created for {country_name}")
-    print(f"   📁 Location: {output_dir}/")
+    print(f"   🎉 {charts_created} JSON charts created for {country_name}")
+    print(f"   📁 Location: social_dashboard/assets/data/")
 
     return charts_created
 
 def generate_viral_content():
     """
-    Generate charts for all active countries + global
+    Generate interactive JSON charts for all active countries + global
 
     This is the main entry point for viral content generation.
-    Creates separate folders for each country and global content.
+    Creates JSON data files for ECharts visualization.
+    Each story generates 2 variants: primary + alternate (for hover).
     """
     active_countries = get_active_countries()
     date_str = datetime.now().strftime('%Y%m%d')
@@ -138,6 +101,7 @@ def generate_viral_content():
     print(f"🚀 Tagtaly Viral Content Generator")
     print(f"📅 Date: {date_str}")
     print(f"🌍 Active countries: {', '.join(active_countries)}")
+    print(f"📊 Output format: Interactive JSON (ECharts)")
 
     total_charts = 0
 
@@ -150,11 +114,10 @@ def generate_viral_content():
     global_count = create_charts_for_country(None, date_str)
     total_charts += global_count
 
-    print(f"\n✨ COMPLETE! Total {total_charts} viral charts ready for social media!")
-    print(f"\n📂 Output locations:")
-    for country in active_countries:
-        print(f"   {country}: output/viral_charts_{country.lower()}_{date_str}/")
-    print(f"   Global: output/viral_charts_global_{date_str}/")
+    print(f"\n✨ COMPLETE! Total {total_charts} interactive JSON charts generated!")
+    print(f"\n📂 Output location: social_dashboard/assets/data/")
+    print(f"📋 JSON files created: chart_1_primary.json, chart_1_alternate.json, ...")
+    print(f"🎨 Charts render in: social_dashboard/index.html with ECharts")
 
 if __name__ == "__main__":
     generate_viral_content()
