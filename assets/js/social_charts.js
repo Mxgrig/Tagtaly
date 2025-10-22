@@ -251,7 +251,7 @@ function initEmotionalRollercoaster() {
         });
 }
 
-// --- CHART 2: WEEKLY WINNER (Top Category with Dual Hover) ---
+// --- CHART 2: WEEKLY WINNER (Top Category Display) ---
 function initWeeklyWinner() {
     const container = document.getElementById('weekly-winner-chart');
     if (!container) return;
@@ -271,31 +271,43 @@ function initWeeklyWinner() {
             const values = categories.map(c => c.value);
             const colors = categories.map(c => c.color || '#3b82f6');
 
-            // Primary: Large display of top winner
+            // Primary: Large pie highlighting top category
             const renderPrimary = (chart) => {
                 const option = {
-                    tooltip: { trigger: 'item' },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: (params) => `${params.name}: ${params.value} articles`
+                    },
                     series: [{
-                        type: 'gauge',
-                        axisLine: { lineStyle: { width: 30, color: [[0.3, '#ef4444'], [0.7, '#fbbf24'], [1, '#10b981']] } },
-                        pointer: { itemStyle: { color: 'auto' } },
-                        axisTick: { distance: 15, length: 8, lineStyle: { color: '#999', width: 2 } },
-                        splitLine: { distance: 15, length: 30, lineStyle: { color: '#999', width: 2 } },
-                        axisLabel: { color: 'auto', distance: 40, fontSize: 16 },
-                        detail: {
-                            valueAnimation: true,
-                            formatter: '{value}',
-                            color: '#3b82f6',
-                            fontSize: 24,
-                            fontWeight: 'bold'
-                        },
-                        data: [{
-                            value: topCategory.value,
-                            name: topCategory.name,
-                            itemStyle: { color: topCategory.color || '#3b82f6' }
-                        }],
-                        min: 0,
-                        max: Math.max(...values) * 1.2
+                        name: 'Articles',
+                        type: 'pie',
+                        radius: ['30%', '60%'],
+                        data: categories.map(c => ({
+                            value: c.value,
+                            name: c.name,
+                            itemStyle: {
+                                color: c.name === topCategory.name ? c.color : '#4b5563',
+                                opacity: c.name === topCategory.name ? 1 : 0.4
+                            },
+                            emphasis: {
+                                itemStyle: { opacity: 1 }
+                            }
+                        })),
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            formatter: (params) => {
+                                if (params.name === topCategory.name) {
+                                    return `${params.name}\n${params.value}`;
+                                }
+                                return '';
+                            },
+                            fontSize: 13,
+                            fontWeight: 'bold',
+                            color: '#ffffff',
+                            textShadowColor: 'rgba(0, 0, 0, 0.8)',
+                            textShadowBlur: 3
+                        }
                     }]
                 };
                 chart.setOption(option);
@@ -319,12 +331,11 @@ function initWeeklyWinner() {
                     xAxis: {
                         type: 'category',
                         data: labels,
-                        axisLabel: { ...ECHART_TEXT_STYLE, rotate: 45 }
+                        axisLabel: { ...ECHART_TEXT_STYLE }
                     },
                     yAxis: {
                         type: 'value',
-                        axisLabel: { ...ECHART_TEXT_STYLE },
-                        name: 'Article Count'
+                        axisLabel: { ...ECHART_TEXT_STYLE }
                     },
                     series: [{
                         name: 'Articles',
@@ -337,7 +348,8 @@ function initWeeklyWinner() {
                             show: true,
                             position: 'top',
                             formatter: '{c}',
-                            color: '#94a3b8'
+                            color: '#94a3b8',
+                            fontSize: 11
                         }
                     }]
                 };
@@ -361,31 +373,44 @@ function initWeeklyWinner() {
             const topIndex = values.indexOf(topValue);
             const topName = labels[topIndex];
 
-            // Primary: Large display of top winner
+            // Primary: Large pie highlighting top category
             const renderPrimary = (chart) => {
+                const mockCategories = labels.map((name, i) => ({ name, value: values[i] }));
                 const option = {
-                    tooltip: { trigger: 'item' },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: (params) => `${params.name}: ${params.value} articles`
+                    },
                     series: [{
-                        type: 'gauge',
-                        axisLine: { lineStyle: { width: 30, color: [[0.3, '#ef4444'], [0.7, '#fbbf24'], [1, '#10b981']] } },
-                        pointer: { itemStyle: { color: 'auto' } },
-                        axisTick: { distance: 15, length: 8, lineStyle: { color: '#999', width: 2 } },
-                        splitLine: { distance: 15, length: 30, lineStyle: { color: '#999', width: 2 } },
-                        axisLabel: { color: 'auto', distance: 40, fontSize: 16 },
-                        detail: {
-                            valueAnimation: true,
-                            formatter: '{value}',
-                            color: '#3b82f6',
-                            fontSize: 24,
-                            fontWeight: 'bold'
-                        },
-                        data: [{
-                            value: topValue,
-                            name: topName,
-                            itemStyle: { color: colors[topIndex] }
-                        }],
-                        min: 0,
-                        max: Math.max(...values) * 1.2
+                        name: 'Articles',
+                        type: 'pie',
+                        radius: ['30%', '60%'],
+                        data: mockCategories.map(c => ({
+                            value: c.value,
+                            name: c.name,
+                            itemStyle: {
+                                color: c.name === topName ? colors[labels.indexOf(c.name)] : '#4b5563',
+                                opacity: c.name === topName ? 1 : 0.4
+                            },
+                            emphasis: {
+                                itemStyle: { opacity: 1 }
+                            }
+                        })),
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            formatter: (params) => {
+                                if (params.name === topName) {
+                                    return `${params.name}\n${params.value}`;
+                                }
+                                return '';
+                            },
+                            fontSize: 13,
+                            fontWeight: 'bold',
+                            color: '#ffffff',
+                            textShadowColor: 'rgba(0, 0, 0, 0.8)',
+                            textShadowBlur: 3
+                        }
                     }]
                 };
                 chart.setOption(option);
@@ -402,12 +427,11 @@ function initWeeklyWinner() {
                     xAxis: {
                         type: 'category',
                         data: labels,
-                        axisLabel: { ...ECHART_TEXT_STYLE, rotate: 45 }
+                        axisLabel: { ...ECHART_TEXT_STYLE }
                     },
                     yAxis: {
                         type: 'value',
-                        axisLabel: { ...ECHART_TEXT_STYLE },
-                        name: 'Article Count'
+                        axisLabel: { ...ECHART_TEXT_STYLE }
                     },
                     series: [{
                         name: 'Articles',
@@ -420,7 +444,8 @@ function initWeeklyWinner() {
                             show: true,
                             position: 'top',
                             formatter: '{c}',
-                            color: '#94a3b8'
+                            color: '#94a3b8',
+                            fontSize: 11
                         }
                     }]
                 };
