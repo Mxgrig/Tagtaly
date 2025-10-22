@@ -650,11 +650,30 @@ function initWordcloud() {
                 return;
             }
 
-            // Transform keywords to wordcloud format - filter HTML artifacts and stop words
-            const stopWords = new Set(['href', 'https', 'http', 'apos', 'quot', 'nbsp', 'amp', 'lt', 'gt', 'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'that', 'this', 'is', 'are', 'was', 'were', 'be', 'have', 'has', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'her', 'his', 'their', 'he', 'she', 'it', 'you', 'me', 'we']);
+            // Comprehensive stop words list - HTML artifacts, pronouns, prepositions, common words
+            const stopWords = new Set([
+                // HTML artifacts
+                'href', 'https', 'http', 'apos', 'quot', 'nbsp', 'amp', 'lt', 'gt',
+                // Pronouns
+                'the', 'a', 'an', 'i', 'me', 'we', 'he', 'she', 'it', 'they', 'you', 'him', 'her', 'them', 'his', 'hers', 'our', 'ours', 'their', 'theirs',
+                // Prepositions and conjunctions
+                'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'that', 'this', 'as', 'about', 'is', 'are', 'was', 'were',
+                // Common verbs
+                'be', 'have', 'has', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'can',
+                // Common words
+                'said', 'say', 'says', 'like', 'go', 'just', 'now', 'more', 'also', 'very', 'some', 'which', 'get', 'been',
+                // Single/double letters and numbers
+                ...[...Array(26)].map((_, i) => String.fromCharCode(97 + i)), // a-z
+                ...[...Array(10)].map((_, i) => i.toString()) // 0-9
+            ]);
+
             const wordData = (data.keywords || [])
-                .filter(k => k.name && k.value && k.name.length > 2 && !stopWords.has(k.name.toLowerCase())) // Filter out stop words and short keywords
-                .slice(0, 40)
+                .filter(k => {
+                    // Filter: must have name and value, length > 3 chars, not a stop word
+                    return k.name && k.value && k.name.length > 3 && !stopWords.has(k.name.toLowerCase());
+                })
+                .sort((a, b) => b.value - a.value) // Sort by frequency descending
+                .slice(0, 50) // Get top 50 keywords (more content for better cloud)
                 .map(k => ({ name: k.name, value: k.value }));
 
             if (wordData.length === 0) {
@@ -670,15 +689,16 @@ function initWordcloud() {
                 tooltip: {},
                 series: [{
                     type: 'wordCloud',
-                    shape: 'circle',
+                    shape: 'square', // Changed from 'circle' for better packing and readability
                     left: 'center',
                     top: 'center',
                     width: '100%',
                     height: '100%',
                     right: null,
                     bottom: null,
-                    sizeRange: [12, 48],
-                    rotationRange: [-45, 45],
+                    gridSize: 8, // Controls spacing between words
+                    sizeRange: [16, 36], // Reduced from [12, 48] for more uniform sizing (smaller range)
+                    rotationRange: [-20, 20], // Reduced from [-45, 45] for better readability
                     emphasis: {
                         focus: 'self',
                         textStyle: {
@@ -688,11 +708,9 @@ function initWordcloud() {
                     },
                     textStyle: {
                         color: () => {
-                            return 'rgb(' + [
-                                Math.round(Math.random() * 200 + 30),
-                                Math.round(Math.random() * 200 + 30),
-                                Math.round(Math.random() * 200 + 30)
-                            ].join(',') + ')';
+                            // Better color distribution - more vibrant
+                            const hue = Math.random() * 360;
+                            return `hsl(${hue}, 70%, 50%)`;
                         },
                         fontFamily: 'Inter, sans-serif',
                         fontWeight: 'bold'
