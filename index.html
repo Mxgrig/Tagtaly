@@ -4,446 +4,438 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Tagtaly turns UK and US news into viral-ready intelligence. Track the surge, sentiment, and sources in one dashboard.">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>Tagtaly — News That Matters. Data That Shows It.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/design-system.css">
+    <link rel="stylesheet" href="assets/css/enhanced-ui.css">
+    <link rel="stylesheet" href="assets/css/shadcn.css">
+    <link rel="stylesheet" href="assets/css/monetization.css">
+    <link rel="stylesheet" href="assets/css/premium-dashboard.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2/dist/echarts-wordcloud.min.js"></script>
     <style>
-        :root {
-            --background: hsl(0 0% 100%);
-            --foreground: hsl(0 0% 3.9%);
-            --card: hsl(0 0% 100%);
-            --card-foreground: hsl(0 0% 3.9%);
-            --primary: hsl(0 0% 9%);
-            --primary-foreground: hsl(0 0% 98%);
-            --secondary: hsl(0 0% 96.1%);
-            --secondary-foreground: hsl(0 0% 9%);
-            --muted: hsl(0 0% 96.1%);
-            --muted-foreground: hsl(0 0% 45.1%);
-            --border: hsl(0 0% 89.8%);
-            --radius: 0.5rem;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--background);
-            color: var(--foreground);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        header {
-            background: linear-gradient(135deg, #0a0e27 0%, #1a202c 100%);
-            color: white;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid #e5e7eb;
-            margin-bottom: 2rem;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-img {
-            height: 50px;
-            width: auto;
-        }
-
-        .brand-info h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin: 0;
-            color: #00d4ff;
-        }
-
-        .brand-info p {
-            font-size: 0.9rem;
-            color: #a0aec0;
-            margin: 0.25rem 0 0 0;
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .page-header h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .page-header p {
-            font-size: 1rem;
-            color: var(--muted-foreground);
-        }
-
-        .hero-banner {
-            background: white;
-            border-radius: var(--radius);
-            overflow: hidden;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
-
         .banner-image {
             width: 100%;
             height: 300px;
             object-fit: cover;
-            display: block;
-        }
-
-        .banner-credit {
-            padding: 0.75rem 1.5rem;
-            font-size: 0.8rem;
-            color: #9ca3af;
-            background: #f9fafb;
-        }
-
-        .rss-section {
-            background: white;
-            border-radius: var(--radius);
-            padding: 1.5rem;
+            border-radius: 8px;
             margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
-
-        .rss-section h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
+        .topic-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 6px;
             margin-bottom: 1rem;
         }
-
-        .rss-feed {
-            max-height: 400px;
-            overflow-y: auto;
+        .image-credit {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
         }
-
+        .chart-container {
+            min-height: 400px;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        .rss-feed {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f0f4f8;
+            border-left: 4px solid #00d4ff;
+            border-radius: 6px;
+        }
         .rss-item {
             padding: 1rem 0;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e0e0e0;
         }
-
         .rss-item:last-child {
             border-bottom: none;
         }
-
-        .rss-item strong {
-            color: var(--foreground);
-            display: block;
-            font-weight: 600;
+        .rss-item a {
+            color: #00d4ff;
+            text-decoration: none;
         }
-
-        .rss-item p {
-            color: var(--muted-foreground);
-            margin: 0.5rem 0;
-            font-size: 0.95rem;
+        .rss-item a:hover {
+            text-decoration: underline;
         }
-
-        .rss-item small {
-            color: #9ca3af;
-            font-size: 0.8rem;
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .chart-card {
-            background-color: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04);
-        }
-
-        .chart-card-header {
-            margin-bottom: 1rem;
-        }
-
-        .chart-card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .chart-placeholder {
-            min-height: 300px;
-            width: 100%;
-        }
-
-        .winner-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            background: linear-gradient(145deg, hsl(260, 80%, 40%), hsl(260, 100%, 60%));
-            color: white;
-            border-radius: var(--radius);
-            padding: 2rem;
-        }
-
-        .winner-topic {
-            font-size: 1.75rem;
-            font-weight: 800;
-        }
-
-        .winner-count {
-            font-size: 5rem;
-            font-weight: 900;
-            line-height: 1;
-            margin: 0.5rem 0;
-        }
-
-        .winner-subtitle {
-            font-size: 1rem;
-            font-weight: 500;
-            opacity: 0.8;
-        }
-
-        footer {
+        .footer-enhanced {
             background: #0a0e27;
-            color: white;
-            padding: 2rem 0;
+            color: #fff;
+            padding: 2rem;
             margin-top: 3rem;
             border-top: 1px solid #1e2749;
         }
-
-        footer .container {
-            padding: 2rem;
-        }
-
         .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-bottom: 2rem;
         }
-
         .footer-section h4 {
             color: #00d4ff;
             margin-bottom: 1rem;
-            font-size: 1rem;
         }
-
         .footer-section a {
             color: #a0aec0;
             text-decoration: none;
             display: block;
             margin: 0.5rem 0;
-            transition: color 0.3s;
         }
-
         .footer-section a:hover {
             color: #00d4ff;
         }
-
-        .footer-section p {
-            color: #a0aec0;
-            font-size: 0.9rem;
-            margin: 0.5rem 0;
-        }
-
         .footer-meta {
             text-align: center;
-            padding-top: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
             border-top: 1px solid #1e2749;
             color: #718096;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .logo-img {
-                height: 40px;
-            }
-
-            .brand-info h1 {
-                font-size: 1.5rem;
-            }
-
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .banner-image {
-                height: 200px;
-            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo-section">
-                    <img src="asset/taglogo.png" alt="Tagtaly logo" class="logo-img">
-                    <div class="brand-info">
-                        <h1>Tagtaly</h1>
-                        <p>Automated UK & US news intelligence</p>
+    <header class="site-header">
+        <nav class="nav">
+            <div class="brand">
+                <div class="brand-text">
+                    <span class="brand-title">Tagtaly</span>
+                    <span class="brand-tagline">Automated UK & US news intelligence</span>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Dashboard</a></li>
+                <li><a href="archive.html">Archive</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Banner Image from NYTimes API -->
+        <section class="hero hero--split">
+            <div class="hero-content">
+                <span class="hero-eyebrow">Daily intelligence briefing</span>
+                <h1 class="hero-title">News That Matters.<br>Data That Shows It.</h1>
+                <p class="hero-subtitle">
+                    Tagtaly ingests national feeds, scores every headline with QWE and virality, and renders social-ready charts in minutes. This dashboard is the daily command centre.
+                </p>
+                <div class="hero-statline">
+                    <div class="hero-stat">
+                        <span class="hero-stat-label">Last updated</span>
+                        <span class="hero-stat-value" id="updated-time">—</span>
+                        <span class="hero-stat-unit">UTC</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-label">Articles analysed</span>
+                        <span class="hero-stat-value" id="total-articles">—</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-label">Active sources</span>
+                        <span class="hero-stat-value" id="total-sources">—</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
+            <aside class="hero-panel">
+                <img id="banner-image" class="banner-image" src="" alt="Today's top story image" style="display:none;">
+                <div class="image-credit" id="banner-credit"></div>
+            </aside>
+        </section>
 
-    <main class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h2>News That Matters. Data That Shows It.</h2>
-            <p>Daily intelligence briefing from 20+ news sources. Tagtaly ingests, analyzes, and visualizes the stories that matter.</p>
-        </div>
-
-        <!-- Hero Banner with Images -->
-        <div class="hero-banner">
-            <img id="banner-image" class="banner-image" src="" alt="Today's top story" style="display: none;">
-            <div class="banner-credit" id="banner-credit"></div>
-        </div>
-
-        <!-- Live RSS Feed -->
-        <div class="rss-section">
-            <h3>📰 Latest Headlines</h3>
-            <div class="rss-feed" id="rss-feed-container">
-                <p style="color: #666;">Loading headlines...</p>
-            </div>
-        </div>
-
-        <!-- Charts Section -->
-        <div class="page-header" style="margin-top: 3rem;">
-            <h2>Complete News Intelligence</h2>
-            <p>Interactive charts powered by ECharts, generated from real-time analysis.</p>
-        </div>
-
-        <div class="charts-grid">
-            <!-- Emotional Rollercoaster -->
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <h3 class="chart-card-title" id="rollercoaster-title"></h3>
+        <!-- Live RSS Feed Section -->
+        <section class="section-block">
+            <div class="section-header">
+                <div>
+                    <span class="metric-eyebrow">Live Wire</span>
+                    <h2 class="section-title">Real-Time RSS Pulse</h2>
+                    <p>Latest headlines from UK and US news sources, refreshed automatically.</p>
                 </div>
-                <div id="emotional-rollercoaster-chart" class="chart-placeholder"></div>
             </div>
-
-            <!-- Weekly Winner -->
-            <div class="chart-card">
-                <div id="weekly-winner-chart" class="chart-placeholder"></div>
-            </div>
-
-            <!-- Topic Surge Alert -->
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <h3 class="chart-card-title" id="surge-alert-title"></h3>
+            <div class="rss-feed">
+                <h3>📰 Latest Headlines</h3>
+                <div id="rss-feed-container">
+                    <p style="color: #666;">Loading headlines...</p>
                 </div>
-                <div id="surge-alert-chart" class="chart-placeholder"></div>
+            </div>
+        </section>
+
+        <!-- JavaScript Charts Section -->
+        <section class="section-block metrics-board premium-dashboard">
+            <div class="section-header">
+                <div>
+                    <span class="metric-eyebrow">Today's Overview</span>
+                    <h2 class="section-title">How the news is changing</h2>
+                    <p>Interactive charts powered by ECharts, updated with the latest analysis.</p>
+                </div>
             </div>
 
-            <!-- Media Divide -->
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <h3 class="chart-card-title" id="media-divide-title"></h3>
-                </div>
-                <div id="media-divide-chart" class="chart-placeholder"></div>
+            <!-- Emotional Rollercoaster Chart -->
+            <div class="chart-container">
+                <h3>📈 Emotional Rollercoaster - Sentiment Trend</h3>
+                <div id="emotional-chart" style="width: 100%; height: 350px;"></div>
             </div>
 
-            <!-- Sentiment Showdown -->
-            <div class="chart-card">
-                <div class="chart-card-header">
-                    <h3 class="chart-card-title" id="sentiment-showdown-title"></h3>
-                </div>
-                <div id="sentiment-showdown-chart" class="chart-placeholder"></div>
+            <!-- Topic Surge Alert Chart -->
+            <div class="chart-container">
+                <h3>🚨 Topic Surge Alert</h3>
+                <div id="surge-chart" style="width: 100%; height: 350px;"></div>
             </div>
-        </div>
+
+            <!-- Media Divide Chart -->
+            <div class="chart-container">
+                <h3>📰 Media Divide - Outlet Sentiment</h3>
+                <div id="media-chart" style="width: 100%; height: 350px;"></div>
+            </div>
+
+            <!-- Sentiment Showdown Chart -->
+            <div class="chart-container">
+                <h3>⚖️ Sentiment Showdown</h3>
+                <div id="sentiment-chart" style="width: 100%; height: 350px;"></div>
+            </div>
+
+            <!-- Topic Image from Pexels -->
+            <div style="margin: 2rem 0;">
+                <h3>🎨 Today's Visual Brief</h3>
+                <img id="topic-image" class="topic-image" src="" alt="Topic visualization" style="display:none;">
+                <div class="image-credit" id="topic-credit"></div>
+            </div>
+        </section>
+
+        <!-- Metrics Cards -->
+        <section class="section-block">
+            <div class="premium-stats-grid">
+                <article class="stat-card stat-card--primary">
+                    <span class="stat-icon"><i class="fa-solid fa-chart-column"></i></span>
+                    <div class="stat-content">
+                        <span class="stat-label">Total coverage</span>
+                        <div class="stat-value" id="coverage-count">—</div>
+                        <p class="stat-subtext">Across <span id="sources-count">—</span> newsrooms</p>
+                    </div>
+                </article>
+                <article class="stat-card stat-card--accent">
+                    <span class="stat-icon"><i class="fa-solid fa-photo-film"></i></span>
+                    <div class="stat-content">
+                        <span class="stat-label">Charts ready</span>
+                        <div class="stat-value">4</div>
+                        <p class="stat-subtext">Instagram-ready assets from this morning's batch</p>
+                    </div>
+                </article>
+                <article class="stat-card stat-card--success">
+                    <span class="stat-icon"><i class="fa-solid fa-signal"></i></span>
+                    <div class="stat-content">
+                        <span class="stat-label">Update frequency</span>
+                        <div class="stat-value">Daily</div>
+                        <p class="stat-subtext">Generated at 7 AM UTC</p>
+                    </div>
+                </article>
+                <article class="stat-card stat-card--sentiment">
+                    <span class="stat-icon"><i class="fa-solid fa-bolt"></i></span>
+                    <div class="stat-content">
+                        <span class="stat-label">System status</span>
+                        <div class="stat-value" style="color: #22c55e;">Live</div>
+                        <p class="stat-subtext">All systems operational</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-block cta-panel">
+            <div class="cta-grid">
+                <div class="cta-card cta-card--primary">
+                    <span class="cta-eyebrow">Stay In The Loop</span>
+                    <h3>Get the Charts Delivered</h3>
+                    <p>Subscribe to daily drops, send the charts to Slack, or follow <strong>@tagtaly</strong> to stay ahead of the news cycle.</p>
+                    <a class="btn btn-primary" href="https://twitter.com/tagtaly" target="_blank" rel="noreferrer">Follow @tagtaly</a>
+                </div>
+                <div class="cta-card">
+                    <span class="cta-eyebrow">Go Hands-On</span>
+                    <h3>View Full Archive</h3>
+                    <p>Explore historical charts, sentiment trends, and topic analysis from previous weeks and months.</p>
+                    <a class="btn btn-secondary" href="archive.html">View Archive</a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>About Tagtaly</h4>
-                    <p>Automated news intelligence for creators, newsrooms, and data enthusiasts. Real-time analysis of 500+ daily articles.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Data Sources</h4>
-                    <p>BBC, Guardian, Sky News, Telegraph, CNN, NY Times, Washington Post, and more.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Pipeline</h4>
-                    <p>Updated daily at 7 AM UTC. Analysis includes virality scoring, sentiment analysis, and story detection.</p>
-                </div>
+    <!-- Enhanced Footer -->
+    <footer class="footer-enhanced">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Tagtaly</h4>
+                <p>Automated news intelligence for creators, newsrooms, and data enthusiasts.</p>
+                <p style="font-size: 0.9rem; color: #718096;">Last update: <span id="footer-update">—</span> UTC</p>
             </div>
-            <div class="footer-meta">
-                <p>&copy; 2025 Tagtaly. News That Matters. Data That Shows It.</p>
-                <p style="margin-top: 0.5rem;">Automated pipeline • Real-time analysis • Social-first visualizations</p>
+            <div class="footer-section">
+                <h4>Navigate</h4>
+                <a href="index.html">Dashboard</a>
+                <a href="archive.html">Archive</a>
+                <a href="about.html">About</a>
             </div>
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <a href="https://twitter.com/tagtaly" target="_blank">Twitter / X</a>
+                <a href="https://github.com/mxgrig/tagtaly" target="_blank">GitHub</a>
+                <a href="mailto:hello@tagtaly.com">Email</a>
+            </div>
+        </div>
+        <div class="footer-meta">
+            <p>&copy; 2025 Tagtaly. News That Matters. Data That Shows It.</p>
+            <p style="font-size: 0.85rem; margin-top: 1rem;">
+                Articles processed: <span id="footer-articles">—</span> | 
+                Sources: <span id="footer-sources">—</span> | 
+                Pipeline: Automated daily at 7 AM UTC
+            </p>
         </div>
     </footer>
 
-    <script src="social_charts.js"></script>
     <script>
+        // Mock data - replace with actual API calls
+        const mockData = {
+            updated: new Date().toISOString(),
+            totalArticles: 487,
+            totalSources: 12,
+            emotionalData: {
+                dates: ['Oct 18', 'Oct 19', 'Oct 20', 'Oct 21', 'Oct 22'],
+                scores: [42.5, 38.2, 45.8, 52.3, 48.9]
+            },
+            surgeData: [
+                ['Technology', 67.5],
+                ['Health', 45.2],
+                ['Politics', 38.8],
+                ['Climate', 22.3],
+                ['Royal Family', 18.5]
+            ],
+            mediaOutlets: [
+                {source: 'BBC', mood: 12},
+                {source: 'Guardian', mood: 8},
+                {source: 'Sky News', mood: 6},
+                {source: 'Daily Mail', mood: -15},
+                {source: 'Telegraph', mood: -9}
+            ]
+        };
+
         let imagesData = null;
 
+        // Load images from JSON (generated by Python pipeline)
         async function loadImagesFromJSON() {
             try {
                 const response = await fetch('social_dashboard/assets/data/images.json');
                 if (response.ok) {
                     imagesData = await response.json();
                     loadBannerImage();
+                    loadTopicImage();
                 } else {
-                    loadBannerImageFallback();
+                    loadFallbackImages();
                 }
             } catch (error) {
-                console.warn('Images JSON not found, using placeholder:', error);
-                loadBannerImageFallback();
+                console.warn('Images JSON not found, using fallback:', error);
+                loadFallbackImages();
             }
         }
 
-        function loadBannerImage() {
-            if (!imagesData || !imagesData.banner) {
-                loadBannerImageFallback();
-                return;
-            }
-
-            const img = document.getElementById('banner-image');
-            const banner = imagesData.banner;
-
-            img.src = banner.url;
-            img.alt = banner.title;
-            img.style.display = 'block';
-            img.onerror = () => loadBannerImageFallback();
-
-            document.getElementById('banner-credit').textContent = banner.attribution;
+        // Initialize dashboard
+        function initDashboard() {
+            updateMetrics();
+            loadCharts();
+            loadRSSFeed();
         }
 
-        function loadBannerImageFallback() {
-            const img = document.getElementById('banner-image');
-            img.src = 'https://images.pexels.com/photos/3811517/pexels-photo-3811517.jpeg?auto=compress&cs=tinysrgb&w=1200';
-            img.style.display = 'block';
-            document.getElementById('banner-credit').textContent = '📷 Image: Pexels';
+        function updateMetrics() {
+            document.getElementById('updated-time').textContent = new Date().toLocaleTimeString('en-GB');
+            document.getElementById('total-articles').textContent = mockData.totalArticles;
+            document.getElementById('total-sources').textContent = mockData.totalSources;
+            document.getElementById('coverage-count').textContent = mockData.totalArticles;
+            document.getElementById('sources-count').textContent = mockData.totalSources;
+            document.getElementById('footer-update').textContent = new Date().toLocaleTimeString('en-GB');
+            document.getElementById('footer-articles').textContent = mockData.totalArticles;
+            document.getElementById('footer-sources').textContent = mockData.totalSources;
+        }
+
+        function loadCharts() {
+            // Emotional Rollercoaster
+            const emotionalChart = echarts.init(document.getElementById('emotional-chart'));
+            emotionalChart.setOption({
+                tooltip: {trigger: 'axis'},
+                xAxis: {type: 'category', data: mockData.emotionalData.dates},
+                yAxis: {type: 'value'},
+                series: [{
+                    name: 'Mood Score',
+                    type: 'line',
+                    data: mockData.emotionalData.scores,
+                    smooth: true,
+                    itemStyle: {color: '#8b5cf6'},
+                    lineStyle: {color: '#8b5cf6', width: 3},
+                    areaStyle: {color: 'rgba(139, 92, 246, 0.1)'}
+                }]
+            });
+
+            // Surge Alert
+            const surgeChart = echarts.init(document.getElementById('surge-chart'));
+            surgeChart.setOption({
+                tooltip: {trigger: 'axis'},
+                xAxis: {type: 'value'},
+                yAxis: {type: 'category', data: mockData.surgeData.map(d => d[0])},
+                series: [{
+                    type: 'bar',
+                    data: mockData.surgeData.map(d => d[1]),
+                    itemStyle: {color: '#ef4444'}
+                }]
+            });
+
+            // Media Divide
+            const mediaChart = echarts.init(document.getElementById('media-chart'));
+            const mediaData = mockData.mediaOutlets.map(o => ({
+                value: o.mood,
+                itemStyle: {color: o.mood > 0 ? '#22c55e' : '#ef4444'}
+            }));
+            mediaChart.setOption({
+                tooltip: {trigger: 'axis'},
+                xAxis: {type: 'value'},
+                yAxis: {type: 'category', data: mockData.mediaOutlets.map(o => o.source)},
+                series: [{
+                    type: 'bar',
+                    data: mediaData
+                }]
+            });
+
+            // Sentiment Showdown
+            const sentimentChart = echarts.init(document.getElementById('sentiment-chart'));
+            sentimentChart.setOption({
+                tooltip: {trigger: 'axis'},
+                xAxis: {type: 'value'},
+                yAxis: {type: 'category', data: ['']},
+                series: [
+                    {
+                        name: 'Positive',
+                        type: 'bar',
+                        stack: 'showdown',
+                        data: [35],
+                        itemStyle: {color: '#22c55e'}
+                    },
+                    {
+                        name: 'Negative',
+                        type: 'bar',
+                        stack: 'showdown',
+                        data: [-28],
+                        itemStyle: {color: '#ef4444'}
+                    }
+                ]
+            });
+
+            window.addEventListener('resize', () => {
+                emotionalChart.resize();
+                surgeChart.resize();
+                mediaChart.resize();
+                sentimentChart.resize();
+            });
         }
 
         function loadRSSFeed() {
@@ -452,22 +444,71 @@
                 'Guardian: Climate summit reaches breakthrough agreement',
                 'Sky News: Political controversy dominates headlines',
                 'Telegraph: Market analysis - interest rates stabilize',
-                'Independent: Healthcare sector reports improvements',
-                'CNN: International developments shape global markets',
-                'NY Times: Analysis of emerging trends'
+                'Independent: Healthcare sector reports improvements'
             ];
 
-            const feedHTML = feeds.map(item => {
-                const [source, headline] = item.split(':');
-                return `<div class="rss-item"><strong>${source}</strong><p>${headline}</p><small>Updated ${Math.floor(Math.random() * 60)} minutes ago</small></div>`;
-            }).join('');
+            const feedHTML = feeds.map((item, i) => `
+                <div class="rss-item">
+                    <strong>${item.split(':')[0]}</strong>
+                    <p>${item.split(':')[1]}</p>
+                    <small>Updated ${Math.floor(Math.random() * 60)} minutes ago</small>
+                </div>
+            `).join('');
 
             document.getElementById('rss-feed-container').innerHTML = feedHTML;
         }
 
+        function loadBannerImage() {
+            if (!imagesData || !imagesData.banner) {
+                loadFallbackImages();
+                return;
+            }
+
+            const img = document.getElementById('banner-image');
+            const banner = imagesData.banner;
+            img.src = banner.url;
+            img.alt = banner.title;
+            img.style.display = 'block';
+            img.onerror = loadFallbackImages;
+            document.getElementById('banner-credit').textContent = banner.attribution;
+        }
+
+        function loadTopicImage() {
+            if (!imagesData || !imagesData.topics || Object.keys(imagesData.topics).length === 0) {
+                loadFallbackImages();
+                return;
+            }
+
+            const topics = Object.values(imagesData.topics);
+            if (topics.length > 0) {
+                const img = document.getElementById('topic-image');
+                img.src = topics[0].url;
+                img.style.display = 'block';
+                img.onerror = loadFallbackImages;
+                document.getElementById('topic-credit').textContent = `Image by ${topics[0].photographer} - Pexels`;
+            }
+        }
+
+        function loadFallbackImages() {
+            // Fallback to Pexels placeholder images
+            const bannerUrl = 'https://images.pexels.com/photos/3811517/pexels-photo-3811517.jpeg?auto=compress&cs=tinysrgb&w=1200';
+            const topicUrl = 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=600';
+            
+            const bannerImg = document.getElementById('banner-image');
+            bannerImg.src = bannerUrl;
+            bannerImg.style.display = 'block';
+            document.getElementById('banner-credit').textContent = 'Image: Pexels';
+
+            const topicImg = document.getElementById('topic-image');
+            topicImg.src = topicUrl;
+            topicImg.style.display = 'block';
+            document.getElementById('topic-credit').textContent = 'Image: Pexels';
+        }
+
+        // Initialize on load
         document.addEventListener('DOMContentLoaded', async () => {
             await loadImagesFromJSON();
-            loadRSSFeed();
+            initDashboard();
         });
     </script>
 </body>
