@@ -876,93 +876,193 @@ function initSentimentShowdown() {
         });
 }
 
-// --- CHART 6: CATEGORY DOMINANCE (Doughnut) ---
+// --- CHART 6: CATEGORY DOMINANCE (Pie Chart with Dual Hover) ---
 function initCategoryDominance() {
-    const canvas = document.getElementById('category-dominance-chart');
-    if (!canvas) return;
+    const container = document.getElementById('category-dominance-chart');
+    if (!container) return;
 
     fetch('assets/data/category_dominance.json')
         .then(r => r.json())
         .then(data => {
+            const myChart = echarts.init(container);
             const categories = data.categories || [];
             const labels = categories.map(c => c.name || 'Unknown');
             const values = categories.map(c => c.value || 0);
-            
-            // Calculate percentages
             const total = values.reduce((a, b) => a + b, 0);
             const percentages = values.map(v => ((v / total) * 100).toFixed(1));
+            const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899'];
 
-            new Chart(canvas, {
-                type: 'doughnut',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: values,
-                        backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'],
-                        borderColor: '#ffffff',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { font: { family: 'Inter, sans-serif', size: 13 }, padding: 15 }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const index = context.dataIndex;
-                                    const value = values[index];
-                                    const percentage = percentages[index];
-                                    return `${labels[index]}: ${value} articles (${percentage}%)`;
-                                }
+            // Primary: Pie with legend
+            const renderPrimary = (chart) => {
+                const option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: (params) => `${params.name}: ${params.value} articles (${params.percent}%)`
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'right',
+                        data: labels,
+                        textStyle: { ...ECHART_TEXT_STYLE, fontSize: 12 }
+                    },
+                    series: [{
+                        name: 'Articles',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        data: labels.map((label, i) => ({
+                            value: values[i],
+                            name: label,
+                            itemStyle: { color: colors[i % colors.length] }
+                        })),
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
                         }
-                    }
-                }
-            });
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            // Alternate: Pie with labels and percentages inside slices
+            const renderAlternate = (chart) => {
+                const option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: (params) => `${params.name}: ${params.value} articles (${params.percent}%)`
+                    },
+                    series: [{
+                        name: 'Articles',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        data: labels.map((label, i) => ({
+                            value: values[i],
+                            name: label,
+                            itemStyle: { color: colors[i % colors.length] }
+                        })),
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            formatter: (params) => {
+                                const idx = labels.indexOf(params.name);
+                                return `${params.name}\n${percentages[idx]}%`;
+                            },
+                            fontSize: 11,
+                            fontWeight: 'bold',
+                            color: '#ffffff',
+                            textShadowColor: 'rgba(0, 0, 0, 0.7)',
+                            textShadowBlur: 3
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Category Dominance: Rendering primary view');
+            renderPrimary(myChart);
+            console.log('✓ Category Dominance: Setting up dual-chart hover');
+            setupDualChartHover('category-dominance-chart', myChart, renderPrimary, renderAlternate);
+
+            window.addEventListener('resize', () => myChart.resize());
         })
         .catch(() => {
-            // Calculate percentages for mock data
-            const mockValues = MOCK_DATA.categories.data;
-            const mockTotal = mockValues.reduce((a, b) => a + b, 0);
-            const mockPercentages = mockValues.map(v => ((v / mockTotal) * 100).toFixed(1));
+            const myChart = echarts.init(container);
+            const labels = MOCK_DATA.categories.labels;
+            const values = MOCK_DATA.categories.data;
+            const total = values.reduce((a, b) => a + b, 0);
+            const percentages = values.map(v => ((v / total) * 100).toFixed(1));
+            const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899'];
 
-            new Chart(canvas, {
-                type: 'doughnut',
-                data: {
-                    labels: MOCK_DATA.categories.labels,
-                    datasets: [{
-                        data: mockValues,
-                        backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'],
-                        borderColor: '#ffffff',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { font: { family: 'Inter, sans-serif', size: 13 }, padding: 15 }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const index = context.dataIndex;
-                                    const value = mockValues[index];
-                                    const percentage = mockPercentages[index];
-                                    return `${MOCK_DATA.categories.labels[index]}: ${value} articles (${percentage}%)`;
-                                }
+            // Primary: Pie with legend
+            const renderPrimary = (chart) => {
+                const option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: (params) => `${params.name}: ${params.value} articles (${params.percent}%)`
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'right',
+                        data: labels,
+                        textStyle: { ...ECHART_TEXT_STYLE, fontSize: 12 }
+                    },
+                    series: [{
+                        name: 'Articles',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        data: labels.map((label, i) => ({
+                            value: values[i],
+                            name: label,
+                            itemStyle: { color: colors[i % colors.length] }
+                        })),
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
                         }
-                    }
-                }
-            });
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            // Alternate: Pie with labels and percentages inside slices
+            const renderAlternate = (chart) => {
+                const option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: (params) => `${params.name}: ${params.value} articles (${params.percent}%)`
+                    },
+                    series: [{
+                        name: 'Articles',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        data: labels.map((label, i) => ({
+                            value: values[i],
+                            name: label,
+                            itemStyle: { color: colors[i % colors.length] }
+                        })),
+                        label: {
+                            show: true,
+                            position: 'inside',
+                            formatter: (params) => {
+                                const idx = labels.indexOf(params.name);
+                                return `${params.name}\n${percentages[idx]}%`;
+                            },
+                            fontSize: 11,
+                            fontWeight: 'bold',
+                            color: '#ffffff',
+                            textShadowColor: 'rgba(0, 0, 0, 0.7)',
+                            textShadowBlur: 3
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Category Dominance (fallback): Rendering primary view');
+            renderPrimary(myChart);
+            console.log('✓ Category Dominance (fallback): Setting up dual-chart hover');
+            setupDualChartHover('category-dominance-chart', myChart, renderPrimary, renderAlternate);
+
+            window.addEventListener('resize', () => myChart.resize());
         });
 }
 
@@ -1074,41 +1174,39 @@ function initPublishingRhythm() {
                 chart.setOption(option);
             };
 
-            // Alternate: Polar/Clock chart
+            // Alternate: Vertical bar chart showing peak hours
             const renderAlternate = (chart) => {
-                const clockHours = hourlyData.map((_, i) => `${i}:00`);
+                const maxValue = Math.max(...hourlyData);
                 const option = {
-                    tooltip: { trigger: 'item' },
-                    polar: {
-                        radius: ['20%', '90%']
-                    },
-                    angleAxis: {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
                         type: 'category',
-                        data: clockHours,
-                        boundaryGap: false,
-                        axisLabel: { ...ECHART_TEXT_STYLE, fontSize: 11 },
-                        splitLine: { show: true }
+                        data: hourLabels,
+                        axisLabel: { ...ECHART_TEXT_STYLE, rotate: 45, interval: 0 }
                     },
-                    radiusAxis: {
+                    yAxis: {
                         type: 'value',
-                        axisLabel: { ...ECHART_TEXT_STYLE },
-                        splitNumber: 3
+                        name: 'Article Count',
+                        nameTextStyle: { ...ECHART_TEXT_STYLE },
+                        axisLabel: { ...ECHART_TEXT_STYLE }
                     },
                     series: [{
-                        name: 'Articles Published',
+                        name: 'Articles',
                         type: 'bar',
-                        data: hourlyData,
-                        itemStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                { offset: 0, color: '#3b82f6' },
-                                { offset: 1, color: '#1e40af' }
-                            ]),
-                            opacity: 0.8
-                        },
-                        emphasis: {
+                        data: hourlyData.map((val, i) => ({
+                            value: val,
                             itemStyle: {
-                                color: '#60a5fa'
+                                color: val === maxValue ? '#ef4444' : '#3b82f6',
+                                borderRadius: [4, 4, 0, 0]
                             }
+                        })),
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: '{c}',
+                            fontSize: 10,
+                            color: '#94a3b8'
                         }
                     }]
                 };
@@ -1158,41 +1256,39 @@ function initPublishingRhythm() {
                 chart.setOption(option);
             };
 
-            // Alternate: Polar/Clock chart
+            // Alternate: Vertical bar chart showing peak hours
             const renderAlternate = (chart) => {
-                const clockHours = hourlyData.map((_, i) => `${i}:00`);
+                const maxValue = Math.max(...hourlyData);
                 const option = {
-                    tooltip: { trigger: 'item' },
-                    polar: {
-                        radius: ['20%', '90%']
-                    },
-                    angleAxis: {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
                         type: 'category',
-                        data: clockHours,
-                        boundaryGap: false,
-                        axisLabel: { ...ECHART_TEXT_STYLE, fontSize: 11 },
-                        splitLine: { show: true }
+                        data: hourLabels,
+                        axisLabel: { ...ECHART_TEXT_STYLE, rotate: 45, interval: 0 }
                     },
-                    radiusAxis: {
+                    yAxis: {
                         type: 'value',
-                        axisLabel: { ...ECHART_TEXT_STYLE },
-                        splitNumber: 3
+                        name: 'Article Count',
+                        nameTextStyle: { ...ECHART_TEXT_STYLE },
+                        axisLabel: { ...ECHART_TEXT_STYLE }
                     },
                     series: [{
-                        name: 'Articles Published',
+                        name: 'Articles',
                         type: 'bar',
-                        data: hourlyData,
-                        itemStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                { offset: 0, color: '#3b82f6' },
-                                { offset: 1, color: '#1e40af' }
-                            ]),
-                            opacity: 0.8
-                        },
-                        emphasis: {
+                        data: hourlyData.map((val, i) => ({
+                            value: val,
                             itemStyle: {
-                                color: '#60a5fa'
+                                color: val === maxValue ? '#ef4444' : '#3b82f6',
+                                borderRadius: [4, 4, 0, 0]
                             }
+                        })),
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: '{c}',
+                            fontSize: 10,
+                            color: '#94a3b8'
                         }
                     }]
                 };
