@@ -186,9 +186,11 @@ function initEmotionalRollercoaster() {
             };
 
             // Initialize with primary chart
+            console.log('✓ Emotional Rollercoaster: Rendering primary view with', dates.length, 'dates');
             renderPrimary(myChart);
 
             // Setup dual-chart hover switching
+            console.log('✓ Emotional Rollercoaster: Setting up dual-chart hover');
             setupDualChartHover('emotional-rollercoaster-chart', myChart, renderPrimary, renderAlternate);
 
             window.addEventListener('resize', () => myChart.resize());
@@ -399,7 +401,9 @@ function initSurgeAlert() {
                 chart.setOption(option);
             };
 
+            console.log('✓ Surge Alert: Rendering primary view with', chartData.length, 'topics');
             renderPrimary(myChart);
+            console.log('✓ Surge Alert: Setting up dual-chart hover');
             setupDualChartHover('surge-alert-chart', myChart, renderPrimary, renderAlternate);
 
             window.addEventListener('resize', () => myChart.resize());
