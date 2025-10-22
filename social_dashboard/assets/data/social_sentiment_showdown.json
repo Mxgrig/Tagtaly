@@ -1,0 +1,11 @@
+{
+    "headline": "Sentiment Showdown",
+    "positive": {
+        "source": "N/A",
+        "mood_score": 0
+    },
+    "negative": {
+        "source": "N/A",
+        "mood_score": 0
+    }
+}

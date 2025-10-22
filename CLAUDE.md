@@ -16,6 +16,66 @@ An automated UK news analysis pipeline that transforms 500+ daily articles into 
 - **Repository:** [GitHub](https://github.com/grig/tagtaly) (public)
 - **Automation:** Cron jobs configured for daily execution (see Deployment section)
 
+---
+
+## Current Deployment Plan (Phase 3 - In Progress)
+
+**Goal:** Automated daily data generation with custom domain deployment
+
+### Architecture
+```
+GitHub Actions (7 AM UTC)
+  ↓ Runs Python pipeline
+  ↓ Generates JSON charts
+  ↓ Commits to tagtaly-pages repo
+  ↓
+Hostinger Server (8 AM UTC)
+  ↓ Auto-pulls latest from GitHub
+  ↓ Website serves fresh data
+  ↓
+www.tagtaly.com (LIVE ✅)
+```
+
+### Recent Changes ✅
+- ✅ Created `json_generator.py` - converts story data to ECharts JSON
+- ✅ Updated `viral_engine.py` - uses JSON generation instead of PNG
+- ✅ Enhanced `news_collector.py` - retry logic + error logging for RSS feeds
+- ✅ Added dual-chart hover in `social_charts.js` - ECharts with variants
+- ✅ Created `vercel.json` - static site deployment config
+
+### Current Status
+- ⏳ **Hostinger SSH Setup:** Ready to configure auto-pull
+- ⏳ **GitHub Actions Workflow:** Confirmed working, generates JSON daily
+- ⏳ **Custom Domain:** DNS configured, waiting for final deployment
+- ⏳ **Automation:** Need to set up cron on Hostinger to pull from GitHub
+
+### Next Steps
+1. SSH into Hostinger
+2. Clone `tagtaly-pages` repo
+3. Set up cron job: `git pull origin main` daily at 8 AM UTC
+4. Website auto-updates with fresh JSON data
+5. Custom domain goes live
+
+---
+
+## Hostinger SSH Details
+```bash
+# NOTE: Keep these commented for security
+# SSH_KEY: /home/grig/Projects/Complitrack/tools/.ssh/hostinger_key
+# SSH_HOST: u958180753@45.87.81.67
+# SSH_PORT: 65002
+# REMOTE_DIR: ~/domains/www.tagtaly.com/public_html (needs confirmation)
+#
+# Known domains on server:
+#   - complytrack.co.uk
+#   - klenfast.com
+#   - opengovdatahub.com
+#   - www.tagtaly.com (target)
+#
+# Setup command template:
+# ssh -i [key_path] -p [port] [user@host] "cd [dir] && git clone [repo]"
+```
+
 ## Common Commands
 
 ### Development

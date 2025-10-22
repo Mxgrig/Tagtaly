@@ -1,0 +1,15 @@
+name = "tagtaly-rss-worker"
+main = "worker.js"
+compatibility_date = "2024-09-24"
+
+[vars]
+# Set this to the origin serving your dashboard, e.g. https://mxgrig.github.io
+ALLOWED_ORIGIN = "https://example.com"
+
+[[kv_namespaces]]
+binding = "RSS_KV"
+id = "00000000000000000000000000000000"
+
+[[durable_objects.bindings]]
+name = "FEED_HUB"
+class_name = "FeedHub"
