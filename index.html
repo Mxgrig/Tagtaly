@@ -1013,7 +1013,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <div id="emotional-rollercoaster-chart" style="height: 400px;"></div>
+                        <div id="emotional-rollercoaster-chart" style="width: 100%; height: 400px;"></div>
                         <div id="rollercoaster-title" style="text-align: center; margin-top: 0.5rem; font-weight: 600; color: #666;"></div>
                     </div>
                 </div>
@@ -1031,7 +1031,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <div id="surge-alert-chart" style="height: 400px;"></div>
+                        <div id="surge-alert-chart" style="width: 100%; height: 400px;"></div>
                         <div id="surge-alert-title" style="text-align: center; margin-top: 0.5rem; font-weight: 600; color: #666;"></div>
                     </div>
                 </div>
@@ -1059,7 +1059,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <div id="sentiment-showdown-chart" style="height: 400px;"></div>
+                        <div id="sentiment-showdown-chart" style="width: 100%; height: 400px;"></div>
                         <div id="sentiment-showdown-title" style="text-align: center; margin-top: 0.5rem; font-weight: 600; color: #666;"></div>
                     </div>
                 </div>
@@ -1117,7 +1117,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <div id="media-divide-chart" style="height: 400px;"></div>
+                        <div id="media-divide-chart" style="width: 100%; height: 400px;"></div>
                         <div id="media-divide-title" style="text-align: center; margin-top: 0.5rem; font-weight: 600; color: #666;"></div>
                     </div>
                 </div>
@@ -1311,8 +1311,10 @@
                 // Filter by categories (money, lifestyle, entertainment)
                 const categories = ['money', 'lifestyle', 'entertainment'];
                 const categoryArticles = articles.filter(a => {
-                    const cats = a.categories || [];
-                    return categories.some(cat => cats.includes(cat) || a.qwe_primary === cat);
+                    // Check both qwe_category (actual field) and topic fields
+                    const qwe_cat = (a.qwe_category || '').toLowerCase();
+                    const topic = (a.topic || '').toLowerCase();
+                    return categories.some(cat => qwe_cat.includes(cat) || topic.includes(cat));
                 });
 
                 // Calculate metrics
