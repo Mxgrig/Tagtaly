@@ -32,8 +32,8 @@ function createDualChartCard(containerId, primaryFile, alternateFile, initFuncti
 
     // Load both variants
     Promise.all([
-        fetch(`social_dashboard/assets/data/${primaryFile}`).then(r => r.json()),
-        fetch(`social_dashboard/assets/data/${alternateFile}`).then(r => r.json())
+        fetch(`../assets/data/${primaryFile}`).then(r => r.json()),
+        fetch(`../assets/data/${alternateFile}`).then(r => r.json())
     ]).then(([primaryData, alternateData]) => {
         // Store both data sets on the container
         container.dataset.primaryData = JSON.stringify(primaryData);
@@ -111,7 +111,7 @@ function initEmotionalRollercoaster() {
 
 // --- CHART 2: WEEKLY WINNER (Custom HTML) ---
 function initWeeklyWinner() {
-    fetch('social_dashboard/assets/data/social_weekly_winner.json')
+    fetch('../assets/data/social_weekly_winner.json')
         .then(response => response.json())
         .then(content => {
             const chartDom = document.getElementById('weekly-winner-chart');

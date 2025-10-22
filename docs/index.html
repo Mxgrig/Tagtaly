@@ -1,194 +1,65 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="News that matters. Data that shows it. UK news analyzed daily, visualized dramatically.">
-    <meta name="keywords" content="UK news, data visualization, news charts, UK politics, media analysis">
-    <title>Tagtaly - News That Matters. Data That Shows It.</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Tagtaly - Social Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../social_dashboard/assets/css/shadcn_style.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <h1>🏷️ Tagtaly</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="archive.html">Archive</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="container">
+        <header class="page-header">
+            <h1>Social Media Dashboard</h1>
+            <p>A showcase of shareable, social-first charts generated from the Tagtaly pipeline.</p>
+        </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <h2 class="tagline">News That Matters.<br>Data That Shows It.</h2>
-            <p class="subtitle">1,000+ articles analyzed daily from UK 🇬🇧 & US 🇺🇸. Drama delivered in charts.</p>
-            <div class="cta">
-                <a href="https://twitter.com/tagtaly" class="btn btn-primary" target="_blank">Follow @tagtaly</a>
-                <a href="archive.html" class="btn btn-secondary">View Archive</a>
-            </div>
-        </section>
+        <main class="charts-grid">
 
-        <!-- Latest Charts Section -->
-        <section class="latest-charts">
-            <h3>Today's Viral Charts</h3>
-            <p class="date" id="current-date"></p>
-
-            <!-- Country Tabs -->
-            <div class="country-tabs">
-                <button class="tab-btn active" onclick="showCountry('uk')">🇬🇧 UK</button>
-                <button class="tab-btn" onclick="showCountry('us')">🇺🇸 US</button>
-                <button class="tab-btn" onclick="showCountry('global')">🌍 Global</button>
+            <!-- Emotional Rollercoaster -->
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h2 class="chart-card-title" id="rollercoaster-title"></h2>
+                </div>
+                <div id="emotional-rollercoaster-chart" class="chart-placeholder"></div>
             </div>
 
-            <!-- UK Charts -->
-            <div id="uk-charts" class="chart-grid country-charts active">
-                <div class="chart-card">
-                    <img src="charts/uk/viral_1_RECORD_ALERT.png" alt="UK Record Alert Chart">
-                    <p class="chart-caption">🇬🇧 Record-breaking stories this week</p>
-                </div>
-                <div class="chart-card">
-                    <img src="charts/uk/viral_2_MEDIA_BIAS.png" alt="UK Media Bias Chart">
-                    <p class="chart-caption">🇬🇧 What UK outlets are covering</p>
-                </div>
+            <!-- Weekly Winner -->
+            <div class="chart-card">
+                 <div id="weekly-winner-chart" class="chart-placeholder"></div>
             </div>
 
-            <!-- US Charts -->
-            <div id="us-charts" class="chart-grid country-charts">
-                <div class="chart-card">
-                    <img src="charts/us/viral_1_MEDIA_BIAS.png" alt="US Media Bias Chart">
-                    <p class="chart-caption">🇺🇸 What US outlets are covering</p>
+            <!-- Topic Surge Alert -->
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h2 class="chart-card-title" id="surge-alert-title"></h2>
                 </div>
-                <div class="chart-card">
-                    <img src="charts/us/viral_2_RECORD_ALERT.png" alt="US Record Alert Chart">
-                    <p class="chart-caption">🇺🇸 Record-breaking stories this week</p>
-                </div>
+                <div id="surge-alert-chart" class="chart-placeholder"></div>
             </div>
 
-            <!-- Global Charts -->
-            <div id="global-charts" class="chart-grid country-charts">
-                <div class="chart-card">
-                    <img src="charts/global/viral_1_RECORD_ALERT.png" alt="Global Record Alert Chart">
-                    <p class="chart-caption">🌍 Record-breaking global stories</p>
+            <!-- Media Divide -->
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h2 class="chart-card-title" id="media-divide-title"></h2>
                 </div>
-                <div class="chart-card">
-                    <img src="charts/global/viral_2_MEDIA_BIAS.png" alt="Global Media Bias Chart">
-                    <p class="chart-caption">🌍 Global media coverage</p>
-                </div>
+                <div id="media-divide-chart" class="chart-placeholder"></div>
             </div>
-        </section>
 
-        <!-- What We Track Section -->
-        <section class="what-we-track">
-            <h3>What We Track</h3>
-            <div class="tracking-grid">
-                <div class="tracking-item">
-                    <span class="icon">🗳️</span>
-                    <h4>Politics</h4>
-                    <p>Who's dominating the headlines</p>
+            <!-- Sentiment Showdown -->
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <h2 class="chart-card-title" id="sentiment-showdown-title"></h2>
                 </div>
-                <div class="tracking-item">
-                    <span class="icon">📈</span>
-                    <h4>Surges</h4>
-                    <p>Topics exploding week-over-week</p>
-                </div>
-                <div class="tracking-item">
-                    <span class="icon">🏥</span>
-                    <h4>Health</h4>
-                    <p>NHS coverage and trends</p>
-                </div>
-                <div class="tracking-item">
-                    <span class="icon">💰</span>
-                    <h4>Economy</h4>
-                    <p>Financial news that moves markets</p>
-                </div>
-                <div class="tracking-item">
-                    <span class="icon">📰</span>
-                    <h4>Media Bias</h4>
-                    <p>What each outlet really covers</p>
-                </div>
-                <div class="tracking-item">
-                    <span class="icon">🚨</span>
-                    <h4>Records</h4>
-                    <p>Highs, lows, and breaking points</p>
-                </div>
+                <div id="sentiment-showdown-chart" class="chart-placeholder"></div>
             </div>
-        </section>
 
-        <!-- How It Works Section -->
-        <section class="how-it-works">
-            <h3>How It Works</h3>
-            <div class="process-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h4>Collect</h4>
-                    <p>1,000+ articles daily from UK & US news sources</p>
-                </div>
-                <div class="step-arrow">→</div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h4>Analyze</h4>
-                    <p>Viral scoring, topic classification, sentiment analysis</p>
-                </div>
-                <div class="step-arrow">→</div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h4>Visualize</h4>
-                    <p>Generate 6 viral-ready charts (UK, US, Global)</p>
-                </div>
-                <div class="step-arrow">→</div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h4>Deliver</h4>
-                    <p>Posted daily at 7 AM UTC, ready to share</p>
-                </div>
-            </div>
-        </section>
-    </main>
+        </main>
+    </div>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Tagtaly. News that matters. Data that shows it.</p>
-            <div class="footer-links">
-                <a href="https://twitter.com/tagtaly" target="_blank">Twitter</a>
-                <a href="https://github.com/Mxgrig/Tagtaly" target="_blank">GitHub</a>
-                <a href="about.html">About</a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/js/main.js"></script>
-    <script>
-        // Set current date
-        const dateEl = document.getElementById('current-date');
-        const today = new Date().toLocaleDateString('en-GB', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-        dateEl.textContent = today;
-
-        // Country tab switching
-        function showCountry(country) {
-            // Hide all charts
-            document.querySelectorAll('.country-charts').forEach(el => {
-                el.classList.remove('active');
-            });
-            // Remove active from all buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show selected country charts
-            document.getElementById(country + '-charts').classList.add('active');
-            // Add active to clicked button
-            event.target.classList.add('active');
-        }
-    </script>
+    <script src="../social_dashboard/assets/js/social_charts.js"></script>
 </body>
 </html>
