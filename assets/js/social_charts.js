@@ -20,6 +20,32 @@ document.addEventListener('DOMContentLoaded', () => {
     initCrossSourceStories();
 });
 
+// Utility function to add dual-chart hover switching
+function setupDualChartHover(containerId, primaryChartInit, alternateChartInit) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const cardHeader = container.closest('.chart-card');
+    if (!cardHeader) return;
+
+    let currentChart = echarts.getInstanceByDom(container);
+    let isPrimary = true;
+
+    cardHeader.addEventListener('mouseenter', () => {
+        if (isPrimary && currentChart) {
+            isPrimary = false;
+            alternateChartInit(container, currentChart);
+        }
+    });
+
+    cardHeader.addEventListener('mouseleave', () => {
+        if (!isPrimary && currentChart) {
+            isPrimary = true;
+            primaryChartInit(container, currentChart);
+        }
+    });
+}
+
 const ECHART_TEXT_STYLE = {
     fontFamily: 'Inter, sans-serif',
     fontWeight: 600,
@@ -35,12 +61,12 @@ const MOCK_DATA = {
     },
     surge: {
         headline: "🚨 Topic Surge Alert",
-        data: [
-            ['Technology', 67.5],
-            ['Health', 45.2],
-            ['Politics', 38.8],
-            ['Climate', 22.3],
-            ['Entertainment', 18.5]
+        surges: [
+            { topic: 'Technology', change_pct: 67.5, today: 125, yesterday: 74 },
+            { topic: 'Health', change_pct: 45.2, today: 89, yesterday: 61 },
+            { topic: 'Politics', change_pct: 38.8, today: 67, yesterday: 48 },
+            { topic: 'Climate', change_pct: 22.3, today: 45, yesterday: 37 },
+            { topic: 'Entertainment', change_pct: 18.5, today: 38, yesterday: 32 }
         ]
     },
     mediaDivide: {
@@ -73,21 +99,20 @@ const MOCK_DATA = {
     }
 };
 
-// --- CHART 1: EMOTIONAL ROLLERCOASTER (Line Chart) ---
+// --- CHART 1: EMOTIONAL ROLLERCOASTER (Line Chart with Dual Hover) ---
 function initEmotionalRollercoaster() {
     const chartDom = document.getElementById('emotional-rollercoaster-chart');
     if (!chartDom) {
         console.warn('emotional-rollercoaster-chart not found');
         return;
     }
-    console.log('Initializing Emotional Rollercoaster chart');
 
     fetch('assets/data/sentiment_tracker.json')
         .then(r => r.json())
         .then(data => {
             const myChart = echarts.init(chartDom);
             const titleEl = document.getElementById('rollercoaster-title');
-            
+
             // Convert dates to short format (Mon, Tue, etc)
             const dates = (data.dates || []).map(d => {
                 const date = new Date(d);
@@ -95,52 +120,125 @@ function initEmotionalRollercoaster() {
             });
             const scores = data.mood_scores || MOCK_DATA.emotional.scores;
 
-            if (titleEl) titleEl.textContent = "📊 Emotional Rollercoaster - Sentiment Trend";
+            // Primary chart: Line chart
+            const renderPrimary = (chart) => {
+                if (titleEl) titleEl.textContent = "📊 Emotional Rollercoaster - Sentiment Trend (Hover for area view)";
 
-            const option = {
-                tooltip: { trigger: 'axis' },
-                grid: { left: '3%', right: '10%', bottom: '3%', top: '15%', containLabel: true },
-                xAxis: { type: 'category', data: dates.length > 0 ? dates : MOCK_DATA.emotional.dates, axisLabel: { ...ECHART_TEXT_STYLE } },
-                yAxis: { type: 'value', name: 'Mood Score', nameTextStyle: { ...ECHART_TEXT_STYLE }, axisLabel: { ...ECHART_TEXT_STYLE } },
-                series: [{
-                    name: 'Mood Score',
-                    type: 'line',
-                    data: scores.length > 0 ? scores : MOCK_DATA.emotional.scores,
-                    smooth: true,
-                    symbol: 'circle',
-                    symbolSize: 8,
-                    lineStyle: { color: '#8b5cf6', width: 3 },
-                    itemStyle: { color: '#8b5cf6' },
-                    areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(139, 92, 246, 0.2)' }, { offset: 1, color: 'rgba(139, 92, 246, 0)' }]) }
-                }]
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'line' } },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '15%', containLabel: true },
+                    xAxis: { type: 'category', data: dates.length > 0 ? dates : MOCK_DATA.emotional.dates, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: { type: 'value', name: 'Mood Score', nameTextStyle: { ...ECHART_TEXT_STYLE }, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [{
+                        name: 'Mood Score',
+                        type: 'line',
+                        data: scores.length > 0 ? scores : MOCK_DATA.emotional.scores,
+                        smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 8,
+                        lineStyle: { color: '#8b5cf6', width: 3 },
+                        itemStyle: { color: '#8b5cf6' }
+                    }]
+                };
+                chart.setOption(option);
             };
-            myChart.setOption(option);
+
+            // Alternate chart: Area chart with filled background
+            const renderAlternate = (chart) => {
+                if (titleEl) titleEl.textContent = "📊 Emotional Rollercoaster - Area View (More detail on hover)";
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'line' },
+                        formatter: (params) => {
+                            if (!params.length) return '';
+                            const p = params[0];
+                            return `${p.name}<br/><strong>Sentiment: ${p.value}</strong>`;
+                        }
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '15%', containLabel: true },
+                    xAxis: { type: 'category', data: dates.length > 0 ? dates : MOCK_DATA.emotional.dates, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: { type: 'value', name: 'Mood Score', nameTextStyle: { ...ECHART_TEXT_STYLE }, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [{
+                        name: 'Mood Score',
+                        type: 'line',
+                        data: scores.length > 0 ? scores : MOCK_DATA.emotional.scores,
+                        smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 10,
+                        lineStyle: { color: '#8b5cf6', width: 4 },
+                        itemStyle: { color: '#8b5cf6', borderWidth: 2, borderColor: '#fff' },
+                        areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: 'rgba(139, 92, 246, 0.5)' },
+                            { offset: 1, color: 'rgba(139, 92, 246, 0.1)' }
+                        ]) }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            // Initialize with primary chart
+            renderPrimary(myChart);
+
+            // Setup dual-chart hover switching
+            setupDualChartHover('emotional-rollercoaster-chart', renderPrimary, renderAlternate);
+
             window.addEventListener('resize', () => myChart.resize());
         })
         .catch(error => {
             console.warn('Sentiment tracker error:', error);
             const myChart = echarts.init(chartDom);
             const titleEl = document.getElementById('rollercoaster-title');
-            if (titleEl) titleEl.textContent = "📊 Emotional Rollercoaster - Sentiment Trend";
 
-            const option = {
-                tooltip: { trigger: 'axis' },
-                grid: { left: '3%', right: '10%', bottom: '3%', top: '15%', containLabel: true },
-                xAxis: { type: 'category', data: MOCK_DATA.emotional.dates, axisLabel: { ...ECHART_TEXT_STYLE } },
-                yAxis: { type: 'value', name: 'Mood Score', nameTextStyle: { ...ECHART_TEXT_STYLE }, axisLabel: { ...ECHART_TEXT_STYLE } },
-                series: [{
-                    name: 'Mood Score',
-                    type: 'line',
-                    data: MOCK_DATA.emotional.scores,
-                    smooth: true,
-                    symbol: 'circle',
-                    symbolSize: 8,
-                    lineStyle: { color: '#8b5cf6', width: 3 },
-                    itemStyle: { color: '#8b5cf6' },
-                    areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(139, 92, 246, 0.2)' }, { offset: 1, color: 'rgba(139, 92, 246, 0)' }]) }
-                }]
+            const renderPrimary = (chart) => {
+                if (titleEl) titleEl.textContent = "📊 Emotional Rollercoaster - Sentiment Trend (Hover for area view)";
+                const option = {
+                    tooltip: { trigger: 'axis' },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '15%', containLabel: true },
+                    xAxis: { type: 'category', data: MOCK_DATA.emotional.dates, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: { type: 'value', name: 'Mood Score', nameTextStyle: { ...ECHART_TEXT_STYLE }, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [{
+                        name: 'Mood Score',
+                        type: 'line',
+                        data: MOCK_DATA.emotional.scores,
+                        smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 8,
+                        lineStyle: { color: '#8b5cf6', width: 3 },
+                        itemStyle: { color: '#8b5cf6' }
+                    }]
+                };
+                chart.setOption(option);
             };
-            myChart.setOption(option);
+
+            const renderAlternate = (chart) => {
+                if (titleEl) titleEl.textContent = "📊 Emotional Rollercoaster - Area View";
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'line' } },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '15%', containLabel: true },
+                    xAxis: { type: 'category', data: MOCK_DATA.emotional.dates, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: { type: 'value', name: 'Mood Score', nameTextStyle: { ...ECHART_TEXT_STYLE }, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [{
+                        name: 'Mood Score',
+                        type: 'line',
+                        data: MOCK_DATA.emotional.scores,
+                        smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 10,
+                        lineStyle: { color: '#8b5cf6', width: 4 },
+                        itemStyle: { color: '#8b5cf6', borderWidth: 2, borderColor: '#fff' },
+                        areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: 'rgba(139, 92, 246, 0.5)' },
+                            { offset: 1, color: 'rgba(139, 92, 246, 0.1)' }
+                        ]) }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            renderPrimary(myChart);
+            setupDualChartHover('emotional-rollercoaster-chart', renderPrimary, renderAlternate);
         });
 }
 
@@ -185,7 +283,7 @@ function initWeeklyWinner() {
         });
 }
 
-// --- CHART 3: SURGE ALERT (Bar Chart) ---
+// --- CHART 3: SURGE ALERT (Bar Chart with Dual Hover) ---
 function initSurgeAlert() {
     const chartDom = document.getElementById('surge-alert-chart');
     if (!chartDom) return;
@@ -206,67 +304,201 @@ function initSurgeAlert() {
                     topic: s.topic,
                     value: s.change_pct, // Keep sign for color coding
                     abs_value: Math.abs(s.change_pct),
-                    color: s.change_pct > 0 ? '#10b981' : '#ef4444' // Green for gains, red for losses
+                    color: s.change_pct > 0 ? '#10b981' : '#ef4444', // Green for gains, red for losses
+                    today: s.today,
+                    yesterday: s.yesterday
                 }));
 
-            if (titleEl) titleEl.textContent = "📊 Topic Attention - Topics gaining or losing coverage";
+            // Primary: Horizontal bars
+            const renderPrimary = (chart) => {
+                if (titleEl) titleEl.textContent = "📊 Topic Attention - Topics gaining or losing coverage (Hover for vertical view)";
 
-            const option = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: { type: 'shadow' },
-                    formatter: (params) => {
-                        if (params.length === 0) return '';
-                        const p = params[0];
-                        const item = chartData.find(d => d.topic === p.name);
-                        return `${p.name}<br/>${item.value > 0 ? '📈 +' : '📉 '}${Math.abs(item.value).toFixed(1)}%`;
-                    }
-                },
-                grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
-                xAxis: { type: 'value', boundaryGap: [0, 0.01], axisLabel: { ...ECHART_TEXT_STYLE } },
-                yAxis: {
-                    type: 'category',
-                    data: chartData.map(item => item.topic).reverse(),
-                    axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
-                },
-                series: [{
-                    name: 'Coverage Change',
-                    type: 'bar',
-                    data: chartData.map(item => ({
-                        value: item.abs_value,
-                        itemStyle: { color: item.color }
-                    })).reverse(),
-                    label: { show: true, position: 'right', fontWeight: 'bold', formatter: (v) => v.value + '%' }
-                }]
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => {
+                            if (params.length === 0) return '';
+                            const p = params[0];
+                            const item = chartData.find(d => d.topic === p.name);
+                            return `<strong>${p.name}</strong><br/>Yesterday: ${item.yesterday}<br/>Today: ${item.today}<br/>${item.value > 0 ? '📈 +' : '📉 '}${Math.abs(item.value).toFixed(1)}%`;
+                        }
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
+                    xAxis: { type: 'value', boundaryGap: [0, 0.01], axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: {
+                        type: 'category',
+                        data: chartData.map(item => item.topic).reverse(),
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
+                    },
+                    series: [{
+                        name: 'Coverage Change',
+                        type: 'bar',
+                        data: chartData.map(item => ({
+                            value: item.abs_value,
+                            itemStyle: { color: item.color }
+                        })).reverse(),
+                        label: { show: true, position: 'right', fontWeight: 'bold', formatter: (v) => v.value + '%' }
+                    }]
+                };
+                chart.setOption(option);
             };
-            myChart.setOption(option);
+
+            // Alternate: Vertical bars with values comparison
+            const renderAlternate = (chart) => {
+                if (titleEl) titleEl.textContent = "📊 Topic Attention - Detailed View (Articles count)";
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => {
+                            if (params.length === 0) return '';
+                            return params.map(p => {
+                                const item = chartData.find(d => d.topic === p.name);
+                                return `<strong>${p.name}</strong><br/>${p.seriesName}: ${p.value}`;
+                            }).join('<br/>');
+                        }
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: chartData.map(item => item.topic).reverse(),
+                        axisLabel: { ...ECHART_TEXT_STYLE, interval: 0, rotate: 45 }
+                    },
+                    yAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [
+                        {
+                            name: 'Yesterday',
+                            type: 'bar',
+                            data: chartData.map(item => item.yesterday).reverse(),
+                            itemStyle: { color: '#cbd5e1', borderRadius: [4, 4, 0, 0] }
+                        },
+                        {
+                            name: 'Today',
+                            type: 'bar',
+                            data: chartData.map(item => item.today).reverse(),
+                            itemStyle: {
+                                color: (params) => {
+                                    const item = chartData.reverse().find(d => d.topic === params.name);
+                                    chartData.reverse();
+                                    return item.color;
+                                },
+                                borderRadius: [4, 4, 0, 0]
+                            }
+                        }
+                    ]
+                };
+                chart.setOption(option);
+            };
+
+            renderPrimary(myChart);
+            setupDualChartHover('surge-alert-chart', renderPrimary, renderAlternate);
+
             window.addEventListener('resize', () => myChart.resize());
         })
         .catch(error => {
             console.warn('Surge Alert Error:', error);
             const myChart = echarts.init(chartDom);
             const titleEl = document.getElementById('surge-alert-title');
-            if (titleEl) titleEl.textContent = "🚨 Topic Surge Alert - What's trending more than yesterday";
 
-            const chartData = MOCK_DATA.surge.data;
-            const option = {
-                tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-                grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
-                xAxis: { type: 'value', boundaryGap: [0, 0.01], axisLabel: { ...ECHART_TEXT_STYLE } },
-                yAxis: {
-                    type: 'category',
-                    data: chartData.map(item => item[0]).reverse(),
-                    axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
-                },
-                series: [{
-                    name: 'Surge Score',
-                    type: 'bar',
-                    data: chartData.map(item => item[1]).reverse(),
-                    itemStyle: { color: '#ef4444', borderRadius: [0, 4, 4, 0] },
-                    label: { show: true, position: 'right', fontWeight: 'bold', formatter: '{c}%' }
-                }]
+            // Use mock data structure
+            const mockData = (MOCK_DATA.surge.surges || []).map(s => ({
+                topic: s.topic,
+                value: s.change_pct,
+                abs_value: Math.abs(s.change_pct),
+                color: s.change_pct > 0 ? '#10b981' : '#ef4444',
+                today: s.today || 0,
+                yesterday: s.yesterday || 0
+            }));
+
+            // Primary: Horizontal bars
+            const renderPrimary = (chart) => {
+                if (titleEl) titleEl.textContent = "📊 Topic Attention - Topics gaining or losing coverage (Hover for vertical view)";
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => {
+                            if (params.length === 0) return '';
+                            const p = params[0];
+                            const item = mockData.find(d => d.topic === p.name);
+                            return `<strong>${p.name}</strong><br/>Yesterday: ${item.yesterday}<br/>Today: ${item.today}<br/>${item.value > 0 ? '📈 +' : '📉 '}${Math.abs(item.value).toFixed(1)}%`;
+                        }
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
+                    xAxis: { type: 'value', boundaryGap: [0, 0.01], axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: {
+                        type: 'category',
+                        data: mockData.map(item => item.topic).reverse(),
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
+                    },
+                    series: [{
+                        name: 'Coverage Change',
+                        type: 'bar',
+                        data: mockData.map(item => ({
+                            value: item.abs_value,
+                            itemStyle: { color: item.color }
+                        })).reverse(),
+                        label: { show: true, position: 'right', fontWeight: 'bold', formatter: (v) => v.value + '%' }
+                    }]
+                };
+                chart.setOption(option);
             };
-            myChart.setOption(option);
+
+            // Alternate: Vertical bars with values comparison
+            const renderAlternate = (chart) => {
+                if (titleEl) titleEl.textContent = "📊 Topic Attention - Detailed View (Articles count)";
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => {
+                            if (params.length === 0) return '';
+                            return params.map(p => {
+                                const item = mockData.find(d => d.topic === p.name);
+                                return `<strong>${p.name}</strong><br/>${p.seriesName}: ${p.value}`;
+                            }).join('<br/>');
+                        }
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: mockData.map(item => item.topic).reverse(),
+                        axisLabel: { ...ECHART_TEXT_STYLE, interval: 0, rotate: 45 }
+                    },
+                    yAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [
+                        {
+                            name: 'Yesterday',
+                            type: 'bar',
+                            data: mockData.map(item => item.yesterday).reverse(),
+                            itemStyle: { color: '#cbd5e1', borderRadius: [4, 4, 0, 0] }
+                        },
+                        {
+                            name: 'Today',
+                            type: 'bar',
+                            data: mockData.map(item => item.today).reverse(),
+                            itemStyle: {
+                                color: (params) => {
+                                    const item = mockData.reverse().find(d => d.topic === params.name);
+                                    mockData.reverse();
+                                    return item.color;
+                                },
+                                borderRadius: [4, 4, 0, 0]
+                            }
+                        }
+                    ]
+                };
+                chart.setOption(option);
+            };
+
+            renderPrimary(myChart);
+            setupDualChartHover('surge-alert-chart', renderPrimary, renderAlternate);
+
+            window.addEventListener('resize', () => myChart.resize());
         });
 }
 
