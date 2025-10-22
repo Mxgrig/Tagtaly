@@ -273,33 +273,34 @@ function initWeeklyWinner() {
                 : 0;
 
             container.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 30px; height: 100%; justify-content: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 15px; justify-content: center;">
                     <div style="
-                        width: 80px;
-                        height: 80px;
+                        width: 70px;
+                        height: 70px;
                         background-color: ${topCategory.color};
-                        border-radius: 12px;
+                        border-radius: 10px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                     ">
-                        <span style="font-size: 40px;">📌</span>
+                        <span style="font-size: 36px;">📌</span>
                     </div>
                     <div style="text-align: center;">
-                        <div style="font-size: 1.8rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px;">${topCategory.name}</div>
-                        <div style="font-size: 1.2rem; color: #cbd5e1;"><strong>${topCategory.value}</strong> articles</div>
+                        <div style="font-size: 1.6rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px; line-height: 1.2;">${topCategory.name}</div>
+                        <div style="font-size: 1rem; color: #cbd5e1;"><strong>${topCategory.value}</strong> articles</div>
                     </div>
                     ${change > 0 ? `
                         <div style="
                             background-color: rgba(16, 185, 129, 0.2);
                             color: #10b981;
-                            padding: 6px 12px;
+                            padding: 4px 10px;
                             border-radius: 6px;
-                            font-size: 0.9rem;
+                            font-size: 0.85rem;
                             font-weight: 600;
+                            margin-top: 4px;
                         ">
-                            📈 +${change}% vs 2nd place
+                            📈 +${change}% vs 2nd
                         </div>
                     ` : ''}
                 </div>
@@ -323,33 +324,34 @@ function initWeeklyWinner() {
                 : 0;
 
             container.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 30px; height: 100%; justify-content: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 15px; justify-content: center;">
                     <div style="
-                        width: 80px;
-                        height: 80px;
+                        width: 70px;
+                        height: 70px;
                         background-color: ${topColor};
-                        border-radius: 12px;
+                        border-radius: 10px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                     ">
-                        <span style="font-size: 40px;">📌</span>
+                        <span style="font-size: 36px;">📌</span>
                     </div>
                     <div style="text-align: center;">
-                        <div style="font-size: 1.8rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px;">${topName}</div>
-                        <div style="font-size: 1.2rem; color: #cbd5e1;"><strong>${topValue}</strong> articles</div>
+                        <div style="font-size: 1.6rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px; line-height: 1.2;">${topName}</div>
+                        <div style="font-size: 1rem; color: #cbd5e1;"><strong>${topValue}</strong> articles</div>
                     </div>
                     ${change > 0 ? `
                         <div style="
                             background-color: rgba(16, 185, 129, 0.2);
                             color: #10b981;
-                            padding: 6px 12px;
+                            padding: 4px 10px;
                             border-radius: 6px;
-                            font-size: 0.9rem;
+                            font-size: 0.85rem;
                             font-weight: 600;
+                            margin-top: 4px;
                         ">
-                            📈 +${change}% vs 2nd place
+                            📈 +${change}% vs 2nd
                         </div>
                     ` : ''}
                 </div>
