@@ -809,14 +809,51 @@
             document.getElementById('rss-feed-container').innerHTML = feedHTML;
         }
 
+        let imagesData = null;
+
+        async function loadImagesFromJSON() {
+            try {
+                const response = await fetch('social_dashboard/assets/data/images.json');
+                if (response.ok) {
+                    imagesData = await response.json();
+                    loadBannerImage();
+                } else {
+                    loadBannerImageFallback();
+                }
+            } catch (error) {
+                console.warn('Images JSON not found, using placeholder:', error);
+                loadBannerImageFallback();
+            }
+        }
+
         function loadBannerImage() {
+            if (!imagesData || !imagesData.banner) {
+                loadBannerImageFallback();
+                return;
+            }
+
+            const img = document.getElementById('banner-image');
+            const banner = imagesData.banner;
+
+            img.src = banner.url;
+            img.alt = banner.title;
+            img.style.display = 'block';
+            img.onerror = () => loadBannerImageFallback();
+
+            document.getElementById('banner-credit').textContent = banner.attribution;
+        }
+
+        function loadBannerImageFallback() {
             const img = document.getElementById('banner-image');
             img.src = 'https://images.pexels.com/photos/3811517/pexels-photo-3811517.jpeg?auto=compress&cs=tinysrgb&w=1200';
             img.style.display = 'block';
-            document.getElementById('banner-credit').textContent = '📷 Image: Pexels';
+            document.getElementById('banner-credit').textContent = '📷 Image: Pexels (Placeholder)';
         }
 
-        document.addEventListener('DOMContentLoaded', initDashboard);
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadImagesFromJSON();
+            initDashboard();
+        });
     </script>
 </body>
 </html>

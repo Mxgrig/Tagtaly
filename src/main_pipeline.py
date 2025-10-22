@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from news_collector import fetch_news
 from news_analyzer import analyze_articles
 from viral_engine import generate_viral_content
+from image_fetcher import ImageFetcher
 from config.countries import get_active_countries
 from datetime import datetime
 
@@ -35,6 +36,12 @@ def daily_job():
         # Step 3: Generate viral charts for each country + global
         print("\n📊 STEP 3: Generating viral charts...")
         generate_viral_content()
+
+        # Step 4: Fetch and generate images for dashboard
+        print("\n🖼️  STEP 4: Fetching dashboard images...")
+        image_fetcher = ImageFetcher()
+        topics = ['Tech', 'Politics', 'Business', 'Health', 'Entertainment', 'Science', 'International']
+        image_fetcher.generate_images_json(topics)
 
         print(f"\n{'='*60}")
         print(f"✅ PIPELINE COMPLETE!")

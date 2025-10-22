@@ -1,20 +1,8 @@
 {
-  "headline": "\ud83c\udf0d What Global outlets are REALLY covering this week",
+  "headline": "\ud83c\uddfa\ud83c\uddf8 What United States outlets are REALLY covering this week",
   "type": "bias_indicator",
   "chart_type": "media_bias_alternate",
   "data": [
-    {
-      "source": "BBC",
-      "focus": "Other",
-      "intensity": 2.8,
-      "bias_color": "positive"
-    },
-    {
-      "source": "BBC Lifestyle",
-      "focus": "Other",
-      "intensity": 1.4,
-      "bias_color": "positive"
-    },
     {
       "source": "CNN",
       "focus": "Tech",
@@ -34,10 +22,22 @@
       "bias_color": "positive"
     },
     {
-      "source": "Evening Standard Food",
+      "source": "Fox News",
       "focus": "Tech",
-      "intensity": 0.4,
-      "bias_color": "neutral"
+      "intensity": 3.5,
+      "bias_color": "positive"
+    },
+    {
+      "source": "NPR",
+      "focus": "Tech",
+      "intensity": 1.1,
+      "bias_color": "positive"
+    },
+    {
+      "source": "NPR Food",
+      "focus": "Other",
+      "intensity": 0.8,
+      "bias_color": "positive"
     }
   ],
   "virality_score": 8
