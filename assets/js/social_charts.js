@@ -251,44 +251,188 @@ function initEmotionalRollercoaster() {
         });
 }
 
-// --- CHART 2: WEEKLY WINNER (Custom HTML) ---
+// --- CHART 2: WEEKLY WINNER (Top Category with Dual Hover) ---
 function initWeeklyWinner() {
-    const chartDom = document.getElementById('weekly-winner-chart');
-    if (!chartDom) return;
+    const container = document.getElementById('weekly-winner-chart');
+    if (!container) return;
 
-    fetch('assets/data/dashboard_config.json')
-        .then(response => response.json())
-        .then(content => {
-            // Extract top topic from sections or use config
-            let topic = 'Technology';
-            let count = 127;
-            
-            if (content.top_topic) {
-                topic = content.top_topic;
-                count = content.top_topic_count || 127;
-            } else if (content.sections && Array.isArray(content.sections)) {
-                // Parse from sections structure
-                const glance = content.sections.find(s => s.id === 'at-a-glance');
-                if (glance && glance.charts) {
-                    const dominant = glance.charts.find(c => c.id === 'record-breakers-chart');
-                    if (dominant) topic = dominant.title || 'Technology';
-                }
-            }
-            
-            chartDom.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px;">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6;">${topic}</div>
-                    <div style="font-size: 1rem; color: #6b7280;"><strong>${count}</strong> articles this week</div>
-                </div>
-            `;
-        }).catch(error => {
-            console.warn('Weekly Winner Error:', error);
-            chartDom.innerHTML = `
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px;">
-                    <div style="font-size: 2.5rem; font-weight: 800; color: #3b82f6;">Technology</div>
-                    <div style="font-size: 1rem; color: #6b7280;"><strong>127</strong> articles this week</div>
-                </div>
-            `;
+    fetch('assets/data/category_dominance.json')
+        .then(r => r.json())
+        .then(data => {
+            const myChart = echarts.init(container);
+            const categories = data.categories || [];
+
+            // Find top category (highest value)
+            const topCategory = categories.length > 0
+                ? categories.reduce((a, b) => a.value > b.value ? a : b)
+                : { name: 'Unknown', value: 0 };
+
+            const labels = categories.map(c => c.name);
+            const values = categories.map(c => c.value);
+            const colors = categories.map(c => c.color || '#3b82f6');
+
+            // Primary: Large display of top winner
+            const renderPrimary = (chart) => {
+                const option = {
+                    tooltip: { trigger: 'item' },
+                    series: [{
+                        type: 'gauge',
+                        axisLine: { lineStyle: { width: 30, color: [[0.3, '#ef4444'], [0.7, '#fbbf24'], [1, '#10b981']] } },
+                        pointer: { itemStyle: { color: 'auto' } },
+                        axisTick: { distance: 15, length: 8, lineStyle: { color: '#999', width: 2 } },
+                        splitLine: { distance: 15, length: 30, lineStyle: { color: '#999', width: 2 } },
+                        axisLabel: { color: 'auto', distance: 40, fontSize: 16 },
+                        detail: {
+                            valueAnimation: true,
+                            formatter: '{value}',
+                            color: '#3b82f6',
+                            fontSize: 24,
+                            fontWeight: 'bold'
+                        },
+                        data: [{
+                            value: topCategory.value,
+                            name: topCategory.name,
+                            itemStyle: { color: topCategory.color || '#3b82f6' }
+                        }],
+                        min: 0,
+                        max: Math.max(...values) * 1.2
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            // Alternate: Bar chart showing all categories
+            const renderAlternate = (chart) => {
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => {
+                            if (!params.length) return '';
+                            const p = params[0];
+                            const idx = labels.indexOf(p.name);
+                            const pct = categories[idx].percentage || 0;
+                            return `<strong>${p.name}</strong><br/>${p.value} articles (${pct}%)`;
+                        }
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: labels,
+                        axisLabel: { ...ECHART_TEXT_STYLE, rotate: 45 }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: { ...ECHART_TEXT_STYLE },
+                        name: 'Article Count'
+                    },
+                    series: [{
+                        name: 'Articles',
+                        type: 'bar',
+                        data: values.map((v, i) => ({
+                            value: v,
+                            itemStyle: { color: colors[i], borderRadius: [4, 4, 0, 0] }
+                        })),
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: '{c}',
+                            color: '#94a3b8'
+                        }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Weekly Winner: Rendering primary view -', topCategory.name, topCategory.value);
+            renderPrimary(myChart);
+            console.log('✓ Weekly Winner: Setting up dual-chart hover');
+            setupDualChartHover('weekly-winner-chart', myChart, renderPrimary, renderAlternate);
+
+            window.addEventListener('resize', () => myChart.resize());
+        })
+        .catch(() => {
+            const myChart = echarts.init(container);
+            const labels = MOCK_DATA.categories.labels;
+            const values = MOCK_DATA.categories.data;
+            const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899'];
+
+            const topValue = Math.max(...values);
+            const topIndex = values.indexOf(topValue);
+            const topName = labels[topIndex];
+
+            // Primary: Large display of top winner
+            const renderPrimary = (chart) => {
+                const option = {
+                    tooltip: { trigger: 'item' },
+                    series: [{
+                        type: 'gauge',
+                        axisLine: { lineStyle: { width: 30, color: [[0.3, '#ef4444'], [0.7, '#fbbf24'], [1, '#10b981']] } },
+                        pointer: { itemStyle: { color: 'auto' } },
+                        axisTick: { distance: 15, length: 8, lineStyle: { color: '#999', width: 2 } },
+                        splitLine: { distance: 15, length: 30, lineStyle: { color: '#999', width: 2 } },
+                        axisLabel: { color: 'auto', distance: 40, fontSize: 16 },
+                        detail: {
+                            valueAnimation: true,
+                            formatter: '{value}',
+                            color: '#3b82f6',
+                            fontSize: 24,
+                            fontWeight: 'bold'
+                        },
+                        data: [{
+                            value: topValue,
+                            name: topName,
+                            itemStyle: { color: colors[topIndex] }
+                        }],
+                        min: 0,
+                        max: Math.max(...values) * 1.2
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            // Alternate: Bar chart showing all categories
+            const renderAlternate = (chart) => {
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' }
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: labels,
+                        axisLabel: { ...ECHART_TEXT_STYLE, rotate: 45 }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: { ...ECHART_TEXT_STYLE },
+                        name: 'Article Count'
+                    },
+                    series: [{
+                        name: 'Articles',
+                        type: 'bar',
+                        data: values.map((v, i) => ({
+                            value: v,
+                            itemStyle: { color: colors[i % colors.length], borderRadius: [4, 4, 0, 0] }
+                        })),
+                        label: {
+                            show: true,
+                            position: 'top',
+                            formatter: '{c}',
+                            color: '#94a3b8'
+                        }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Weekly Winner (fallback): Rendering primary view');
+            renderPrimary(myChart);
+            console.log('✓ Weekly Winner (fallback): Setting up dual-chart hover');
+            setupDualChartHover('weekly-winner-chart', myChart, renderPrimary, renderAlternate);
+
+            window.addEventListener('resize', () => myChart.resize());
         });
 }
 
