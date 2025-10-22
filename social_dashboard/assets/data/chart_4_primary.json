@@ -1,0 +1,11 @@
+{
+    "headline": "Sentiment Showdown - BBC vs Daily Mail",
+    "positive": {
+        "source": "BBC",
+        "mood_score": 24
+    },
+    "negative": {
+        "source": "Daily Mail",
+        "mood_score": 31
+    }
+}

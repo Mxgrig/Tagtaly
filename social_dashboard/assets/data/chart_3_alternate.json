@@ -1,0 +1,13 @@
+{
+    "headline": "Media Divide - Coverage Bias",
+    "positive_outlets": [
+        {"source": "Independent", "mood_score": 14},
+        {"source": "Mirror", "mood_score": 9},
+        {"source": "Bloomberg", "mood_score": 7}
+    ],
+    "negative_outlets": [
+        {"source": "Express", "mood_score": -18},
+        {"source": "Metro", "mood_score": -8},
+        {"source": "Times", "mood_score": -10}
+    ]
+}

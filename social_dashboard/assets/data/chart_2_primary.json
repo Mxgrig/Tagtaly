@@ -1,0 +1,10 @@
+{
+    "headline": "Topic Surge Alert - This Week",
+    "data": [
+        ["Technology", 67.5],
+        ["Health", 45.2],
+        ["Politics", 38.8],
+        ["Climate", 22.3],
+        ["Royal Family", 18.5]
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "headline": "Media Divide - Outlet Sentiment",
+    "positive_outlets": [
+        {"source": "BBC", "mood_score": 12},
+        {"source": "Guardian", "mood_score": 8},
+        {"source": "Sky News", "mood_score": 6}
+    ],
+    "negative_outlets": [
+        {"source": "Daily Mail", "mood_score": -15},
+        {"source": "Telegraph", "mood_score": -9},
+        {"source": "Sun", "mood_score": -11}
+    ]
+}
