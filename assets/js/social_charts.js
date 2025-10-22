@@ -614,40 +614,87 @@ function initMediaDivide() {
             console.warn('Media Divide Error:', error);
             const myChart = echarts.init(chartDom);
             const titleEl = document.getElementById('media-divide-title');
-            if (titleEl) titleEl.textContent = "📰 Media Divide - Comparing outlet sentiment";
 
             const positiveOutlets = MOCK_DATA.mediaDivide.positive_outlets;
             const negativeOutlets = MOCK_DATA.mediaDivide.negative_outlets;
             const allOutlets = [...positiveOutlets, ...negativeOutlets];
             const sortedOutlets = allOutlets.sort((a, b) => a.mood_score - b.mood_score);
 
-            const option = {
-                tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-                grid: { left: '3%', right: '10%', bottom: '3%', top: '10%', containLabel: true },
-                xAxis: {
-                    type: 'value',
-                    position: 'top',
-                    splitLine: { lineStyle: { type: 'dashed' } },
-                    axisLabel: { ...ECHART_TEXT_STYLE }
-                },
-                yAxis: {
-                    type: 'category',
-                    axisLine: { show: false },
-                    axisTick: { show: false },
-                    axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' },
-                    data: sortedOutlets.map(o => o.source)
-                },
-                series: [{
-                    name: 'Sentiment',
-                    type: 'bar',
-                    label: { show: false },
-                    data: sortedOutlets.map(outlet => ({
-                        value: outlet.mood_score,
-                        itemStyle: { color: outlet.mood_score > 0 ? '#22c55e' : '#ef4444' }
-                    }))
-                }]
+            // Primary: Horizontal bars
+            const renderPrimary = (chart) => {
+                if (titleEl) titleEl.textContent = "📰 Media Divide - Comparing outlet sentiment (Hover for vertical view)";
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => `${params[0].name}: <strong>${params[0].value > 0 ? '+' : ''}${params[0].value.toFixed(1)}</strong>`
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'value',
+                        position: 'top',
+                        splitLine: { lineStyle: { type: 'dashed' } },
+                        axisLabel: { ...ECHART_TEXT_STYLE, formatter: '{value}' }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        axisLine: { show: false },
+                        axisTick: { show: false },
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' },
+                        data: sortedOutlets.map(o => o.source)
+                    },
+                    series: [{
+                        name: 'Sentiment',
+                        type: 'bar',
+                        label: { show: false },
+                        data: sortedOutlets.map(outlet => ({
+                            value: outlet.mood_score || 0,
+                            itemStyle: {
+                                color: (outlet.mood_score || 0) > 0 ? '#22c55e' : '#ef4444'
+                            }
+                        }))
+                    }]
+                };
+                chart.setOption(option);
             };
+
+            // Alternate: Vertical bars
+            const renderAlternate = (chart) => {
+                if (titleEl) titleEl.textContent = "📰 Media Divide - Vertical Comparison (Hover for horizontal view)";
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => `${params[0].name}: <strong>${params[0].value > 0 ? '+' : ''}${params[0].value.toFixed(1)}</strong>`
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: sortedOutlets.map(o => o.source),
+                        axisLabel: { ...ECHART_TEXT_STYLE, interval: 0, rotate: 45 }
+                    },
+                    yAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [{
+                        name: 'Sentiment',
+                        type: 'bar',
+                        data: sortedOutlets.map(outlet => ({
+                            value: outlet.mood_score || 0,
+                            itemStyle: {
+                                color: (outlet.mood_score || 0) > 0 ? '#22c55e' : '#ef4444',
+                                borderRadius: [4, 4, 0, 0]
+                            }
+                        })),
+                        label: { show: true, position: 'top', formatter: (v) => v.value.toFixed(1) }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Media Divide (fallback): Rendering primary view with', sortedOutlets.length, 'outlets');
             renderPrimary(myChart);
+            console.log('✓ Media Divide (fallback): Setting up dual-chart hover');
             setupDualChartHover('media-divide-chart', myChart, renderPrimary, renderAlternate);
         });
 }
@@ -841,6 +888,10 @@ function initCategoryDominance() {
             const labels = categories.map(c => c.name || 'Unknown');
             const values = categories.map(c => c.value || 0);
             
+            // Calculate percentages
+            const total = values.reduce((a, b) => a + b, 0);
+            const percentages = values.map(v => ((v / total) * 100).toFixed(1));
+
             new Chart(canvas, {
                 type: 'doughnut',
                 data: {
@@ -859,18 +910,33 @@ function initCategoryDominance() {
                         legend: {
                             position: 'bottom',
                             labels: { font: { family: 'Inter, sans-serif', size: 13 }, padding: 15 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    const value = values[index];
+                                    const percentage = percentages[index];
+                                    return `${labels[index]}: ${value} articles (${percentage}%)`;
+                                }
+                            }
                         }
                     }
                 }
             });
         })
         .catch(() => {
+            // Calculate percentages for mock data
+            const mockValues = MOCK_DATA.categories.data;
+            const mockTotal = mockValues.reduce((a, b) => a + b, 0);
+            const mockPercentages = mockValues.map(v => ((v / mockTotal) * 100).toFixed(1));
+
             new Chart(canvas, {
                 type: 'doughnut',
                 data: {
                     labels: MOCK_DATA.categories.labels,
                     datasets: [{
-                        data: MOCK_DATA.categories.data,
+                        data: mockValues,
                         backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'],
                         borderColor: '#ffffff',
                         borderWidth: 2
@@ -883,6 +949,16 @@ function initCategoryDominance() {
                         legend: {
                             position: 'bottom',
                             labels: { font: { family: 'Inter, sans-serif', size: 13 }, padding: 15 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    const value = mockValues[index];
+                                    const percentage = mockPercentages[index];
+                                    return `${MOCK_DATA.categories.labels[index]}: ${value} articles (${percentage}%)`;
+                                }
+                            }
                         }
                     }
                 }
@@ -955,75 +1031,180 @@ function initSourceProductivity() {
         });
 }
 
-// --- CHART 8: PUBLISHING RHYTHM (Line/Area) ---
+// --- CHART 8: PUBLISHING RHYTHM (Line Chart with Clock View) ---
 function initPublishingRhythm() {
-    const canvas = document.getElementById('publishing-rhythm-chart');
-    if (!canvas) return;
+    const container = document.getElementById('publishing-rhythm-chart');
+    if (!container) return;
 
     fetch('assets/data/publishing_rhythm.json')
         .then(r => r.json())
         .then(data => {
+            const myChart = echarts.init(container);
             const hourlyData = data.hourly_counts || [];
-            const labels = hourlyData.map((_, i) => `${i}:00`);
-            
-            new Chart(canvas, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Articles',
-                        data: hourlyData,
-                        fill: true,
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.4,
-                        pointBackgroundColor: '#3b82f6',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: { display: false }
+            const hourLabels = hourlyData.map((_, i) => `${i}:00`);
+
+            // Primary: Line chart
+            const renderPrimary = (chart) => {
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'line' } },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: hourLabels,
+                        axisLabel: { ...ECHART_TEXT_STYLE }
                     },
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
+                    yAxis: {
+                        type: 'value',
+                        name: 'Articles Published',
+                        nameTextStyle: { ...ECHART_TEXT_STYLE },
+                        axisLabel: { ...ECHART_TEXT_STYLE }
+                    },
+                    series: [{
+                        name: 'Articles',
+                        type: 'line',
+                        data: hourlyData,
+                        smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 6,
+                        lineStyle: { color: '#3b82f6', width: 2 },
+                        itemStyle: { color: '#3b82f6' },
+                        areaStyle: { color: 'rgba(59, 130, 246, 0.2)' }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            // Alternate: Polar/Clock chart
+            const renderAlternate = (chart) => {
+                const clockHours = hourlyData.map((_, i) => `${i}:00`);
+                const option = {
+                    tooltip: { trigger: 'item' },
+                    polar: {
+                        radius: ['20%', '90%']
+                    },
+                    angleAxis: {
+                        type: 'category',
+                        data: clockHours,
+                        boundaryGap: false,
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontSize: 11 },
+                        splitLine: { show: true }
+                    },
+                    radiusAxis: {
+                        type: 'value',
+                        axisLabel: { ...ECHART_TEXT_STYLE },
+                        splitNumber: 3
+                    },
+                    series: [{
+                        name: 'Articles Published',
+                        type: 'bar',
+                        data: hourlyData,
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                { offset: 0, color: '#3b82f6' },
+                                { offset: 1, color: '#1e40af' }
+                            ]),
+                            opacity: 0.8
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                color: '#60a5fa'
+                            }
+                        }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Publishing Rhythm: Rendering primary view with', hourlyData.length, 'hours');
+            renderPrimary(myChart);
+            console.log('✓ Publishing Rhythm: Setting up dual-chart hover');
+            setupDualChartHover('publishing-rhythm-chart', myChart, renderPrimary, renderAlternate);
+
+            window.addEventListener('resize', () => myChart.resize());
         })
         .catch(() => {
-            new Chart(canvas, {
-                type: 'line',
-                data: {
-                    labels: MOCK_DATA.rhythm.labels,
-                    datasets: [{
-                        label: 'Articles',
-                        data: MOCK_DATA.rhythm.data,
-                        fill: true,
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.4,
-                        pointBackgroundColor: '#3b82f6',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: { display: false }
+            const myChart = echarts.init(container);
+            const hourlyData = MOCK_DATA.rhythm.data;
+            const hourLabels = MOCK_DATA.rhythm.labels;
+
+            // Primary: Line chart
+            const renderPrimary = (chart) => {
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'line' } },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: hourLabels,
+                        axisLabel: { ...ECHART_TEXT_STYLE }
                     },
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
+                    yAxis: {
+                        type: 'value',
+                        name: 'Articles Published',
+                        nameTextStyle: { ...ECHART_TEXT_STYLE },
+                        axisLabel: { ...ECHART_TEXT_STYLE }
+                    },
+                    series: [{
+                        name: 'Articles',
+                        type: 'line',
+                        data: hourlyData,
+                        smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 6,
+                        lineStyle: { color: '#3b82f6', width: 2 },
+                        itemStyle: { color: '#3b82f6' },
+                        areaStyle: { color: 'rgba(59, 130, 246, 0.2)' }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            // Alternate: Polar/Clock chart
+            const renderAlternate = (chart) => {
+                const clockHours = hourlyData.map((_, i) => `${i}:00`);
+                const option = {
+                    tooltip: { trigger: 'item' },
+                    polar: {
+                        radius: ['20%', '90%']
+                    },
+                    angleAxis: {
+                        type: 'category',
+                        data: clockHours,
+                        boundaryGap: false,
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontSize: 11 },
+                        splitLine: { show: true }
+                    },
+                    radiusAxis: {
+                        type: 'value',
+                        axisLabel: { ...ECHART_TEXT_STYLE },
+                        splitNumber: 3
+                    },
+                    series: [{
+                        name: 'Articles Published',
+                        type: 'bar',
+                        data: hourlyData,
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                { offset: 0, color: '#3b82f6' },
+                                { offset: 1, color: '#1e40af' }
+                            ]),
+                            opacity: 0.8
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                color: '#60a5fa'
+                            }
+                        }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Publishing Rhythm (fallback): Rendering primary view');
+            renderPrimary(myChart);
+            console.log('✓ Publishing Rhythm (fallback): Setting up dual-chart hover');
+            setupDualChartHover('publishing-rhythm-chart', myChart, renderPrimary, renderAlternate);
+
+            window.addEventListener('resize', () => myChart.resize());
         });
 }
 
