@@ -513,7 +513,7 @@ function initSurgeAlert() {
         });
 }
 
-// --- CHART 4: MEDIA DIVIDE (Horizontal Bar Chart) ---
+// --- CHART 4: MEDIA DIVIDE (Horizontal Bar Chart with Dual Hover) ---
 function initMediaDivide() {
     const chartDom = document.getElementById('media-divide-chart');
     if (!chartDom) return;
@@ -523,7 +523,7 @@ function initMediaDivide() {
         .then(data => {
             const myChart = echarts.init(chartDom);
             const titleEl = document.getElementById('media-divide-title');
-            
+
             // Transform outlet sentiment data
             const outlets = (data.top_10 || []).map(o => ({
                 source: o.source,
@@ -531,42 +531,83 @@ function initMediaDivide() {
             }));
             const sortedOutlets = outlets.sort((a, b) => a.sentiment_score - b.sentiment_score);
 
-            if (titleEl) titleEl.textContent = "📰 Media Divide - Comparing outlet sentiment";
+            // Primary: Horizontal bars
+            const renderPrimary = (chart) => {
+                if (titleEl) titleEl.textContent = "📰 Media Divide - Comparing outlet sentiment (Hover for vertical view)";
 
-            const option = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: { type: 'shadow' },
-                    formatter: (params) => `${params[0].name}: <strong>${params[0].value > 0 ? '+' : ''}${params[0].value.toFixed(1)}</strong>`
-                },
-                grid: { left: '3%', right: '10%', bottom: '3%', top: '10%', containLabel: true },
-                xAxis: {
-                    type: 'value',
-                    position: 'top',
-                    splitLine: { lineStyle: { type: 'dashed' } },
-                    axisLabel: { ...ECHART_TEXT_STYLE, formatter: '{value}' }
-                },
-                yAxis: {
-                    type: 'category',
-                    axisLine: { show: false },
-                    axisTick: { show: false },
-                    axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' },
-                    data: sortedOutlets.map(o => o.source)
-                },
-                series: [{
-                    name: 'Sentiment',
-                    type: 'bar',
-                    label: { show: false },
-                    data: sortedOutlets.map(outlet => ({
-                        value: outlet.sentiment_score || 0,
-                        itemStyle: {
-                            color: (outlet.sentiment_score || 0) > 0 ? '#22c55e' : '#ef4444'
-                        }
-                    }))
-                }]
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => `${params[0].name}: <strong>${params[0].value > 0 ? '+' : ''}${params[0].value.toFixed(1)}</strong>`
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'value',
+                        position: 'top',
+                        splitLine: { lineStyle: { type: 'dashed' } },
+                        axisLabel: { ...ECHART_TEXT_STYLE, formatter: '{value}' }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        axisLine: { show: false },
+                        axisTick: { show: false },
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' },
+                        data: sortedOutlets.map(o => o.source)
+                    },
+                    series: [{
+                        name: 'Sentiment',
+                        type: 'bar',
+                        label: { show: false },
+                        data: sortedOutlets.map(outlet => ({
+                            value: outlet.sentiment_score || 0,
+                            itemStyle: {
+                                color: (outlet.sentiment_score || 0) > 0 ? '#22c55e' : '#ef4444'
+                            }
+                        }))
+                    }]
+                };
+                chart.setOption(option);
             };
 
-            myChart.setOption(option);
+            // Alternate: Vertical bars
+            const renderAlternate = (chart) => {
+                if (titleEl) titleEl.textContent = "📰 Media Divide - Vertical Comparison (Hover for horizontal view)";
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => `${params[0].name}: <strong>${params[0].value > 0 ? '+' : ''}${params[0].value.toFixed(1)}</strong>`
+                    },
+                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: sortedOutlets.map(o => o.source),
+                        axisLabel: { ...ECHART_TEXT_STYLE, interval: 0, rotate: 45 }
+                    },
+                    yAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [{
+                        name: 'Sentiment',
+                        type: 'bar',
+                        data: sortedOutlets.map(outlet => ({
+                            value: outlet.sentiment_score || 0,
+                            itemStyle: {
+                                color: (outlet.sentiment_score || 0) > 0 ? '#22c55e' : '#ef4444',
+                                borderRadius: [4, 4, 0, 0]
+                            }
+                        })),
+                        label: { show: true, position: 'top', formatter: (v) => v.value.toFixed(1) }
+                    }]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Media Divide: Rendering primary view with', sortedOutlets.length, 'outlets');
+            renderPrimary(myChart);
+            console.log('✓ Media Divide: Setting up dual-chart hover');
+            setupDualChartHover('media-divide-chart', myChart, renderPrimary, renderAlternate);
+
             window.addEventListener('resize', () => myChart.resize());
         })
         .catch(error => {
@@ -606,11 +647,12 @@ function initMediaDivide() {
                     }))
                 }]
             };
-            myChart.setOption(option);
+            renderPrimary(myChart);
+            setupDualChartHover('media-divide-chart', myChart, renderPrimary, renderAlternate);
         });
 }
 
-// --- CHART 5: SENTIMENT SHOWDOWN (Diverging Bar) ---
+// --- CHART 5: SENTIMENT SHOWDOWN (Diverging Bar with Dual Hover) ---
 function initSentimentShowdown() {
     const chartDom = document.getElementById('sentiment-showdown-chart');
     if (!chartDom) return;
@@ -620,7 +662,7 @@ function initSentimentShowdown() {
         .then(data => {
             const myChart = echarts.init(chartDom);
             const titleEl = document.getElementById('sentiment-showdown-title');
-            
+
             // Get top positive and negative outlets
             const outlets = (data.top_10 || []).map(o => ({
                 outlet: o.source,
@@ -632,69 +674,158 @@ function initSentimentShowdown() {
             const pos = positive || MOCK_DATA.sentiment.positive;
             const neg = negative || MOCK_DATA.sentiment.negative;
 
-            if (titleEl) titleEl.textContent = `Sentiment Showdown - ${pos.outlet || pos.source} vs ${neg.outlet || neg.source}`;
+            // Primary: Diverging horizontal bar
+            const renderPrimary = (chart) => {
+                if (titleEl) titleEl.textContent = `Sentiment Showdown - ${pos.outlet || pos.source} vs ${neg.outlet || neg.source} (Hover for details)`;
 
-            const option = {
-                tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-                grid: { left: '3%', right: '3%', bottom: '3%', containLabel: true },
-                xAxis: { type: 'value', show: false },
-                yAxis: { type: 'category', data: [''], show: false },
-                series: [
-                    {
-                        name: pos.outlet || pos.source,
-                        type: 'bar',
-                        stack: 'Showdown',
-                        data: [pos.sentiment_score || pos.mood_score],
-                        itemStyle: { color: '#22c55e' },
-                        label: { show: true, position: 'insideLeft', formatter: `${pos.outlet || pos.source}\n+${(pos.sentiment_score || pos.mood_score).toFixed(1)}`, fontWeight: 'bold', fontSize: 14, color: '#fff' }
-                    },
-                    {
-                        name: neg.outlet || neg.source,
-                        type: 'bar',
-                        stack: 'Showdown',
-                        data: [-(neg.sentiment_score || neg.mood_score)],
-                        itemStyle: { color: '#ef4444' },
-                        label: { show: true, position: 'insideRight', formatter: `${neg.outlet || neg.source}\n${(neg.sentiment_score || neg.mood_score).toFixed(1)}`, fontWeight: 'bold', fontSize: 14, color: '#fff' }
-                    }
-                ]
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                    grid: { left: '3%', right: '3%', bottom: '3%', containLabel: true },
+                    xAxis: { type: 'value', show: false },
+                    yAxis: { type: 'category', data: [''], show: false },
+                    series: [
+                        {
+                            name: pos.outlet || pos.source,
+                            type: 'bar',
+                            stack: 'Showdown',
+                            data: [pos.sentiment_score || pos.mood_score],
+                            itemStyle: { color: '#22c55e' },
+                            label: { show: true, position: 'insideLeft', formatter: `${pos.outlet || pos.source}\n+${(pos.sentiment_score || pos.mood_score).toFixed(1)}`, fontWeight: 'bold', fontSize: 14, color: '#fff' }
+                        },
+                        {
+                            name: neg.outlet || neg.source,
+                            type: 'bar',
+                            stack: 'Showdown',
+                            data: [-(neg.sentiment_score || neg.mood_score)],
+                            itemStyle: { color: '#ef4444' },
+                            label: { show: true, position: 'insideRight', formatter: `${neg.outlet || neg.source}\n${(neg.sentiment_score || neg.mood_score).toFixed(1)}`, fontWeight: 'bold', fontSize: 14, color: '#fff' }
+                        }
+                    ]
+                };
+                chart.setOption(option);
             };
-            myChart.setOption(option);
+
+            // Alternate: Side-by-side vertical comparison
+            const renderAlternate = (chart) => {
+                if (titleEl) titleEl.textContent = `Sentiment Showdown - Side-by-Side Comparison (Hover for diverging view)`;
+
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        formatter: (params) => {
+                            if (!params.length) return '';
+                            return params.map(p => `${p.seriesName}: <strong>${p.value > 0 ? '+' : ''}${p.value.toFixed(1)}</strong>`).join('<br/>');
+                        }
+                    },
+                    grid: { left: '3%', right: '3%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: [pos.outlet || pos.source, neg.outlet || neg.source],
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
+                    },
+                    yAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [
+                        {
+                            name: pos.outlet || pos.source,
+                            type: 'bar',
+                            data: [pos.sentiment_score || pos.mood_score, 0],
+                            itemStyle: { color: '#22c55e', borderRadius: [4, 4, 0, 0] },
+                            label: { show: true, position: 'top' }
+                        },
+                        {
+                            name: neg.outlet || neg.source,
+                            type: 'bar',
+                            data: [0, neg.sentiment_score || neg.mood_score],
+                            itemStyle: { color: '#ef4444', borderRadius: [4, 4, 0, 0] },
+                            label: { show: true, position: 'top' }
+                        }
+                    ]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Sentiment Showdown: Rendering primary view');
+            renderPrimary(myChart);
+            console.log('✓ Sentiment Showdown: Setting up dual-chart hover');
+            setupDualChartHover('sentiment-showdown-chart', myChart, renderPrimary, renderAlternate);
+
             window.addEventListener('resize', () => myChart.resize());
         })
         .catch(error => {
             console.warn('Sentiment Showdown Error:', error);
             const myChart = echarts.init(chartDom);
             const titleEl = document.getElementById('sentiment-showdown-title');
-            if (titleEl) titleEl.textContent = `Sentiment Showdown - BBC vs Daily Mail`;
 
             const pos = MOCK_DATA.sentiment.positive;
             const neg = MOCK_DATA.sentiment.negative;
 
-            const option = {
-                tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-                grid: { left: '3%', right: '3%', bottom: '3%', containLabel: true },
-                xAxis: { type: 'value', show: false },
-                yAxis: { type: 'category', data: [''], show: false },
-                series: [
-                    {
-                        name: pos.source,
-                        type: 'bar',
-                        stack: 'Showdown',
-                        data: [pos.mood_score],
-                        itemStyle: { color: '#22c55e' },
-                        label: { show: true, position: 'insideLeft', formatter: `${pos.source}\n+${pos.mood_score}`, fontWeight: 'bold', fontSize: 14, color: '#fff' }
-                    },
-                    {
-                        name: neg.source,
-                        type: 'bar',
-                        stack: 'Showdown',
-                        data: [-neg.mood_score],
-                        itemStyle: { color: '#ef4444' },
-                        label: { show: true, position: 'insideRight', formatter: `${neg.source}\n${neg.mood_score}`, fontWeight: 'bold', fontSize: 14, color: '#fff' }
-                    }
-                ]
+            const renderPrimary = (chart) => {
+                if (titleEl) titleEl.textContent = `Sentiment Showdown - ${pos.source} vs ${neg.source} (Hover for details)`;
+
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                    grid: { left: '3%', right: '3%', bottom: '3%', containLabel: true },
+                    xAxis: { type: 'value', show: false },
+                    yAxis: { type: 'category', data: [''], show: false },
+                    series: [
+                        {
+                            name: pos.source,
+                            type: 'bar',
+                            stack: 'Showdown',
+                            data: [pos.mood_score],
+                            itemStyle: { color: '#22c55e' },
+                            label: { show: true, position: 'insideLeft', formatter: `${pos.source}\n+${pos.mood_score}`, fontWeight: 'bold', fontSize: 14, color: '#fff' }
+                        },
+                        {
+                            name: neg.source,
+                            type: 'bar',
+                            stack: 'Showdown',
+                            data: [-neg.mood_score],
+                            itemStyle: { color: '#ef4444' },
+                            label: { show: true, position: 'insideRight', formatter: `${neg.source}\n${neg.mood_score}`, fontWeight: 'bold', fontSize: 14, color: '#fff' }
+                        }
+                    ]
+                };
+                chart.setOption(option);
             };
-            myChart.setOption(option);
+
+            const renderAlternate = (chart) => {
+                if (titleEl) titleEl.textContent = `Sentiment Showdown - Side-by-Side (Hover for diverging view)`;
+
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                    grid: { left: '3%', right: '3%', bottom: '15%', top: '10%', containLabel: true },
+                    xAxis: {
+                        type: 'category',
+                        data: [pos.source, neg.source],
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
+                    },
+                    yAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [
+                        {
+                            name: pos.source,
+                            type: 'bar',
+                            data: [pos.mood_score, 0],
+                            itemStyle: { color: '#22c55e', borderRadius: [4, 4, 0, 0] },
+                            label: { show: true, position: 'top' }
+                        },
+                        {
+                            name: neg.source,
+                            type: 'bar',
+                            data: [0, neg.mood_score],
+                            itemStyle: { color: '#ef4444', borderRadius: [4, 4, 0, 0] },
+                            label: { show: true, position: 'top' }
+                        }
+                    ]
+                };
+                chart.setOption(option);
+            };
+
+            console.log('✓ Sentiment Showdown (fallback): Rendering primary view');
+            renderPrimary(myChart);
+            console.log('✓ Sentiment Showdown (fallback): Setting up dual-chart hover');
+            setupDualChartHover('sentiment-showdown-chart', myChart, renderPrimary, renderAlternate);
         });
 }
 
@@ -944,45 +1075,89 @@ function initWordcloud() {
             }
 
             const chart = echarts.init(container);
-            const option = {
-                tooltip: {},
-                series: [{
-                    type: 'wordCloud',
-                    shape: 'square', // Best packing efficiency
-                    left: 'center',
-                    top: 'center',
-                    width: '100%',
-                    height: '100%',
-                    right: null,
-                    bottom: null,
-                    gridSize: 10, // Increased spacing for larger text
-                    sizeRange: [24, 56], // Significantly larger: 24px min, 56px max
-                    rotationRange: [0, 0], // No rotation - text is straight and readable
-                    emphasis: {
-                        focus: 'self',
-                        textStyle: {
-                            textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                            textShadowBlur: 10
-                        }
-                    },
-                    textStyle: {
-                        color: () => {
-                            // Better color distribution - more vibrant
-                            const hue = Math.random() * 360;
-                            return `hsl(${hue}, 70%, 50%)`;
+            const titleEl = document.getElementById('wordcloud-title') || document.createElement('div');
+
+            // Primary: Wordcloud
+            const renderPrimary = (chartInstance) => {
+                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Visual Cloud (Hover for ranked list)';
+
+                const option = {
+                    tooltip: {},
+                    series: [{
+                        type: 'wordCloud',
+                        shape: 'square', // Best packing efficiency
+                        left: 'center',
+                        top: 'center',
+                        width: '100%',
+                        height: '100%',
+                        right: null,
+                        bottom: null,
+                        gridSize: 10, // Increased spacing for larger text
+                        sizeRange: [24, 56], // Significantly larger: 24px min, 56px max
+                        rotationRange: [0, 0], // No rotation - text is straight and readable
+                        emphasis: {
+                            focus: 'self',
+                            textStyle: {
+                                textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                                textShadowBlur: 10
+                            }
                         },
-                        fontFamily: 'Inter, sans-serif',
-                        fontWeight: 'bold'
-                    },
-                    data: wordData
-                }]
+                        textStyle: {
+                            color: () => {
+                                // Better color distribution - more vibrant
+                                const hue = Math.random() * 360;
+                                return `hsl(${hue}, 70%, 50%)`;
+                            },
+                            fontFamily: 'Inter, sans-serif',
+                            fontWeight: 'bold'
+                        },
+                        data: wordData
+                    }]
+                };
+                chartInstance.setOption(option);
             };
-            chart.setOption(option);
+
+            // Alternate: Bar chart ranking words
+            const renderAlternate = (chartInstance) => {
+                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Ranked by Frequency (Hover for cloud view)';
+
+                const sortedWords = [...wordData].sort((a, b) => b.value - a.value).slice(0, 15);
+
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                    grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
+                    xAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: {
+                        type: 'category',
+                        data: sortedWords.map(w => w.name),
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
+                    },
+                    series: [{
+                        name: 'Frequency',
+                        type: 'bar',
+                        data: sortedWords.map((w, i) => ({
+                            value: w.value,
+                            itemStyle: {
+                                color: `hsl(${(i * 360 / sortedWords.length)}, 70%, 50%)`
+                            }
+                        })),
+                        label: { show: true, position: 'right', formatter: (v) => v.value }
+                    }]
+                };
+                chartInstance.setOption(option);
+            };
+
+            console.log('✓ Wordcloud: Rendering primary view with', wordData.length, 'keywords');
+            renderPrimary(chart);
+            console.log('✓ Wordcloud: Setting up dual-chart hover');
+            setupDualChartHover('wordcloud-chart', chart, renderPrimary, renderAlternate);
+
             window.addEventListener('resize', () => chart.resize());
         })
         .catch(error => {
             console.warn('Wordcloud Error:', error);
             const chart = echarts.init(container);
+            const titleEl = document.getElementById('wordcloud-title') || document.createElement('div');
             const mockWords = [
                 { name: 'Technology', value: 450 },
                 { name: 'News', value: 380 },
@@ -993,40 +1168,78 @@ function initWordcloud() {
                 { name: 'Entertainment', value: 180 },
                 { name: 'Sports', value: 160 }
             ];
-            
-            const option = {
-                tooltip: {},
-                series: [{
-                    type: 'wordCloud',
-                    shape: 'square',
-                    left: 'center',
-                    top: 'center',
-                    width: '100%',
-                    height: '100%',
-                    right: null,
-                    bottom: null,
-                    gridSize: 10,
-                    sizeRange: [24, 56],
-                    rotationRange: [0, 0], // Straight text
-                    emphasis: {
-                        focus: 'self',
-                        textStyle: {
-                            textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                            textShadowBlur: 10
-                        }
-                    },
-                    textStyle: {
-                        color: () => {
-                            const hue = Math.random() * 360;
-                            return `hsl(${hue}, 70%, 50%)`;
+
+            // Primary: Wordcloud
+            const renderPrimary = (chartInstance) => {
+                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Visual Cloud (Hover for ranked list)';
+
+                const option = {
+                    tooltip: {},
+                    series: [{
+                        type: 'wordCloud',
+                        shape: 'square',
+                        left: 'center',
+                        top: 'center',
+                        width: '100%',
+                        height: '100%',
+                        right: null,
+                        bottom: null,
+                        gridSize: 10,
+                        sizeRange: [24, 56],
+                        rotationRange: [0, 0], // Straight text
+                        emphasis: {
+                            focus: 'self',
+                            textStyle: {
+                                textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                                textShadowBlur: 10
+                            }
                         },
-                        fontFamily: 'Inter, sans-serif',
-                        fontWeight: 'bold'
-                    },
-                    data: mockWords
-                }]
+                        textStyle: {
+                            color: () => {
+                                const hue = Math.random() * 360;
+                                return `hsl(${hue}, 70%, 50%)`;
+                            },
+                            fontFamily: 'Inter, sans-serif',
+                            fontWeight: 'bold'
+                        },
+                        data: mockWords
+                    }]
+                };
+                chartInstance.setOption(option);
             };
-            chart.setOption(option);
+
+            // Alternate: Bar chart
+            const renderAlternate = (chartInstance) => {
+                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Ranked by Frequency (Hover for cloud view)';
+
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                    grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
+                    xAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: {
+                        type: 'category',
+                        data: mockWords.map(w => w.name),
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
+                    },
+                    series: [{
+                        name: 'Frequency',
+                        type: 'bar',
+                        data: mockWords.map((w, i) => ({
+                            value: w.value,
+                            itemStyle: {
+                                color: `hsl(${(i * 360 / mockWords.length)}, 70%, 50%)`
+                            }
+                        })),
+                        label: { show: true, position: 'right', formatter: (v) => v.value }
+                    }]
+                };
+                chartInstance.setOption(option);
+            };
+
+            console.log('✓ Wordcloud (fallback): Rendering primary view with', mockWords.length, 'keywords');
+            renderPrimary(chart);
+            console.log('✓ Wordcloud (fallback): Setting up dual-chart hover');
+            setupDualChartHover('wordcloud-chart', chart, renderPrimary, renderAlternate);
         });
 }
 
