@@ -251,7 +251,7 @@ function initEmotionalRollercoaster() {
         });
 }
 
-// --- CHART 2: WEEKLY WINNER (Top Category Display) ---
+// --- CHART 2: WEEKLY WINNER (Simple Card Display) ---
 function initWeeklyWinner() {
     const container = document.getElementById('weekly-winner-chart');
     if (!container) return;
@@ -259,112 +259,54 @@ function initWeeklyWinner() {
     fetch('assets/data/category_dominance.json')
         .then(r => r.json())
         .then(data => {
-            const myChart = echarts.init(container);
             const categories = data.categories || [];
 
             // Find top category (highest value)
             const topCategory = categories.length > 0
                 ? categories.reduce((a, b) => a.value > b.value ? a : b)
-                : { name: 'Unknown', value: 0 };
+                : { name: 'Unknown', value: 0, color: '#3b82f6' };
 
-            const labels = categories.map(c => c.name);
-            const values = categories.map(c => c.value);
-            const colors = categories.map(c => c.color || '#3b82f6');
+            // Calculate percentage change (comparing to second place)
+            const sorted = [...categories].sort((a, b) => b.value - a.value);
+            const change = sorted.length > 1
+                ? Math.round(((sorted[0].value - sorted[1].value) / sorted[1].value) * 100)
+                : 0;
 
-            // Primary: Large pie highlighting top category
-            const renderPrimary = (chart) => {
-                const option = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: (params) => `${params.name}: ${params.value} articles`
-                    },
-                    series: [{
-                        name: 'Articles',
-                        type: 'pie',
-                        radius: ['30%', '60%'],
-                        data: categories.map(c => ({
-                            value: c.value,
-                            name: c.name,
-                            itemStyle: {
-                                color: c.name === topCategory.name ? c.color : '#4b5563',
-                                opacity: c.name === topCategory.name ? 1 : 0.4
-                            },
-                            emphasis: {
-                                itemStyle: { opacity: 1 }
-                            }
-                        })),
-                        label: {
-                            show: true,
-                            position: 'inside',
-                            formatter: (params) => {
-                                if (params.name === topCategory.name) {
-                                    return `${params.name}\n${params.value}`;
-                                }
-                                return '';
-                            },
-                            fontSize: 13,
-                            fontWeight: 'bold',
-                            color: '#ffffff',
-                            textShadowColor: 'rgba(0, 0, 0, 0.8)',
-                            textShadowBlur: 3
-                        }
-                    }]
-                };
-                chart.setOption(option);
-            };
-
-            // Alternate: Bar chart showing all categories
-            const renderAlternate = (chart) => {
-                const option = {
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: { type: 'shadow' },
-                        formatter: (params) => {
-                            if (!params.length) return '';
-                            const p = params[0];
-                            const idx = labels.indexOf(p.name);
-                            const pct = categories[idx].percentage || 0;
-                            return `<strong>${p.name}</strong><br/>${p.value} articles (${pct}%)`;
-                        }
-                    },
-                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
-                    xAxis: {
-                        type: 'category',
-                        data: labels,
-                        axisLabel: { ...ECHART_TEXT_STYLE }
-                    },
-                    yAxis: {
-                        type: 'value',
-                        axisLabel: { ...ECHART_TEXT_STYLE }
-                    },
-                    series: [{
-                        name: 'Articles',
-                        type: 'bar',
-                        data: values.map((v, i) => ({
-                            value: v,
-                            itemStyle: { color: colors[i], borderRadius: [4, 4, 0, 0] }
-                        })),
-                        label: {
-                            show: true,
-                            position: 'top',
-                            formatter: '{c}',
-                            color: '#94a3b8',
-                            fontSize: 11
-                        }
-                    }]
-                };
-                chart.setOption(option);
-            };
-
-            console.log('✓ Weekly Winner: Rendering primary view -', topCategory.name, topCategory.value);
-            renderPrimary(myChart);
-            console.log('✓ Weekly Winner: Setting up dual-chart hover');
-            setupDualChartHover('weekly-winner-chart', myChart, renderPrimary, renderAlternate);
-
-            window.addEventListener('resize', () => myChart.resize());
+            container.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 30px; height: 100%; justify-content: center;">
+                    <div style="
+                        width: 80px;
+                        height: 80px;
+                        background-color: ${topCategory.color};
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    ">
+                        <span style="font-size: 40px;">📌</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px;">${topCategory.name}</div>
+                        <div style="font-size: 1.2rem; color: #cbd5e1;"><strong>${topCategory.value}</strong> articles</div>
+                    </div>
+                    ${change > 0 ? `
+                        <div style="
+                            background-color: rgba(16, 185, 129, 0.2);
+                            color: #10b981;
+                            padding: 6px 12px;
+                            border-radius: 6px;
+                            font-size: 0.9rem;
+                            font-weight: 600;
+                        ">
+                            📈 +${change}% vs 2nd place
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            console.log('✓ Weekly Winner: Rendering card -', topCategory.name, topCategory.value);
         })
         .catch(() => {
-            const myChart = echarts.init(container);
             const labels = MOCK_DATA.categories.labels;
             const values = MOCK_DATA.categories.data;
             const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899'];
@@ -372,92 +314,47 @@ function initWeeklyWinner() {
             const topValue = Math.max(...values);
             const topIndex = values.indexOf(topValue);
             const topName = labels[topIndex];
+            const topColor = colors[topIndex];
 
-            // Primary: Large pie highlighting top category
-            const renderPrimary = (chart) => {
-                const mockCategories = labels.map((name, i) => ({ name, value: values[i] }));
-                const option = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: (params) => `${params.name}: ${params.value} articles`
-                    },
-                    series: [{
-                        name: 'Articles',
-                        type: 'pie',
-                        radius: ['30%', '60%'],
-                        data: mockCategories.map(c => ({
-                            value: c.value,
-                            name: c.name,
-                            itemStyle: {
-                                color: c.name === topName ? colors[labels.indexOf(c.name)] : '#4b5563',
-                                opacity: c.name === topName ? 1 : 0.4
-                            },
-                            emphasis: {
-                                itemStyle: { opacity: 1 }
-                            }
-                        })),
-                        label: {
-                            show: true,
-                            position: 'inside',
-                            formatter: (params) => {
-                                if (params.name === topName) {
-                                    return `${params.name}\n${params.value}`;
-                                }
-                                return '';
-                            },
-                            fontSize: 13,
-                            fontWeight: 'bold',
-                            color: '#ffffff',
-                            textShadowColor: 'rgba(0, 0, 0, 0.8)',
-                            textShadowBlur: 3
-                        }
-                    }]
-                };
-                chart.setOption(option);
-            };
+            // Calculate change
+            const sorted = values.map((v, i) => ({ value: v, name: labels[i] })).sort((a, b) => b.value - a.value);
+            const change = sorted.length > 1
+                ? Math.round(((sorted[0].value - sorted[1].value) / sorted[1].value) * 100)
+                : 0;
 
-            // Alternate: Bar chart showing all categories
-            const renderAlternate = (chart) => {
-                const option = {
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: { type: 'shadow' }
-                    },
-                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
-                    xAxis: {
-                        type: 'category',
-                        data: labels,
-                        axisLabel: { ...ECHART_TEXT_STYLE }
-                    },
-                    yAxis: {
-                        type: 'value',
-                        axisLabel: { ...ECHART_TEXT_STYLE }
-                    },
-                    series: [{
-                        name: 'Articles',
-                        type: 'bar',
-                        data: values.map((v, i) => ({
-                            value: v,
-                            itemStyle: { color: colors[i % colors.length], borderRadius: [4, 4, 0, 0] }
-                        })),
-                        label: {
-                            show: true,
-                            position: 'top',
-                            formatter: '{c}',
-                            color: '#94a3b8',
-                            fontSize: 11
-                        }
-                    }]
-                };
-                chart.setOption(option);
-            };
-
-            console.log('✓ Weekly Winner (fallback): Rendering primary view');
-            renderPrimary(myChart);
-            console.log('✓ Weekly Winner (fallback): Setting up dual-chart hover');
-            setupDualChartHover('weekly-winner-chart', myChart, renderPrimary, renderAlternate);
-
-            window.addEventListener('resize', () => myChart.resize());
+            container.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 30px; height: 100%; justify-content: center;">
+                    <div style="
+                        width: 80px;
+                        height: 80px;
+                        background-color: ${topColor};
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    ">
+                        <span style="font-size: 40px;">📌</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #f8fafc; margin-bottom: 8px;">${topName}</div>
+                        <div style="font-size: 1.2rem; color: #cbd5e1;"><strong>${topValue}</strong> articles</div>
+                    </div>
+                    ${change > 0 ? `
+                        <div style="
+                            background-color: rgba(16, 185, 129, 0.2);
+                            color: #10b981;
+                            padding: 6px 12px;
+                            border-radius: 6px;
+                            font-size: 0.9rem;
+                            font-weight: 600;
+                        ">
+                            📈 +${change}% vs 2nd place
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            console.log('✓ Weekly Winner (fallback): Rendering card');
         });
 }
 
