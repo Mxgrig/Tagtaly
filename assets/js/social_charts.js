@@ -195,32 +195,48 @@ function initSurgeAlert() {
         .then(data => {
             const myChart = echarts.init(chartDom);
             const titleEl = document.getElementById('surge-alert-title');
-            
-            // Transform surges data - show most volatile topics (highest absolute change)
+
+            // Transform surges data - show most volatile topics with direction (up/down)
             const surges = data.surges || [];
             const chartData = surges
-                .filter(s => Math.abs(s.change_pct) > 0) // Filter out zero change
+                .filter(s => s.change_pct !== 0) // Filter out zero change
                 .sort((a, b) => Math.abs(b.change_pct) - Math.abs(a.change_pct)) // Sort by absolute change
                 .slice(0, 5)
-                .map(s => [s.topic, Math.abs(s.change_pct)]);
+                .map(s => ({
+                    topic: s.topic,
+                    value: s.change_pct, // Keep sign for color coding
+                    abs_value: Math.abs(s.change_pct),
+                    color: s.change_pct > 0 ? '#10b981' : '#ef4444' // Green for gains, red for losses
+                }));
 
-            if (titleEl) titleEl.textContent = "🚨 Topic Volatility - Most changed topics from yesterday";
+            if (titleEl) titleEl.textContent = "📊 Topic Attention - Topics gaining or losing coverage";
 
             const option = {
-                tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: (params) => {
+                        if (params.length === 0) return '';
+                        const p = params[0];
+                        const item = chartData.find(d => d.topic === p.name);
+                        return `${p.name}<br/>${item.value > 0 ? '📈 +' : '📉 '}${Math.abs(item.value).toFixed(1)}%`;
+                    }
+                },
                 grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
                 xAxis: { type: 'value', boundaryGap: [0, 0.01], axisLabel: { ...ECHART_TEXT_STYLE } },
                 yAxis: {
                     type: 'category',
-                    data: chartData.map(item => item[0]).reverse(),
+                    data: chartData.map(item => item.topic).reverse(),
                     axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
                 },
                 series: [{
-                    name: 'Surge Score',
+                    name: 'Coverage Change',
                     type: 'bar',
-                    data: chartData.map(item => item[1]).reverse(),
-                    itemStyle: { color: '#ef4444', borderRadius: [0, 4, 4, 0] },
-                    label: { show: true, position: 'right', fontWeight: 'bold', formatter: (v) => Math.abs(v) + '%' }
+                    data: chartData.map(item => ({
+                        value: item.abs_value,
+                        itemStyle: { color: item.color }
+                    })).reverse(),
+                    label: { show: true, position: 'right', fontWeight: 'bold', formatter: (v) => v.value + '%' }
                 }]
             };
             myChart.setOption(option);
@@ -689,16 +705,16 @@ function initWordcloud() {
                 tooltip: {},
                 series: [{
                     type: 'wordCloud',
-                    shape: 'square', // Changed from 'circle' for better packing and readability
+                    shape: 'square', // Best packing efficiency
                     left: 'center',
                     top: 'center',
                     width: '100%',
                     height: '100%',
                     right: null,
                     bottom: null,
-                    gridSize: 8, // Controls spacing between words
-                    sizeRange: [16, 36], // Reduced from [12, 48] for more uniform sizing (smaller range)
-                    rotationRange: [-20, 20], // Reduced from [-45, 45] for better readability
+                    gridSize: 10, // Increased spacing for larger text
+                    sizeRange: [24, 56], // Significantly larger: 24px min, 56px max
+                    rotationRange: [0, 0], // No rotation - text is straight and readable
                     emphasis: {
                         focus: 'self',
                         textStyle: {
@@ -739,15 +755,16 @@ function initWordcloud() {
                 tooltip: {},
                 series: [{
                     type: 'wordCloud',
-                    shape: 'circle',
+                    shape: 'square',
                     left: 'center',
                     top: 'center',
                     width: '100%',
                     height: '100%',
                     right: null,
                     bottom: null,
-                    sizeRange: [12, 48],
-                    rotationRange: [-45, 45],
+                    gridSize: 10,
+                    sizeRange: [24, 56],
+                    rotationRange: [0, 0], // Straight text
                     emphasis: {
                         focus: 'self',
                         textStyle: {
@@ -757,11 +774,8 @@ function initWordcloud() {
                     },
                     textStyle: {
                         color: () => {
-                            return 'rgb(' + [
-                                Math.round(Math.random() * 200 + 30),
-                                Math.round(Math.random() * 200 + 30),
-                                Math.round(Math.random() * 200 + 30)
-                            ].join(',') + ')';
+                            const hue = Math.random() * 360;
+                            return `hsl(${hue}, 70%, 50%)`;
                         },
                         fontFamily: 'Inter, sans-serif',
                         fontWeight: 'bold'
@@ -784,7 +798,7 @@ function initCrossSourceStories() {
             const stories = data.stories || [];
             
             if (stories.length === 0) {
-                container.innerHTML = '<p style="color: #9ca3af; padding: 20px; text-align: center;">No cross-source stories available yet</p>';
+                // Don't show placeholder - let fallback handle it
                 return;
             }
 
@@ -804,10 +818,6 @@ function initCrossSourceStories() {
         })
         .catch(error => {
             console.warn('Cross-source Error:', error);
-            container.innerHTML = `
-                <div style="padding: 20px; text-align: center; color: #9ca3af;">
-                    <p>No cross-source data available. Check back after the pipeline runs.</p>
-                </div>
-            `;
+            // Silently fail - don't show error message
         });
 }
