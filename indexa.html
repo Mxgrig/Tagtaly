@@ -112,7 +112,7 @@
                 </div>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html" class="active">Dashboard</a></li>
+                <li><a href="indexa.html" class="active">Dashboard</a></li>
                 <li><a href="archive.html">Archive</a></li>
                 <li><a href="about.html">About</a></li>
             </ul>
@@ -120,7 +120,7 @@
     </header>
 
     <main>
-        <!-- Banner Image from Pexels -->
+        <!-- Banner Image from NYTimes API -->
         <section class="hero hero--split">
             <div class="hero-content">
                 <span class="hero-eyebrow">Daily intelligence briefing</span>
@@ -275,7 +275,7 @@
             </div>
             <div class="footer-section">
                 <h4>Navigate</h4>
-                <a href="index.html">Dashboard</a>
+                <a href="indexa.html">Dashboard</a>
                 <a href="archive.html">Archive</a>
                 <a href="about.html">About</a>
             </div>
@@ -442,7 +442,7 @@
         }
 
         function loadBannerImage() {
-            // Banner image from Pexels
+            // Fallback banner image from Pexels (no API key needed for demo)
             const bannerUrl = 'https://images.pexels.com/photos/3811517/pexels-photo-3811517.jpeg?auto=compress&cs=tinysrgb&w=1200';
             const img = document.getElementById('banner-image');
             img.src = bannerUrl;
