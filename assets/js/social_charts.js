@@ -21,27 +21,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Utility function to add dual-chart hover switching
-function setupDualChartHover(containerId, primaryChartInit, alternateChartInit) {
+function setupDualChartHover(containerId, chartInstance, primaryChartInit, alternateChartInit) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if (!container) {
+        console.warn(`Container ${containerId} not found for dual-chart hover`);
+        return;
+    }
 
     const cardHeader = container.closest('.chart-card');
-    if (!cardHeader) return;
+    if (!cardHeader) {
+        console.warn(`Chart card not found for ${containerId}`);
+        return;
+    }
 
-    let currentChart = echarts.getInstanceByDom(container);
     let isPrimary = true;
 
     cardHeader.addEventListener('mouseenter', () => {
-        if (isPrimary && currentChart) {
+        if (isPrimary && chartInstance) {
             isPrimary = false;
-            alternateChartInit(container, currentChart);
+            console.log(`Switching to alternate: ${containerId}`);
+            alternateChartInit(chartInstance);
         }
     });
 
     cardHeader.addEventListener('mouseleave', () => {
-        if (!isPrimary && currentChart) {
+        if (!isPrimary && chartInstance) {
             isPrimary = true;
-            primaryChartInit(container, currentChart);
+            console.log(`Switching back to primary: ${containerId}`);
+            primaryChartInit(chartInstance);
         }
     });
 }
@@ -182,7 +189,7 @@ function initEmotionalRollercoaster() {
             renderPrimary(myChart);
 
             // Setup dual-chart hover switching
-            setupDualChartHover('emotional-rollercoaster-chart', renderPrimary, renderAlternate);
+            setupDualChartHover('emotional-rollercoaster-chart', myChart, renderPrimary, renderAlternate);
 
             window.addEventListener('resize', () => myChart.resize());
         })
@@ -238,7 +245,7 @@ function initEmotionalRollercoaster() {
             };
 
             renderPrimary(myChart);
-            setupDualChartHover('emotional-rollercoaster-chart', renderPrimary, renderAlternate);
+            setupDualChartHover('emotional-rollercoaster-chart', myChart, renderPrimary, renderAlternate);
         });
 }
 
@@ -393,7 +400,7 @@ function initSurgeAlert() {
             };
 
             renderPrimary(myChart);
-            setupDualChartHover('surge-alert-chart', renderPrimary, renderAlternate);
+            setupDualChartHover('surge-alert-chart', myChart, renderPrimary, renderAlternate);
 
             window.addEventListener('resize', () => myChart.resize());
         })
@@ -496,7 +503,7 @@ function initSurgeAlert() {
             };
 
             renderPrimary(myChart);
-            setupDualChartHover('surge-alert-chart', renderPrimary, renderAlternate);
+            setupDualChartHover('surge-alert-chart', myChart, renderPrimary, renderAlternate);
 
             window.addEventListener('resize', () => myChart.resize());
         });
