@@ -1478,6 +1478,66 @@
                 }, 2000);
             });
         }
+
+        /* ============================================
+           CHART INITIALIZATION & RENDERING
+           ============================================ */
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+        });
+
+        async function initializeCharts() {
+            if (typeof echarts === 'undefined') {
+                console.warn('ECharts not loaded');
+                return;
+            }
+
+            try {
+                // Load chart data
+                const dataPath = 'assets/data/';
+                const response = await fetch(dataPath + 'chart_archive.json');
+                if (!response.ok) throw new Error('Failed to load chart data');
+                const chartData = await response.json();
+
+                // Initialize sentiment tracker chart
+                const sentimentContainer = document.getElementById('sentiment-tracker-chart')?.parentElement;
+                if (sentimentContainer && chartData.sentiment_tracker) {
+                    const chart = echarts.init(sentimentContainer);
+                    chart.setOption(buildChartOption(chartData.sentiment_tracker));
+                    window.addEventListener('resize', () => chart.resize());
+                }
+
+            } catch (error) {
+                console.log('Charts loading:', error.message);
+                // Charts optional - page works without them
+            }
+        }
+
+        function buildChartOption(data) {
+            if (!data) {
+                return {
+                    title: { text: 'Chart Data Loading...' },
+                    xAxis: { type: 'category' },
+                    yAxis: {},
+                    series: []
+                };
+            }
+
+            // Generic chart option builder
+            return {
+                title: { text: data.title || 'Chart' },
+                tooltip: { trigger: 'axis' },
+                xAxis: { type: 'category', data: data.categories || [] },
+                yAxis: { type: 'value' },
+                series: [{
+                    type: 'line',
+                    data: data.values || [],
+                    smooth: true,
+                    lineStyle: { color: '#3b82f6', width: 2 },
+                    areaStyle: { color: 'rgba(59, 130, 246, 0.1)' }
+                }]
+            };
+        }
     </script>
 </body>
 </html>
