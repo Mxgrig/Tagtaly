@@ -1,0 +1,22 @@
+{
+  "categories": [
+    {
+      "name": "Lifestyle",
+      "value": 69,
+      "percentage": 40,
+      "color": "#f97316"
+    },
+    {
+      "name": "Money",
+      "value": 61,
+      "percentage": 35,
+      "color": "#ef4444"
+    },
+    {
+      "name": "Entertainment",
+      "value": 42,
+      "percentage": 24,
+      "color": "#8b5cf6"
+    }
+  ]
+}
