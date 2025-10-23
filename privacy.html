@@ -7,7 +7,6 @@
     <title>Privacy Policy - Tagtaly</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.6; color: #333; }
         main { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
         h1 { font-size: 2.5rem; margin-bottom: 10px; }
         h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 15px; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
@@ -17,18 +16,26 @@
         ul { margin-left: 20px; margin-bottom: 15px; }
         li { margin-bottom: 8px; }
         .last-updated { color: #666; font-size: 0.9rem; font-style: italic; }
-        footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666; border-top: 1px solid #e5e7eb; }
-        header { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 20px; margin-bottom: 40px; }
-        nav { max-width: 900px; margin: 0 auto; }
         a { color: #3b82f6; text-decoration: none; }
         a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <h1 style="margin: 0; font-size: 1.5rem;"><a href="index.html">🏷️ Tagtaly</a></h1>
-        </nav>
+    <header class="app-header">
+        <div class="app-header-inner">
+            <div class="brand">
+                <img src="assets/taglogo.png" alt="Tagtaly logo" class="brand-logo">
+                <div>
+                    <div class="brand-name">Tagtaly</div>
+                    <div class="brand-tagline">News Intelligence</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="privacy.html" class="nav-link active">Privacy</a></li>
+            </ul>
+        </div>
     </header>
 
     <main>
