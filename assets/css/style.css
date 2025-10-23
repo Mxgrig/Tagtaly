@@ -606,8 +606,10 @@ img {
 }
 
 .chart-container {
+    width: 100%;
     padding: 2rem;
     min-height: 450px;
+    box-sizing: border-box;
 }
 
 .chart-container--compact {

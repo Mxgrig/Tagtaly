@@ -11,8 +11,16 @@ function ensureChartContainerSizes() {
     const containers = document.querySelectorAll('.chart-container');
     console.log('ensureChartContainerSizes: Found', containers.length, 'containers');
     containers.forEach(container => {
+        // Ensure height
         if (!container.style.height && !container.style.minHeight) {
             container.style.height = '400px';
+        }
+        // Ensure width - critical for ECharts rendering
+        const computedWidth = getComputedStyle(container).width;
+        console.log('Container width:', computedWidth, 'id:', container.id);
+        if (computedWidth === '0px' || !container.style.width) {
+            container.style.width = '100%';
+            console.log('Set width to 100% for', container.id);
         }
     });
 }
