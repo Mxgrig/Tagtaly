@@ -12,15 +12,34 @@ function ensureChartContainerSizes() {
     console.log('ensureChartContainerSizes: Found', containers.length, 'containers');
     containers.forEach(container => {
         // Ensure height
-        if (!container.style.height && !container.style.minHeight) {
-            container.style.height = '400px';
+        const computedHeight = parseFloat(getComputedStyle(container).height);
+        if (!container.style.height || container.style.height === 'auto') {
+            if (!isNaN(computedHeight) && computedHeight > 0) {
+                container.style.height = `${computedHeight}px`;
+            } else if (!container.style.minHeight) {
+                container.style.height = '400px';
+            } else {
+                container.style.height = container.style.minHeight;
+            }
         }
+
         // Ensure width - critical for ECharts rendering
         const computedWidth = getComputedStyle(container).width;
         console.log('Container width:', computedWidth, 'id:', container.id);
         if (computedWidth === '0px' || !container.style.width) {
             container.style.width = '100%';
             console.log('Set width to 100% for', container.id);
+        }
+
+        const firstChild = container.firstElementChild;
+        if (firstChild) {
+            const childRect = firstChild.getBoundingClientRect();
+            if (childRect.height <= 0) {
+                firstChild.style.minHeight = container.style.height || getComputedStyle(container).height || '400px';
+            }
+            if (childRect.width <= 0) {
+                firstChild.style.minWidth = '100%';
+            }
         }
     });
 }
