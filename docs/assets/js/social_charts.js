@@ -1696,3 +1696,46 @@ function initCrossSourceStories() {
             // Silently fail - don't show error message
         });
 }
+
+// ============================================
+// INITIALIZE ALL CHARTS ON PAGE LOAD
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🎯 Initializing Tagtaly Dashboard Charts...');
+
+    // Ensure chart containers have proper sizing
+    ensureChartContainerSizes();
+
+    // Initialize all charts in order
+    console.log('📊 Loading: Emotional Rollercoaster');
+    initEmotionalRollercoaster();
+
+    console.log('📊 Loading: Weekly Winner');
+    initWeeklyWinner();
+
+    console.log('📊 Loading: Surge Alert');
+    initSurgeAlert();
+
+    console.log('📊 Loading: Media Divide');
+    initMediaDivide();
+
+    console.log('📊 Loading: Sentiment Showdown');
+    initSentimentShowdown();
+
+    console.log('📊 Loading: Category Dominance');
+    initCategoryDominance();
+
+    console.log('📊 Loading: Source Productivity');
+    initSourceProductivity();
+
+    console.log('📊 Loading: Publishing Rhythm');
+    initPublishingRhythm();
+
+    console.log('📊 Loading: Wordcloud');
+    initWordcloud();
+
+    console.log('📊 Loading: Cross-Source Stories');
+    initCrossSourceStories();
+
+    console.log('✅ All charts initialized successfully!');
+});
