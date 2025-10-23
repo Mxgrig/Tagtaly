@@ -354,12 +354,15 @@
     <!-- Chart Initialization -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Initializing charts...');
+            console.log('Chart initialization starting...');
+            console.log('echarts available:', typeof echarts !== 'undefined');
+            console.log('Chart.js available:', typeof Chart !== 'undefined');
 
             // Ensure containers are properly sized
             ensureChartContainerSizes();
 
             // Initialize all charts
+            console.log('Initializing individual charts...');
             initEmotionalRollercoaster();
             initWeeklyWinner();
             initSurgeAlert();
@@ -370,6 +373,7 @@
             initPublishingRhythm();
             initWordcloud();
             initCrossSourceStories();
+            console.log('All chart init functions called');
         });
     </script>
 </body>

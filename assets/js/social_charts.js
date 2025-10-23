@@ -1,6 +1,15 @@
+// Check if required libraries are loaded
+if (typeof echarts === 'undefined') {
+    console.error('ERROR: echarts library not loaded');
+}
+if (typeof Chart === 'undefined') {
+    console.error('ERROR: Chart.js library not loaded');
+}
+
 // Ensure all container elements have proper sizing before chart init
 function ensureChartContainerSizes() {
     const containers = document.querySelectorAll('.chart-container');
+    console.log('ensureChartContainerSizes: Found', containers.length, 'containers');
     containers.forEach(container => {
         if (!container.style.height && !container.style.minHeight) {
             container.style.height = '400px';
