@@ -71,7 +71,7 @@ body {
     border-radius: 8px;
     display: block;
     object-fit: contain;
-    background: var(--gray-100);
+    background: transparent;
     padding: 6px;
     flex-shrink: 0;
 }
