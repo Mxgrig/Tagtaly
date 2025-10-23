@@ -16,254 +16,862 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
 
     <!-- Stylesheets -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WZ8F7A58yxTkbZVqhlV+3I8OIVwvY74vwQ13VaeXyq5iP6k6v1zXQvQNHZJ7Y8bD" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/shadcn.css?v=1760960007">
     <link rel="stylesheet" href="assets/css/style.css?v=1760960007">
 
     <!-- AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx" crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --color-primary: #0f172a;
+            --color-secondary: #1e293b;
+            --color-accent: #3b82f6;
+            --color-success: #10b981;
+            --color-danger: #ef4444;
+            --color-warning: #f59e0b;
+            --color-neutral-50: #f9fafb;
+            --color-neutral-100: #f3f4f6;
+            --color-neutral-200: #e5e7eb;
+            --color-neutral-300: #d1d5db;
+            --color-neutral-400: #9ca3af;
+            --color-neutral-500: #6b7280;
+            --color-neutral-600: #4b5563;
+            --color-neutral-700: #374151;
+            --color-neutral-800: #1f2937;
+            --color-neutral-900: #111827;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--color-neutral-50);
+            color: var(--color-neutral-900);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-block {
+            margin: 100px 0 60px 0;
+        }
+
+        /* ========================================
+           HERO WITH IMAGE BANNER
+           ======================================== */
+
+        .hero-banner {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .hero-banner-image {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 55%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 1;
+            z-index: 0;
+        }
+
+        .hero-banner-overlay {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 55%;
+            background: linear-gradient(90deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.6) 100%);
+            z-index: 1;
+        }
+
+        .hero-banner-content {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px 48px 48px 32px;
+            z-index: 2;
+            color: white;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a2e 100%);
+        }
+
+        .hero-banner-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-accent);
+            margin-bottom: 12px;
+        }
+
+        .hero-banner-title {
+            font-size: 44px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin: 0 0 20px 0;
+            letter-spacing: -1px;
+            color: #ffffff;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-banner-subtitle {
+            font-size: 16px;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 400px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* ========================================
+           ARTICLE LAYOUT - TWO COLUMN
+           ======================================== */
+
+        .article-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+            margin-bottom: 0;
+        }
+
+        .article-main {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-header {
+            margin-bottom: 32px;
+            border-bottom: 2px solid var(--color-neutral-200);
+            padding-bottom: 24px;
+        }
+
+        .article-category {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: var(--color-accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .article-headline {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin: 12px 0 16px 0;
+            color: var(--color-primary);
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 24px;
+            font-size: 13px;
+            color: var(--color-neutral-500);
+        }
+
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-body {
+            line-height: 1.8;
+            color: var(--color-neutral-700);
+        }
+
+        .article-body p {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+        }
+
+        .article-image {
+            margin: 40px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--color-neutral-200);
+        }
+
+        .article-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .article-image-credit {
+            font-size: 12px;
+            color: var(--color-neutral-500);
+            margin-top: 8px;
+        }
+
+        /* ========================================
+           SIDEBAR
+           ======================================== */
+
+        .article-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-neutral-700);
+            margin-bottom: 16px;
+            margin-top: 0;
+        }
+
+        .news-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .news-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--color-neutral-200);
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: block;
+            line-height: 1.4;
+        }
+
+        .news-item a:hover {
+            color: var(--color-accent);
+        }
+
+        .news-item-meta {
+            font-size: 0.8rem;
+            color: var(--color-neutral-500);
+            margin-top: 6px;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            border-radius: 12px;
+            padding: 24px;
+            color: white;
+            text-align: center;
+        }
+
+        .cta-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+        }
+
+        .cta-box p {
+            font-size: 13px;
+            margin: 0 0 16px 0;
+            opacity: 0.9;
+        }
+
+        .cta-link {
+            display: inline-block;
+            background: var(--color-accent);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-link:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+           CHARTS GRID
+           ======================================== */
+
+        .charts-section {
+            margin-bottom: 60px;
+        }
+
+        .charts-section-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--color-neutral-200);
+        }
+
+        .charts-section-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+            color: var(--color-primary);
+        }
+
+        .charts-section-description {
+            font-size: 15px;
+            color: var(--color-neutral-600);
+            margin: 0;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--color-neutral-200);
+        }
+
+        .chart-card-header {
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .chart-card-header-text {
+            flex: 1;
+        }
+
+        .chart-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: var(--color-primary);
+        }
+
+        .chart-card-description {
+            font-size: 13px;
+            color: var(--color-neutral-500);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .chart-share-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            min-width: fit-content;
+        }
+
+        .chart-share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: white;
+            border: 2px solid var(--color-neutral-200);
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            min-height: 400px;
+            background: var(--color-neutral-50);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        /* ========================================
+           STATS GRID
+           ======================================== */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--color-accent);
+        }
+
+        .stat-card-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--color-neutral-500);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card-value {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--color-accent);
+            margin: 12px 0 8px 0;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .stat-card-subtext {
+            font-size: 13px;
+            color: var(--color-neutral-600);
+            margin-top: 8px;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+
+        @media (max-width: 1024px) {
+            .article-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-banner-title {
+                font-size: 36px;
+            }
+
+            .article-headline {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-banner {
+                height: 350px;
+            }
+
+            .hero-banner-content {
+                padding: 32px;
+            }
+
+            .hero-banner-title {
+                font-size: 28px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .article-main {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-banner {
+                height: 250px;
+            }
+
+            .hero-banner-title {
+                font-size: 20px;
+            }
+
+            .article-layout {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="app-shell">
-        <!-- HEADER -->
-        <header class="app-header">
-            <div class="app-header-inner">
-                <div class="brand">
-                    <img class="brand-logo" src="assets/taglogo.png" alt="Tagtaly logo" width="32" height="32">
-                    <div>
-                        <div class="brand-name">Tagtaly</div>
-                        <div class="brand-tagline">News Intelligence</div>
-                    </div>
-                </div>
-                <nav class="nav-links">
-                    <a href="index.html" class="nav-link active">Dashboard</a>
-                    <a href="archive.html" class="nav-link">Archive</a>
-                    <a href="about.html" class="nav-link">About</a>
-                </nav>
-                <div class="header-actions">
-                    <a class="cta-btn" href="mailto:ops@tagtaly.com">Get Started</a>
+    <!-- HEADER & NAVIGATION -->
+    <header class="site-header">
+        <nav class="nav">
+            <div class="brand">
+                <img src="assets/taglogo.png" alt="Tagtaly logo" class="brand-logo">
+                <div class="brand-text">
+                    <span class="brand-title">Tagtaly</span>
+                    <span class="brand-tagline">Automated UK &amp; US news intelligence</span>
                 </div>
             </div>
-        </header>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Dashboard</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="privacy.html">Privacy</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <main class="app-main">
-            <!-- HERO WITH OVERLAY TEXT -->
-            <section class="hero-section">
-                <figure class="hero-image-wrapper">
-                    <img id="hero-banner" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1600&h=600&fit=crop" alt="Newsroom coverage" loading="lazy">
-                    <div class="hero-overlay">
-                        <div class="hero-content">
-                            <h1 class="hero-title">What's Moving in News Today</h1>
-                            <p class="hero-subtitle">Real-time viral trends, sentiment analysis, and editorial patterns across UK news outlets</p>
-                            <div class="hero-stats">
-                                <div class="stat">
-                                    <span class="stat-value" id="metric-headlines">—</span>
-                                    <span class="stat-label">Stories tracked</span>
-                                </div>
-                                <div class="stat">
-                                    <span class="stat-value" id="metric-source">—</span>
-                                    <span class="stat-label">Leading source</span>
-                                </div>
-                                <div class="stat">
-                                    <span class="stat-value" id="metric-updated">—</span>
-                                    <span class="stat-label">Updated</span>
-                                </div>
+    <main>
+        <!-- HERO BANNER -->
+        <section class="hero-banner">
+            <img class="hero-banner-image" id="nytimes-banner" src="https://source.unsplash.com/1600x500/?news" alt="News banner" loading="lazy">
+            <div class="hero-banner-overlay"></div>
+            <div class="hero-banner-content">
+                <span class="hero-banner-eyebrow">Today's News</span>
+                <h1 class="hero-banner-title" data-stat="top-topic-name">Tech</h1>
+                <p class="hero-banner-subtitle">Real-time news analysis, viral scoring, and editorial intelligence refreshed every hour.</p>
+            </div>
+        </section>
+
+        <!-- ARTICLE LAYOUT WITH SIDEBAR -->
+        <section class="article-layout">
+            <article class="article-main">
+                <header class="article-header">
+                    <span class="article-category" data-stat="top-topic-name">Tech</span>
+                    <h2 class="article-headline">How Today's News is Reshaping the Narrative</h2>
+                    <div class="article-meta" style="justify-content: space-between; align-items: center;">
+                        <div style="display: flex; gap: 24px; align-items: center;">
+                            <div class="article-meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Updated <span data-stat="updated-time">05:54</span> UTC</span>
+                            </div>
+                            <div class="article-meta-item">
+                                <i class="fas fa-newspaper"></i>
+                                <span><span data-stat="total-sources">13</span> sources analyzed</span>
+                            </div>
+                            <div class="article-meta-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span><span data-stat="total-articles">172</span> articles</span>
                             </div>
                         </div>
                     </div>
+                </header>
+
+                <div class="article-body">
+                    <p>
+                        Today's news cycle reflects a dynamic shift in media coverage patterns. Tagtaly's pipeline processed
+                        <strong data-stat="total-articles">172</strong> articles from <strong data-stat="total-sources">13</strong> major news sources
+                        across the UK and US, analyzing sentiment, virality, and topical relevance in real-time.
+                    </p>
+
+                    <p>
+                        The dominant narrative today centers on <strong data-stat="top-topic-name">Tech</strong>,
+                        commanding <strong data-stat="top-topic-share" data-format="percent1">55.8%</strong> of total coverage.
+                        This represents a significant surge from yesterday's coverage, signaling heightened editorial focus on this category.
+                    </p>
+
+                    <p>
+                        Sentiment analysis reveals <strong data-stat="positive-pct">28%</strong> positive,
+                        <strong data-stat="neutral-pct">53%</strong> neutral, and <strong data-stat="negative-pct">18%</strong> negative coverage—
+                        indicating a predominantly optimistic news environment today.
+                    </p>
+                </div>
+
+                <!-- ARTICLE IMAGE -->
+                <figure class="article-image">
+                    <img id="pexels-image" src="https://images.unsplash.com/photo-1585776245865-b0fee3ae99ce?w=800&h=600&fit=crop" alt="News analysis visualization" loading="lazy">
+                    <figcaption class="article-image-credit">
+                        Image: Editorial insight visualization from the Tagtaly pipeline. Updated daily at <span data-stat="updated-time">05:54</span> UTC.
+                    </figcaption>
                 </figure>
-            </section>
 
-            <!-- ARTICLE BODY -->
-            <article class="article-layout">
-                <div class="article-container">
-                    <!-- MAIN CONTENT -->
-                    <div class="article-main">
-                        <!-- SECTION: Key Metrics -->
-                        <section class="article-section">
-                            <h2>Today's Data Summary</h2>
-                            <p>News moves fast. Newsrooms scramble to keep pace. At Tagtaly, we see everything—the stories that surge, the outlets driving coverage, the sentiment shifts happening in real-time. This is what your audience cares about, visualized.</p>
+                <div class="article-body">
+                    <p>
+                        The Tagtaly dashboard below provides comprehensive breakdowns of today's news landscape,
+                        including topic surges, source productivity, outlet sentiment, and publishing rhythm patterns.
+                        Use these insights to brief newsroom standups, commission follow-up coverage, or validate editorial instincts.
+                    </p>
 
-                            <div class="charts-grid-2">
-                                <div class="chart-card">
-                                    <div class="card-header">
-                                        <h3>News Mood</h3>
-                                        <p class="card-desc">7-day sentiment trend</p>
-                                    </div>
-                                    <div class="chart-container">
-                                        <div id="emotional-rollercoaster-chart"></div>
-                                    </div>
-                                </div>
-                                <div class="chart-card">
-                                    <div class="card-header">
-                                        <h3>Momentum</h3>
-                                        <p class="card-desc">Topics accelerating today</p>
-                                    </div>
-                                    <div class="chart-container">
-                                        <div id="surge-alert-chart"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <!-- SECTION: Editorial Coverage -->
-                        <section class="article-section">
-                            <h2>What Newsrooms Are Covering</h2>
-                            <p>Where are editors placing their bets? These charts show topic concentration, outlet sentiment, and the story types dominating the agenda today.</p>
-
-                            <div class="charts-grid-2">
-                                <div class="chart-card">
-                                    <div class="card-header">
-                                        <h3>Weekly Winner</h3>
-                                        <p class="card-desc">Top topic</p>
-                                    </div>
-                                    <div class="chart-container chart-container--compact">
-                                        <div id="weekly-winner-chart"></div>
-                                    </div>
-                                </div>
-                                <div class="chart-card">
-                                    <div class="card-header">
-                                        <h3>Tone Split</h3>
-                                        <p class="card-desc">Positive vs negative</p>
-                                    </div>
-                                    <div class="chart-container chart-container--compact">
-                                        <div id="media-divide-chart"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="chart-card">
-                                <div class="card-header">
-                                    <h3>Story Types Today</h3>
-                                    <p class="card-desc">Category breakdown across all coverage</p>
-                                </div>
-                                <div class="chart-container">
-                                    <div id="category-dominance-chart"></div>
-                                </div>
-                            </div>
-
-                            <div class="chart-card">
-                                <div class="card-header">
-                                    <h3>Outlet Sentiment</h3>
-                                    <p class="card-desc">Tone by source</p>
-                                </div>
-                                <div class="chart-container">
-                                    <div id="sentiment-showdown-chart"></div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <!-- SECTION: Publishing Operations -->
-                        <section class="article-section">
-                            <h2>Publishing Operations</h2>
-                            <p>When are stories breaking? How much are outlets publishing? These metrics reveal editorial cadence and publication patterns across newsrooms.</p>
-
-                            <div class="charts-grid-2">
-                                <div class="chart-card">
-                                    <div class="card-header">
-                                        <h3>Outlet Productivity</h3>
-                                        <p class="card-desc">Stories published per source</p>
-                                    </div>
-                                    <div class="chart-container">
-                                        <div id="source-productivity-chart"></div>
-                                    </div>
-                                </div>
-                                <div class="chart-card">
-                                    <div class="card-header">
-                                        <h3>Publishing Rhythm</h3>
-                                        <p class="card-desc">Hour-by-hour publication pattern</p>
-                                    </div>
-                                    <div class="chart-container">
-                                        <div id="publishing-rhythm-chart"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <!-- SECTION: Keywords -->
-                        <section class="article-section">
-                            <h2>Keywords in Focus</h2>
-                            <p>Language reveals intent. This word cloud shows what terms dominate today's coverage—from policy keywords to breaking news angles.</p>
-
-                            <div class="chart-card">
-                                <div class="card-header">
-                                    <h3>Top Keywords</h3>
-                                    <p class="card-desc">Word frequency analysis</p>
-                                </div>
-                                <div class="chart-container chart-container--wordcloud">
-                                    <div id="wordcloud-chart"></div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
-                    <!-- SIDEBAR -->
-                    <aside class="article-sidebar">
-                        <!-- Featured Image -->
-                        <div class="sidebar-card">
-                            <img id="pexels-image" src="https://images.unsplash.com/photo-1585776245865-b0fee3ae99ce?w=400&h=300&fit=crop" alt="Editorial imagery" loading="lazy">
-                        </div>
-
-                        <!-- Today's Top Stories -->
-                        <div class="sidebar-card">
-                            <h3 class="sidebar-title">Today's Top Stories</h3>
-                            <div class="news-feed" id="articles-list"></div>
-                        </div>
-
-                        <!-- Shared Stories -->
-                        <div class="sidebar-card">
-                            <h3 class="sidebar-title">Shared Across Outlets</h3>
-                            <div id="cross-source-container"></div>
-                        </div>
-
-                        <!-- CTA Box -->
-                        <div class="cta-box">
-                            <h3>Need custom intelligence?</h3>
-                            <p>Get Tagtaly integrated into your newsroom in one week.</p>
-                            <a class="cta-link" href="mailto:ops@tagtaly.com">Talk to ops@tagtaly.com</a>
-                        </div>
-                    </aside>
+                    <p>
+                        Every metric refreshes automatically after each pipeline run, ensuring you have the latest intelligence
+                        without leaving this page. Charts are downloadable as PNG + caption bundles for immediate distribution.
+                    </p>
                 </div>
             </article>
-        </main>
 
-        <!-- FOOTER -->
-        <footer class="app-footer">
-            <div class="footer-content">
-                <div class="footer-grid">
-                    <div class="footer-col">
-                        <h4>Tagtaly</h4>
-                        <p>Enterprise news intelligence for global newsrooms. Understand what will trend before it hits prime time.</p>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Product</h4>
-                        <ul>
-                            <li><a href="index.html">Dashboard</a></li>
-                            <li><a href="archive.html">Archive</a></li>
-                            <li><a href="about.html">About</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="privacy.html">Privacy</a></li>
-                            <li><a href="mailto:legal@tagtaly.com">Legal</a></li>
-                            <li><a href="mailto:hello@tagtaly.com">Contact</a></li>
-                        </ul>
-                    </div>
+            <!-- SIDEBAR -->
+            <aside class="article-sidebar">
+                <!-- Today's Top Stories -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Today's Top Stories</h3>
+                    <div class="news-feed" id="articles-list"></div>
                 </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2025 Tagtaly Inc. All rights reserved.</p>
+
+                <!-- Shared Stories -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Shared Across Outlets</h3>
+                    <div id="cross-source-container"></div>
+                </div>
+
+                <!-- CTA Box -->
+                <div class="cta-box">
+                    <h3>Need custom intelligence?</h3>
+                    <p>Get Tagtaly integrated into your newsroom in one week.</p>
+                    <a class="cta-link" href="mailto:ops@tagtaly.com">Talk to Ops</a>
+                </div>
+            </aside>
+        </section>
+
+        <!-- STATISTICS CARDS -->
+        <section class="section-block">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-label">Total Articles</div>
+                    <div class="stat-card-value" data-stat="total-articles">172</div>
+                    <div class="stat-card-subtext">Across all analyzed sources today</div>
+                </div>
+                <div class="stat-card" style="border-left-color: var(--color-success);">
+                    <div class="stat-card-label">Positive Sentiment</div>
+                    <div class="stat-card-value" data-stat="positive-pct">28%</div>
+                    <div class="stat-card-subtext">Overall coverage tone</div>
+                </div>
+                <div class="stat-card" style="border-left-color: var(--color-warning);">
+                    <div class="stat-card-label">Top Topic</div>
+                    <div class="stat-card-value" data-stat="top-topic-name" style="font-size: 20px;">Tech</div>
+                    <div class="stat-card-subtext"><span data-stat="top-topic-share" data-format="percent1">55.8%</span> of coverage</div>
+                </div>
+                <div class="stat-card" style="border-left-color: #8b5cf6;">
+                    <div class="stat-card-label">Active Sources</div>
+                    <div class="stat-card-value" data-stat="total-sources">13</div>
+                    <div class="stat-card-subtext">UK + US newsrooms</div>
                 </div>
             </div>
-        </footer>
-    </div>
+        </section>
+
+        <!-- CHARTS SECTION -->
+        <section class="charts-section">
+            <div class="charts-section-header">
+                <h2 class="charts-section-title">What's Happening Today</h2>
+                <p class="charts-section-description">All charts update automatically several times per day.</p>
+            </div>
+
+            <!-- ROW 1: SENTIMENT & TOPIC SURGES -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">News Mood</h3>
+                            <p class="chart-card-description">Is today's news positive or negative? 7-day trend</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="emotional-rollercoaster-chart"></div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">What's Getting More Attention?</h3>
+                            <p class="chart-card-description">Topics gaining coverage compared to yesterday</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="surge-alert-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 2: CATEGORY DOMINANCE & SOURCE PRODUCTIVITY -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">Weekly Winner</h3>
+                            <p class="chart-card-description">Top topic today</p>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 300px; min-height: 300px;">
+                        <div id="weekly-winner-chart"></div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">Tone Split</h3>
+                            <p class="chart-card-description">Positive vs negative coverage</p>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 300px; min-height: 300px;">
+                        <div id="media-divide-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 3: More Charts -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">Types of Stories Today</h3>
+                            <p class="chart-card-description">Category breakdown</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="category-dominance-chart"></div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">Top News Outlets</h3>
+                            <p class="chart-card-description">Which outlets published the most</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="source-productivity-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 4: Sentiment & Rhythm -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">Which Outlets Are More Positive?</h3>
+                            <p class="chart-card-description">Comparing editorial tone</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="sentiment-showdown-chart"></div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">When News Breaks</h3>
+                            <p class="chart-card-description">Hour-by-hour publication pattern</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="publishing-rhythm-chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 5: WORDCLOUD -->
+            <div class="charts-grid">
+                <div class="chart-card" style="grid-column: 1 / -1;">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">What's Being Talked About?</h3>
+                            <p class="chart-card-description">The most frequently mentioned keywords</p>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 450px; min-height: 450px;">
+                        <div id="wordcloud-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 6: CROSS-SOURCE STORIES -->
+            <div class="charts-grid">
+                <div class="chart-card" style="grid-column: 1 / -1;">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">Stories Covered by Multiple Outlets</h3>
+                            <p class="chart-card-description">Headlines that multiple sources are reporting on</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div id="cross-source-container" style="max-height: 400px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer" style="margin-top: 60px; border-top: 1px solid #e5e7eb; padding: 40px 20px; background: #f9fafb;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-bottom: 30px;">
+                <div>
+                    <h4 style="margin: 0 0 10px 0; font-size: 14px; font-weight: 600; color: #1f2937;">Tagtaly</h4>
+                    <p style="font-size: 0.875rem; line-height: 1.6; color: #6b7280; margin: 0;">
+                        Enterprise news intelligence platform for global newsrooms.
+                    </p>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 10px 0; font-size: 14px; font-weight: 600; color: #1f2937;">Product</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li><a href="index.html" style="color: #6b7280; text-decoration: none; font-size: 0.875rem;">Dashboard</a></li>
+                        <li><a href="about.html" style="color: #6b7280; text-decoration: none; font-size: 0.875rem;">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="margin: 0 0 10px 0; font-size: 14px; font-weight: 600; color: #1f2937;">Legal</h4>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li><a href="privacy.html" style="color: #6b7280; text-decoration: none; font-size: 0.875rem;">Privacy</a></li>
+                        <li><a href="mailto:legal@tagtaly.com" style="color: #6b7280; text-decoration: none; font-size: 0.875rem;">Contact Legal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #e5e7eb; padding-top: 20px; text-align: center;">
+                <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">
+                    &copy; 2025 Tagtaly Inc. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
 
     <!-- SCRIPTS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2/dist/echarts-wordcloud.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3/dist/chart.min.js"></script>
 
     <!-- Data Loading & Articles -->
     <script>
@@ -281,10 +889,9 @@
                 // Update header metrics
                 document.getElementById('metric-headlines').textContent = articles.length;
                 const topSource = articles.length > 0 ? articles[0].source || 'Unknown' : '—';
-                document.getElementById('metric-source').textContent = topSource;
-                
+
                 const now = new Date();
-                document.getElementById('metric-updated').textContent = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                const updated = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
                 // Populate articles list
                 const articlesList = document.getElementById('articles-list');
@@ -321,24 +928,22 @@
 
     <!-- Image Loading with Fallbacks -->
     <script>
-        async function loadImages() {
-            // Banner fallback (keep simple for now)
-            const banner = document.getElementById('hero-banner');
+        async function loadFeaturedImages() {
+            const banner = document.getElementById('nytimes-banner');
             if (banner) {
-                banner.src = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1600&h=600&fit=crop';
+                banner.src = 'https://images.unsplash.com/photo-1557821552-17105176677c?w=1600&h=500&fit=crop';
             }
 
-            // Pexels fallback
             const pexelsImg = document.getElementById('pexels-image');
             if (pexelsImg) {
-                pexelsImg.src = 'https://images.unsplash.com/photo-1585776245865-b0fee3ae99ce?w=400&h=300&fit=crop';
+                pexelsImg.src = 'https://images.unsplash.com/photo-1585776245865-b0fee3ae99ce?w=800&h=600&fit=crop';
             }
         }
 
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadImages);
+            document.addEventListener('DOMContentLoaded', loadFeaturedImages);
         } else {
-            loadImages();
+            loadFeaturedImages();
         }
     </script>
 
@@ -346,7 +951,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Initializing charts...');
-            
+
             initEmotionalRollercoaster();
             initWeeklyWinner();
             initSurgeAlert();
