@@ -7,14 +7,27 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>Tagtaly — News That Matters. Data That Shows It.</title>
 
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+
+    <!-- Stylesheets -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WZ8F7A58yxTkbZVqhlV+3I8OIVwvY74vwQ13VaeXyq5iP6k6v1zXQvQNHZJ7Y8bD" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/shadcn.css?v=1760960007">
     <link rel="stylesheet" href="assets/css/style.css?v=1760960007">
+
+    <!-- AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="app-shell">
         <!-- HEADER -->
         <header class="app-header">
-            <div class="responsive-wrapper" style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 1.5rem;">
+            <div class="app-header-inner">
                 <div class="brand">
                     <img class="brand-logo" src="assets/taglogo.png" alt="Tagtaly logo" width="32" height="32">
                     <div>
@@ -22,22 +35,22 @@
                         <div class="brand-tagline">News Intelligence</div>
                     </div>
                 </div>
-                <nav class="nav-links" style="display: none;">
+                <nav class="nav-links">
                     <a href="index.html" class="nav-link active">Dashboard</a>
                     <a href="archive.html" class="nav-link">Archive</a>
                     <a href="about.html" class="nav-link">About</a>
                 </nav>
-                <div class="header-actions" style="display: flex; gap: 1rem;">
+                <div class="header-actions">
                     <a class="cta-btn" href="mailto:ops@tagtaly.com">Get Started</a>
                 </div>
             </div>
         </header>
 
         <main class="app-main">
-            <!-- HERO SECTION -->
+            <!-- HERO WITH OVERLAY TEXT -->
             <section class="hero-section">
                 <figure class="hero-image-wrapper">
-                    <img id="hero-banner" src="" alt="Newsroom coverage" loading="lazy">
+                    <img id="hero-banner" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1600&h=600&fit=crop" alt="Newsroom coverage" loading="lazy">
                     <div class="hero-overlay">
                         <div class="hero-content">
                             <h1 class="hero-title">What's Moving in News Today</h1>
@@ -61,149 +74,157 @@
                 </figure>
             </section>
 
-            <!-- MAGAZINE LAYOUT -->
-            <div class="article-container">
-                <!-- MAIN CONTENT (3 columns) -->
-                <div class="article-main">
-                    <!-- Key Metrics Section -->
-                    <section class="article-section">
-                        <h2 class="article-title article-title--large">Today's Data Summary</h2>
-                        <p>News moves fast. Newsrooms scramble to keep pace. At Tagtaly, we see everything—the stories that surge, the outlets driving coverage, the sentiment shifts happening in real-time.</p>
+            <!-- ARTICLE BODY -->
+            <article class="article-layout">
+                <div class="article-container">
+                    <!-- MAIN CONTENT -->
+                    <div class="article-main">
+                        <!-- SECTION: Key Metrics -->
+                        <section class="article-section">
+                            <h2>Today's Data Summary</h2>
+                            <p>News moves fast. Newsrooms scramble to keep pace. At Tagtaly, we see everything—the stories that surge, the outlets driving coverage, the sentiment shifts happening in real-time. This is what your audience cares about, visualized.</p>
 
-                        <div class="charts-grid-2">
+                            <div class="charts-grid-2">
+                                <div class="chart-card">
+                                    <div class="card-header">
+                                        <h3>News Mood</h3>
+                                        <p class="card-desc">7-day sentiment trend</p>
+                                    </div>
+                                    <div class="chart-container">
+                                        <div id="emotional-rollercoaster-chart"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-card">
+                                    <div class="card-header">
+                                        <h3>Momentum</h3>
+                                        <p class="card-desc">Topics accelerating today</p>
+                                    </div>
+                                    <div class="chart-container">
+                                        <div id="surge-alert-chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- SECTION: Editorial Coverage -->
+                        <section class="article-section">
+                            <h2>What Newsrooms Are Covering</h2>
+                            <p>Where are editors placing their bets? These charts show topic concentration, outlet sentiment, and the story types dominating the agenda today.</p>
+
+                            <div class="charts-grid-2">
+                                <div class="chart-card">
+                                    <div class="card-header">
+                                        <h3>Weekly Winner</h3>
+                                        <p class="card-desc">Top topic</p>
+                                    </div>
+                                    <div class="chart-container chart-container--compact">
+                                        <div id="weekly-winner-chart"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-card">
+                                    <div class="card-header">
+                                        <h3>Tone Split</h3>
+                                        <p class="card-desc">Positive vs negative</p>
+                                    </div>
+                                    <div class="chart-container chart-container--compact">
+                                        <div id="media-divide-chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="chart-card">
                                 <div class="card-header">
-                                    <h3>News Mood</h3>
-                                    <p class="card-desc">7-day sentiment trend</p>
+                                    <h3>Story Types Today</h3>
+                                    <p class="card-desc">Category breakdown across all coverage</p>
                                 </div>
                                 <div class="chart-container">
-                                    <div id="emotional-rollercoaster-chart"></div>
+                                    <div id="category-dominance-chart"></div>
                                 </div>
                             </div>
+
                             <div class="chart-card">
                                 <div class="card-header">
-                                    <h3>Momentum</h3>
-                                    <p class="card-desc">Topics accelerating today</p>
+                                    <h3>Outlet Sentiment</h3>
+                                    <p class="card-desc">Tone by source</p>
                                 </div>
                                 <div class="chart-container">
-                                    <div id="surge-alert-chart"></div>
+                                    <div id="sentiment-showdown-chart"></div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
 
-                    <!-- Editorial Coverage -->
-                    <section class="article-section">
-                        <h2 class="article-title article-title--large">What Newsrooms Are Covering</h2>
-                        <p>Where are editors placing their bets? These charts show topic concentration, outlet sentiment, and the story types dominating coverage.</p>
+                        <!-- SECTION: Publishing Operations -->
+                        <section class="article-section">
+                            <h2>Publishing Operations</h2>
+                            <p>When are stories breaking? How much are outlets publishing? These metrics reveal editorial cadence and publication patterns across newsrooms.</p>
 
-                        <div class="charts-grid-2">
+                            <div class="charts-grid-2">
+                                <div class="chart-card">
+                                    <div class="card-header">
+                                        <h3>Outlet Productivity</h3>
+                                        <p class="card-desc">Stories published per source</p>
+                                    </div>
+                                    <div class="chart-container">
+                                        <div id="source-productivity-chart"></div>
+                                    </div>
+                                </div>
+                                <div class="chart-card">
+                                    <div class="card-header">
+                                        <h3>Publishing Rhythm</h3>
+                                        <p class="card-desc">Hour-by-hour publication pattern</p>
+                                    </div>
+                                    <div class="chart-container">
+                                        <div id="publishing-rhythm-chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- SECTION: Keywords -->
+                        <section class="article-section">
+                            <h2>Keywords in Focus</h2>
+                            <p>Language reveals intent. This word cloud shows what terms dominate today's coverage—from policy keywords to breaking news angles.</p>
+
                             <div class="chart-card">
                                 <div class="card-header">
-                                    <h3>Weekly Winner</h3>
-                                    <p class="card-desc">Top topic</p>
+                                    <h3>Top Keywords</h3>
+                                    <p class="card-desc">Word frequency analysis</p>
                                 </div>
-                                <div class="chart-container chart-container--compact">
-                                    <div id="weekly-winner-chart"></div>
-                                </div>
-                            </div>
-                            <div class="chart-card">
-                                <div class="card-header">
-                                    <h3>Tone Split</h3>
-                                    <p class="card-desc">Positive vs negative</p>
-                                </div>
-                                <div class="chart-container chart-container--compact">
-                                    <div id="media-divide-chart"></div>
+                                <div class="chart-container chart-container--wordcloud">
+                                    <div id="wordcloud-chart"></div>
                                 </div>
                             </div>
+                        </section>
+                    </div>
+
+                    <!-- SIDEBAR -->
+                    <aside class="article-sidebar">
+                        <!-- Featured Image -->
+                        <div class="sidebar-card">
+                            <img id="pexels-image" src="https://images.unsplash.com/photo-1585776245865-b0fee3ae99ce?w=400&h=300&fit=crop" alt="Editorial imagery" loading="lazy">
                         </div>
 
-                        <div class="chart-card">
-                            <div class="card-header">
-                                <h3>Story Types Today</h3>
-                                <p class="card-desc">Category breakdown across coverage</p>
-                            </div>
-                            <div class="chart-container">
-                                <div id="category-dominance-chart"></div>
-                            </div>
+                        <!-- Today's Top Stories -->
+                        <div class="sidebar-card">
+                            <h3 class="sidebar-title">Today's Top Stories</h3>
+                            <div class="news-feed" id="articles-list"></div>
                         </div>
 
-                        <div class="chart-card">
-                            <div class="card-header">
-                                <h3>Outlet Sentiment</h3>
-                                <p class="card-desc">Tone by source</p>
-                            </div>
-                            <div class="chart-container">
-                                <div id="sentiment-showdown-chart"></div>
-                            </div>
+                        <!-- Shared Stories -->
+                        <div class="sidebar-card">
+                            <h3 class="sidebar-title">Shared Across Outlets</h3>
+                            <div id="cross-source-container"></div>
                         </div>
-                    </section>
 
-                    <!-- Publishing Operations -->
-                    <section class="article-section">
-                        <h2 class="article-title article-title--large">Publishing Operations</h2>
-                        <p>When are stories breaking? How much are outlets publishing? These metrics reveal editorial cadence and publication patterns.</p>
-
-                        <div class="charts-grid-2">
-                            <div class="chart-card">
-                                <div class="card-header">
-                                    <h3>Outlet Productivity</h3>
-                                    <p class="card-desc">Stories published per source</p>
-                                </div>
-                                <div class="chart-container">
-                                    <canvas id="source-productivity-chart"></canvas>
-                                </div>
-                            </div>
-                            <div class="chart-card">
-                                <div class="card-header">
-                                    <h3>Publishing Rhythm</h3>
-                                    <p class="card-desc">Hour-by-hour publication pattern</p>
-                                </div>
-                                <div class="chart-container">
-                                    <div id="publishing-rhythm-chart"></div>
-                                </div>
-                            </div>
+                        <!-- CTA Box -->
+                        <div class="cta-box">
+                            <h3>Need custom intelligence?</h3>
+                            <p>Get Tagtaly integrated into your newsroom in one week.</p>
+                            <a class="cta-link" href="mailto:ops@tagtaly.com">Talk to ops@tagtaly.com</a>
                         </div>
-                    </section>
-
-                    <!-- Keywords -->
-                    <section class="article-section">
-                        <h2 class="article-title article-title--large">Keywords in Focus</h2>
-                        <p>Language reveals intent. This word cloud shows what terms dominate coverage—from policy keywords to breaking news angles.</p>
-
-                        <div class="chart-card">
-                            <div class="card-header">
-                                <h3>Top Keywords</h3>
-                                <p class="card-desc">Word frequency analysis</p>
-                            </div>
-                            <div class="chart-container chart-container--wordcloud">
-                                <div id="wordcloud-chart"></div>
-                            </div>
-                        </div>
-                    </section>
+                    </aside>
                 </div>
-
-                <!-- SIDEBAR (2 columns) -->
-                <aside class="article-sidebar">
-                    <!-- Featured Image -->
-                    <div class="sidebar-card">
-                        <img id="pexels-image" src="" alt="Editorial imagery" loading="lazy" style="width: 100%; height: auto; display: block;">
-                    </div>
-
-                    <!-- Today's Top Stories -->
-                    <div class="sidebar-card">
-                        <div class="sidebar-title">Today's Top Stories</div>
-                        <div class="news-feed" id="articles-list"></div>
-                    </div>
-
-                    <!-- CTA Box -->
-                    <div class="cta-box">
-                        <h3>Need custom intelligence?</h3>
-                        <p>Get Tagtaly integrated into your newsroom in one week.</p>
-                        <a class="cta-link" href="mailto:ops@tagtaly.com">Talk to ops@tagtaly.com</a>
-                    </div>
-                </aside>
-            </div>
+            </article>
         </main>
 
         <!-- FOOTER -->
@@ -257,6 +278,7 @@
                     return;
                 }
 
+                // Update header metrics
                 document.getElementById('metric-headlines').textContent = articles.length;
                 const topSource = articles.length > 0 ? articles[0].source || 'Unknown' : '—';
                 document.getElementById('metric-source').textContent = topSource;
@@ -264,6 +286,7 @@
                 const now = new Date();
                 document.getElementById('metric-updated').textContent = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
+                // Populate articles list
                 const articlesList = document.getElementById('articles-list');
                 articlesList.innerHTML = '';
 
@@ -296,51 +319,19 @@
     <!-- Chart Rendering -->
     <script src="assets/js/social_charts.js"></script>
 
-    <!-- Image Loading with Pexels API -->
+    <!-- Image Loading with Fallbacks -->
     <script>
-        const PEXELS_API_KEY = 'SyBIk8U1gkGZMT1fKmTEugxBM2PDwIePdrhegkymeJTdnxViCK20ohpy';
-
-        async function fetchPexelsImage(searchTerm = 'news') {
-            try {
-                const pexelsUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(searchTerm)}&per_page=1`;
-                const response = await fetch(pexelsUrl, {
-                    headers: { 'Authorization': PEXELS_API_KEY }
-                });
-
-                if (!response.ok) throw new Error(`Pexels API error: ${response.status}`);
-
-                const data = await response.json();
-                if (data.photos && data.photos.length > 0) {
-                    const photo = data.photos[0];
-                    return {
-                        url: photo.src.landscape,
-                        alt: photo.alt || `Stock photo from Pexels: ${searchTerm}`,
-                        photographer: photo.photographer
-                    };
-                }
-            } catch (error) {
-                console.log('⚠️ Pexels API fetch failed:', error.message);
-            }
-            return null;
-        }
-
         async function loadImages() {
+            // Banner fallback (keep simple for now)
             const banner = document.getElementById('hero-banner');
             if (banner) {
                 banner.src = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1600&h=600&fit=crop';
             }
 
+            // Pexels fallback
             const pexelsImg = document.getElementById('pexels-image');
             if (pexelsImg) {
-                const pexelsData = await fetchPexelsImage('news photography');
-                if (pexelsData && pexelsData.url) {
-                    pexelsImg.src = pexelsData.url;
-                    pexelsImg.alt = pexelsData.alt;
-                    console.log('✅ Loaded Pexels image');
-                } else {
-                    pexelsImg.src = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop';
-                    console.log('📸 Using Unsplash fallback');
-                }
+                pexelsImg.src = 'https://images.unsplash.com/photo-1585776245865-b0fee3ae99ce?w=400&h=300&fit=crop';
             }
         }
 
@@ -354,36 +345,18 @@
     <!-- Chart Initialization -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('===== CHART INIT STARTING =====');
-            console.log('echarts available:', typeof echarts !== 'undefined');
-            console.log('Chart.js available:', typeof Chart !== 'undefined');
-            console.log('ensureChartContainerSizes available:', typeof ensureChartContainerSizes !== 'undefined');
-            console.log('initEmotionalRollercoaster available:', typeof initEmotionalRollercoaster !== 'undefined');
-
-            // Ensure containers are properly sized
-            try {
-                ensureChartContainerSizes();
-            } catch(e) {
-                console.error('Error calling ensureChartContainerSizes:', e);
-            }
-
-            // Initialize all charts
-            console.log('===== CALLING INIT FUNCTIONS =====');
-            try {
-                initEmotionalRollercoaster();
-            } catch(e) {
-                console.error('Error in initEmotionalRollercoaster:', e);
-            }
-            try { initWeeklyWinner(); } catch(e) { console.error('initWeeklyWinner error:', e); }
-            try { initSurgeAlert(); } catch(e) { console.error('initSurgeAlert error:', e); }
-            try { initMediaDivide(); } catch(e) { console.error('initMediaDivide error:', e); }
-            try { initSentimentShowdown(); } catch(e) { console.error('initSentimentShowdown error:', e); }
-            try { initCategoryDominance(); } catch(e) { console.error('initCategoryDominance error:', e); }
-            try { initSourceProductivity(); } catch(e) { console.error('initSourceProductivity error:', e); }
-            try { initPublishingRhythm(); } catch(e) { console.error('initPublishingRhythm error:', e); }
-            try { initWordcloud(); } catch(e) { console.error('initWordcloud error:', e); }
-            try { initCrossSourceStories(); } catch(e) { console.error('initCrossSourceStories error:', e); }
-            console.log('===== ALL CHART INIT FUNCTIONS CALLED =====');
+            console.log('Initializing charts...');
+            
+            initEmotionalRollercoaster();
+            initWeeklyWinner();
+            initSurgeAlert();
+            initMediaDivide();
+            initSentimentShowdown();
+            initCategoryDominance();
+            initSourceProductivity();
+            initPublishingRhythm();
+            initWordcloud();
+            initCrossSourceStories();
         });
     </script>
 </body>
