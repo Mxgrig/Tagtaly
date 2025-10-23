@@ -47,8 +47,8 @@ body {
 
 .app-header-inner {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
+    margin: 0 0 0 auto;
+    padding: 1rem 1.5rem 1rem 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -243,8 +243,8 @@ body {
 
 .article-container {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+    margin: 0 0 0 auto;
+    padding: 0 1.5rem 0 3rem;
     display: grid;
     grid-template-columns: 1fr var(--sidebar-width);
     gap: 3.5rem;
@@ -541,8 +541,8 @@ body {
 
 .footer-content {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem 1.5rem;
+    margin: 0 0 0 auto;
+    padding: 3rem 1.5rem 1.5rem 3rem;
 }
 
 .footer-grid {
