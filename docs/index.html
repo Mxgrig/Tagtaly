@@ -7,8 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../social_dashboard/assets/css/shadcn_style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2/dist/echarts-wordcloud.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3/dist/chart.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -59,6 +61,25 @@
         </main>
     </div>
 
-    <script src="../social_dashboard/assets/js/social_charts.js"></script>
+    <script src="../assets/js/social_charts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initEmotionalRollercoaster === 'function') {
+                try { initEmotionalRollercoaster(); } catch (error) { console.error('initEmotionalRollercoaster failed', error); }
+            }
+            if (typeof initWeeklyWinner === 'function') {
+                try { initWeeklyWinner(); } catch (error) { console.error('initWeeklyWinner failed', error); }
+            }
+            if (typeof initSurgeAlert === 'function') {
+                try { initSurgeAlert(); } catch (error) { console.error('initSurgeAlert failed', error); }
+            }
+            if (typeof initMediaDivide === 'function') {
+                try { initMediaDivide(); } catch (error) { console.error('initMediaDivide failed', error); }
+            }
+            if (typeof initSentimentShowdown === 'function') {
+                try { initSentimentShowdown(); } catch (error) { console.error('initSentimentShowdown failed', error); }
+            }
+        });
+    </script>
 </body>
 </html>

@@ -111,6 +111,52 @@ const MOCK_DATA = {
     }
 };
 
+const DATA_BASE_URL = (() => {
+    const resolveFromSrc = (src) => {
+        try {
+            return new URL('../data/', src).href;
+        } catch (error) {
+            console.warn('Chart asset base resolution failed for', src, error);
+            return null;
+        }
+    };
+
+    const current = document.currentScript;
+    if (current?.src) {
+        const base = resolveFromSrc(current.src);
+        if (base) {
+            return base;
+        }
+    }
+
+    const scripts = Array.from(document.getElementsByTagName('script') || []);
+    for (let i = scripts.length - 1; i >= 0; i--) {
+        const src = scripts[i].src;
+        if (src && src.includes('social_charts.js')) {
+            const base = resolveFromSrc(src);
+            if (base) {
+                return base;
+            }
+        }
+    }
+
+    return 'assets/data/';
+})();
+
+function resolveDataUrl(file) {
+    try {
+        return new URL(file, DATA_BASE_URL).href;
+    } catch {
+        const normalizedBase = DATA_BASE_URL.endsWith('/') ? DATA_BASE_URL : `${DATA_BASE_URL}/`;
+        return `${normalizedBase}${file}`;
+    }
+}
+
+function fetchDashboardJson(file, init = {}) {
+    const options = { cache: 'no-store', ...init };
+    return fetch(resolveDataUrl(file), options);
+}
+
 // --- CHART 1: EMOTIONAL ROLLERCOASTER (Line Chart with Dual Hover) ---
 function initEmotionalRollercoaster() {
     console.log('>>>>> initEmotionalRollercoaster called');
@@ -122,7 +168,7 @@ function initEmotionalRollercoaster() {
     }
 
     console.log('Starting fetch for sentiment_tracker.json');
-    fetch('assets/data/sentiment_tracker.json')
+    fetchDashboardJson('sentiment_tracker.json')
         .then(r => r.json())
         .then(data => {
             console.log('Emotional Rollercoaster data received:', data);
@@ -355,7 +401,7 @@ function initWeeklyWinner() {
         return Math.round(((leader - runnerUp) / runnerUp) * 100);
     };
 
-    fetch('assets/data/category_dominance.json')
+    fetchDashboardJson('category_dominance.json')
         .then(r => r.json())
         .then(data => {
             const categories = data.categories || [];
@@ -415,7 +461,7 @@ function initSurgeAlert() {
     const chartDom = document.getElementById('surge-alert-chart');
     if (!chartDom) return;
 
-    fetch('assets/data/topic_surges.json')
+    fetchDashboardJson('topic_surges.json')
         .then(r => r.json())
         .then(data => {
             const myChart = echarts.init(chartDom);
@@ -636,7 +682,7 @@ function initMediaDivide() {
     const chartDom = document.getElementById('media-divide-chart');
     if (!chartDom) return;
 
-    fetch('assets/data/outlet_sentiment.json')
+    fetchDashboardJson('outlet_sentiment.json')
         .then(r => r.json())
         .then(data => {
             const myChart = echarts.init(chartDom);
@@ -822,7 +868,7 @@ function initSentimentShowdown() {
     const chartDom = document.getElementById('sentiment-showdown-chart');
     if (!chartDom) return;
 
-    fetch('assets/data/outlet_sentiment.json')
+    fetchDashboardJson('outlet_sentiment.json')
         .then(r => r.json())
         .then(data => {
             const myChart = echarts.init(chartDom);
@@ -999,7 +1045,7 @@ function initCategoryDominance() {
     const container = document.getElementById('category-dominance-chart');
     if (!container) return;
 
-    fetch('assets/data/category_dominance.json')
+    fetchDashboardJson('category_dominance.json')
         .then(r => r.json())
         .then(data => {
             const myChart = echarts.init(container);
@@ -1189,7 +1235,7 @@ function initSourceProductivity() {
     const canvas = document.getElementById('source-productivity-chart');
     if (!canvas) return;
 
-    fetch('assets/data/source_productivity.json')
+    fetchDashboardJson('source_productivity.json')
         .then(r => r.json())
         .then(data => {
             const sources = (data.top_sources || []).slice(0, 8);
@@ -1254,7 +1300,7 @@ function initPublishingRhythm() {
     const container = document.getElementById('publishing-rhythm-chart');
     if (!container) return;
 
-    fetch('assets/data/publishing_rhythm.json')
+    fetchDashboardJson('publishing_rhythm.json')
         .then(r => r.json())
         .then(data => {
             const myChart = echarts.init(container);
@@ -1446,7 +1492,7 @@ function initWordcloud() {
     const container = document.getElementById('wordcloud-chart');
     if (!container) return;
 
-    fetch('assets/data/wordcloud.json')
+    fetchDashboardJson('wordcloud.json')
         .then(r => r.json())
         .then(data => {
             if (!window.echarts) {
@@ -1602,7 +1648,7 @@ function initCrossSourceStories() {
     const container = document.getElementById('cross-source-container');
     if (!container) return;
 
-    fetch('assets/data/cross_source_stories.json')
+    fetchDashboardJson('cross_source_stories.json')
         .then(r => r.json())
         .then(data => {
             const stories = data.stories || [];
