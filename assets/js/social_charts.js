@@ -236,6 +236,32 @@ function initEmotionalRollercoaster() {
 
             renderPrimary(myChart);
             setupDualChartHover('emotional-rollercoaster-chart', myChart, renderPrimary, renderAlternate);
+        })
+        .catch((error) => {
+            console.warn('Emotional Rollercoaster fetch failed:', error);
+            if (!chartDom) return;
+            const myChart = echarts.init(chartDom);
+            const renderFallback = (chart) => {
+                const option = {
+                    tooltip: { trigger: 'axis', axisPointer: { type: 'line' } },
+                    grid: { left: '3%', right: '10%', bottom: '3%', top: '15%', containLabel: true },
+                    xAxis: { type: 'category', data: MOCK_DATA.emotional.dates, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    yAxis: { type: 'value', name: 'Mood Score', nameTextStyle: { ...ECHART_TEXT_STYLE }, axisLabel: { ...ECHART_TEXT_STYLE } },
+                    series: [{
+                        name: 'Mood Score',
+                        type: 'line',
+                        data: MOCK_DATA.emotional.scores,
+                        smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 8,
+                        lineStyle: { color: '#8b5cf6', width: 3 },
+                        itemStyle: { color: '#8b5cf6' }
+                    }]
+                };
+                chart.setOption(option);
+            };
+            renderFallback(myChart);
+            console.log('✓ Emotional Rollercoaster (fallback): Using mock data');
         });
 }
 
