@@ -85,6 +85,27 @@ jobs:
           cd src
           python viral_engine.py
 
+      - name: Sync all JSON data files to docs
+        run: |
+          echo "🔄 Syncing all JSON data files to live site..."
+          mkdir -p docs/assets/data
+
+          # Copy all JSON files from source to live site
+          cp -v assets/data/*.json docs/assets/data/ 2>/dev/null || true
+
+          # Also copy any ECharts chart JSON files if they exist in other locations
+          if [ -d "src/social_dashboard/assets/data" ]; then
+            cp -v src/social_dashboard/assets/data/*.json docs/assets/data/ 2>/dev/null || true
+          fi
+
+          # Verify sync
+          echo "✓ JSON files synced to docs/assets/data/"
+          ls -1 docs/assets/data/*.json | wc -l | xargs echo "Total JSON files:"
+
+          # Show timestamps of key files
+          echo "Key file timestamps:"
+          ls -lh docs/assets/data/articles.json docs/assets/data/sentiment_tracker.json docs/assets/data/topic_surges.json 2>/dev/null | awk '{print $9, $6, $7, $8}'
+
       - name: Copy charts to docs
         run: |
           # Create country directories
@@ -112,13 +133,13 @@ jobs:
 
           # Force add PNG charts (they're in .gitignore but we want them in docs/)
           git add -f docs/charts/**/*.png 2>/dev/null || true
-          
-          # Add JSON data files
+
+          # Add all JSON data files (articles, sentiment, topics, etc.)
           git add docs/assets/data/*.json 2>/dev/null || true
 
           # Only commit if there are changes
           if git diff --staged --quiet; then
-            echo "No new charts or data to commit"
+            echo "✓ No new charts or data to commit"
           else
             DATE=$(date +"%Y-%m-%d")
             git commit -m "Daily viral charts & data: ${DATE}
@@ -126,7 +147,8 @@ jobs:
             Automated chart generation and data collection from GitHub Actions
             - UK, US, and Global charts
             - Updated articles.json with latest RSS feed data
-            - Updated category analysis
+            - Synced all JSON data files: sentiment_tracker, topic_surges, wordcloud, etc.
+            - Updated category analysis and source productivity metrics
 
             🤖 Generated with GitHub Actions"
             git push
