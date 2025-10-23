@@ -66,13 +66,13 @@ body {
 }
 
 .brand-logo {
-    width: 56px;
-    height: 56px;
+    width: 72px;
+    height: 72px;
     border-radius: 8px;
     display: block;
     object-fit: contain;
     background: transparent;
-    padding: 6px;
+    padding: 8px;
     flex-shrink: 0;
 }
 
