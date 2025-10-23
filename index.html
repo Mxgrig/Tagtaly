@@ -355,7 +355,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Initializing charts...');
-            
+
+            // Ensure containers are properly sized
+            ensureChartContainerSizes();
+
+            // Initialize all charts
             initEmotionalRollercoaster();
             initWeeklyWinner();
             initSurgeAlert();

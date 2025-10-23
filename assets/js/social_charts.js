@@ -1,24 +1,12 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Ensure all container elements have proper sizing before chart init
+// Ensure all container elements have proper sizing before chart init
+function ensureChartContainerSizes() {
     const containers = document.querySelectorAll('.chart-container');
     containers.forEach(container => {
         if (!container.style.height && !container.style.minHeight) {
             container.style.height = '400px';
         }
     });
-
-    // Initialize all charts
-    initEmotionalRollercoaster();
-    initWeeklyWinner();
-    initSurgeAlert();
-    initMediaDivide();
-    initSentimentShowdown();
-    initCategoryDominance();
-    initSourceProductivity();
-    initPublishingRhythm();
-    initWordcloud();
-    initCrossSourceStories();
-});
+}
 
 // Utility function to add dual-chart hover switching
 function setupDualChartHover(containerId, chartInstance, primaryChartInit, alternateChartInit) {
