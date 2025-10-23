@@ -743,7 +743,7 @@
     <main>
         <!-- HERO BANNER WITH NYT IMAGE -->
         <section class="hero-banner">
-            <img class="hero-banner-image" id="nytimes-banner" src="https://source.unsplash.com/1600x500/?news,news,journalism,news-desk" alt="News banner" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'">
+            <img class="hero-banner-image" id="hero-banner" src="https://source.unsplash.com/1600x500/?news,news,journalism,news-desk" alt="News banner" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)'">
             <div class="hero-banner-overlay"></div>
             <div class="hero-banner-content">
                 <span class="hero-banner-eyebrow">Today's News</span>
@@ -1186,104 +1186,24 @@
     </footer>
 
     <!-- SCRIPTS -->
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2/dist/echarts-wordcloud.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3/dist/chart.min.js"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script>
-        // Vanilla JS - Load articles without React
-        async function loadArticles() {
-            try {
-                const response = await fetch('assets/data/articles.json', { cache: 'no-store' });
-                const data = await response.json();
-                const articles = data.articles || [];
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2/dist/echarts-wordcloud.min.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/charts.js" defer></script>
+    <script src="assets/js/articles-loader.js" defer></script>
 
-                if (articles.length === 0) {
-                    document.getElementById('articles-section').innerHTML = '<p>No articles loaded</p>';
-                    return;
-                }
-
-                // Filter by categories (money, lifestyle, entertainment)
-                const categories = ['money', 'lifestyle', 'entertainment'];
-                const categoryArticles = articles.filter(a => {
-                    const cats = a.categories || [];
-                    return categories.some(cat => cats.includes(cat) || a.qwe_primary === cat);
-                });
-
-                // Calculate metrics
-                const totalHeadlines = categoryArticles.length;
-                const avgViral = categoryArticles.length > 0
-                    ? Math.round(categoryArticles.reduce((sum, a) => sum + (a.viral_score || 0), 0) / categoryArticles.length)
-                    : 0;
-
-                // Get top source
-                const sourceCount = new Map();
-                categoryArticles.forEach(a => {
-                    if (a.source) sourceCount.set(a.source, (sourceCount.get(a.source) || 0) + 1);
-                });
-                const topSource = Array.from(sourceCount.entries()).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
-
-                // Format time
-                const now = new Date();
-                const updated = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-
-                // Update metrics
-                document.getElementById('metric-headlines').textContent = totalHeadlines;
-                document.getElementById('metric-viral').textContent = avgViral;
-                document.getElementById('metric-source').textContent = topSource.substring(0, 10);
-                document.getElementById('metric-updated').textContent = updated;
-
-                // Build articles list
-                const articlesList = document.getElementById('articles-list');
-                categoryArticles.slice(0, 6).forEach(article => {
-                    const li = document.createElement('div');
-                    li.style.cssText = 'padding: 14px 0; border-bottom: 1px solid #e5e7eb; transition: background-color 0.2s; cursor: pointer;';
-                    li.onmouseover = function() { this.style.backgroundColor = '#f9fafb'; };
-                    li.onmouseout = function() { this.style.backgroundColor = 'transparent'; };
-                    li.innerHTML = `
-                        <a href="${article.link}" target="_blank" rel="noreferrer" style="color: #0f172a; font-weight: 600; font-size: 0.95rem; text-decoration: none; line-height: 1.5; display: block; transition: color 0.2s; padding: 4px 0;">
-                            ${article.title}
-                        </a>
-                        <div style="font-size: 0.8rem; color: #9ca3af; margin-top: 6px; font-weight: 500;">
-                            ${article.source || 'Unknown'}
-                        </div>
-                    `;
-                    const link = li.querySelector('a');
-                    link.onmouseover = function() { this.style.color = '#3b82f6'; };
-                    link.onmouseout = function() { this.style.color = '#0f172a'; };
-                    articlesList.appendChild(li);
-                });
-            } catch (err) {
-                console.error('Error loading articles:', err);
-                document.getElementById('articles-section').innerHTML = '<p style="color: #d32f2f;">Error loading articles</p>';
-            }
-        }
-
-        // Load when page is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadArticles);
-        } else {
-            loadArticles();
-        }
-    </script>
-    <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/charts.js"></script>
-    <script src="assets/js/live-feed.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/chart-renderer.js"></script>
 
     <!-- Image Loading Script -->
     <script>
         // Load featured images based on trending topic
         async function loadFeaturedImages() {
             try {
-                const response = await fetch('social_dashboard/assets/data/images.json');
+                const response = await fetch('assets/data/featured_images.json', { cache: 'no-store' });
                 if (response.ok) {
                     const data = await response.json();
 
                     // Set banner image with fallbacks
-                    const banner = document.getElementById('nytimes-banner');
+                    const banner = document.getElementById('hero-banner');
                     if (banner) {
                         if (data.images && data.images.banner && data.images.banner.url) {
                             // Use hero banner image
@@ -1317,7 +1237,7 @@
                 console.log('⚠️ Featured images cache not available, using Unsplash fallbacks');
 
                 // Set Unsplash fallbacks if JSON fetch fails
-                const banner = document.getElementById('nytimes-banner');
+                const banner = document.getElementById('hero-banner');
                 if (banner) {
                     banner.src = 'https://images.unsplash.com/photo-1557821552-17105176677c?w=1600&h=500&fit=crop';
                     banner.alt = 'Technology news coverage';
@@ -1338,6 +1258,8 @@
             loadFeaturedImages();
         }
     </script>
+
+    <script src="assets/js/live-feed.js" defer></script>
 
     <!-- AdSense Script (uncomment when ready) -->
     <script>

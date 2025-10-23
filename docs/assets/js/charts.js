@@ -59,11 +59,22 @@ async function renderSentimentChart() {
         const echartsDiv = document.createElement('div');
         echartsDiv.id = 'sentiment-chart-echarts';
         echartsDiv.style.width = '100%';
-        echartsDiv.style.height = '400px';
+        echartsDiv.style.height = `${Math.max(container.offsetHeight || 360, 360)}px`;
         container.replaceChild(echartsDiv, canvasElement);
 
-        const dates = data.dates || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        const scores = data.mood_scores || [42.5, 38.2, 45.8, 52.3, 48.9, 55.2, 50.1];
+        const datesRaw = Array.isArray(data.dates) ? data.dates : [];
+        const scoresRaw = Array.isArray(data.mood_scores) ? data.mood_scores : [];
+
+        const dates = datesRaw.length
+            ? datesRaw.map((d) => {
+                const date = new Date(d);
+                return Number.isNaN(date.getTime()) ? d : date.toLocaleDateString('en-GB', { weekday: 'short' });
+            })
+            : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+        const scores = scoresRaw.length
+            ? scoresRaw.map(v => Number(v) || 0)
+            : [42.5, 38.2, 45.8, 52.3, 48.9, 55.2, 50.1];
 
         const chart = echarts.init(echartsDiv);
         chartInstances['sentiment'] = chart;
@@ -128,7 +139,7 @@ async function renderSentimentChart() {
         };
 
         chart.setOption(primaryOption);
-        setupDualChartHover('sentiment-tracker-chart', chart, primaryOption, alternateOption);
+        setupDualChartHover(echartsDiv, chart, primaryOption, alternateOption);
         window.addEventListener('resize', () => chart.resize());
 
     } catch (error) {
@@ -151,12 +162,15 @@ async function renderSurgesChart() {
         const echartsDiv = document.createElement('div');
         echartsDiv.id = 'surges-chart-echarts';
         echartsDiv.style.width = '100%';
-        echartsDiv.style.height = '400px';
+        echartsDiv.style.height = `${Math.max(container.offsetHeight || 360, 360)}px`;
         container.replaceChild(echartsDiv, canvasElement);
 
-        const surges = data.surges || [];
-        const topics = surges.map(s => s.topic);
-        const changes = surges.map(s => s.change_pct);
+        const surges = Array.isArray(data.surges) ? data.surges : [];
+        if (surges.length === 0) {
+            surges.push({ topic: 'No Data', change_pct: 0, today: 0, yesterday: 0 });
+        }
+        const topics = surges.map(s => s.topic || 'Topic');
+        const changes = surges.map(s => Number(s.change_pct) || 0);
         const colors = changes.map(v => v > 0 ? COLORS.success : COLORS.danger);
 
         const chart = echarts.init(echartsDiv);
@@ -215,7 +229,7 @@ async function renderSurgesChart() {
         };
 
         chart.setOption(primaryOption);
-        setupDualChartHover('topic-surges-chart', chart, primaryOption, alternateOption);
+        setupDualChartHover(echartsDiv, chart, primaryOption, alternateOption);
         window.addEventListener('resize', () => chart.resize());
 
     } catch (error) {
@@ -238,14 +252,17 @@ async function renderCategoryChart() {
         const echartsDiv = document.createElement('div');
         echartsDiv.id = 'category-chart-echarts';
         echartsDiv.style.width = '100%';
-        echartsDiv.style.height = '400px';
+        echartsDiv.style.height = `${Math.max(container.offsetHeight || 360, 360)}px`;
         container.replaceChild(echartsDiv, canvasElement);
 
-        const categories = data.categories || [
+        const categories = Array.isArray(data.categories) ? data.categories : [
             { name: 'Tech', count: 234 },
             { name: 'Business', count: 187 },
             { name: 'Entertainment', count: 156 }
         ];
+        if (categories.length === 0) {
+            categories.push({ name: 'No Data', value: 0 });
+        }
 
         const categoryColors = [
             COLORS.primary, COLORS.success, COLORS.warning,
@@ -256,8 +273,8 @@ async function renderCategoryChart() {
         chartInstances['categories'] = chart;
 
         const seriesData = categories.map((c, i) => ({
-            value: c.count || c.articles,
-            name: c.name || c.category,
+            value: c.value ?? c.count ?? c.articles ?? 0,
+            name: c.name || c.category || `Category ${i + 1}`,
             itemStyle: { color: categoryColors[i % categoryColors.length] }
         }));
 
@@ -294,7 +311,7 @@ async function renderCategoryChart() {
         };
 
         chart.setOption(primaryOption);
-        setupDualChartHover('category-dominance-chart', chart, primaryOption, alternateOption);
+        setupDualChartHover(echartsDiv, chart, primaryOption, alternateOption);
         window.addEventListener('resize', () => chart.resize());
 
     } catch (error) {
@@ -317,13 +334,18 @@ async function renderSourceChart() {
         const echartsDiv = document.createElement('div');
         echartsDiv.id = 'source-chart-echarts';
         echartsDiv.style.width = '100%';
-        echartsDiv.style.height = '400px';
+        echartsDiv.style.height = `${Math.max(container.offsetHeight || 360, 360)}px`;
         container.replaceChild(echartsDiv, canvasElement);
 
-        const sources = data.sources || [
-            { source: 'BBC', articles: 87 },
-            { source: 'Guardian', articles: 73 }
-        ];
+        const sources = Array.isArray(data.top_sources) ? data.top_sources
+            : Array.isArray(data.sources) ? data.sources
+            : [
+                { source: 'BBC', count: 87 },
+                { source: 'Guardian', count: 73 }
+            ];
+        if (sources.length === 0) {
+            sources.push({ source: 'No Data', count: 0 });
+        }
 
         const chart = echarts.init(echartsDiv);
         chartInstances['sources'] = chart;
@@ -343,7 +365,7 @@ async function renderSourceChart() {
             grid: { left: '5%', right: '5%', bottom: '10%', top: '10%', containLabel: true },
             xAxis: {
                 type: 'category',
-                data: sources.map(s => s.source),
+                data: sources.map(s => s.source || s.name || 'Outlet'),
                 axisLine: { lineStyle: { color: COLORS.neutral[200] } },
                 axisLabel: { ...TEXT_STYLE, color: COLORS.neutral[600], fontWeight: 600 }
             },
@@ -356,7 +378,10 @@ async function renderSourceChart() {
             series: [{
                 name: 'Articles',
                 type: 'bar',
-                data: sources.map(s => ({ value: s.articles, itemStyle: { color: COLORS.primary } })),
+                data: sources.map(s => ({
+                    value: s.count ?? s.articles ?? s.value ?? 0,
+                    itemStyle: { color: COLORS.primary }
+                })),
                 itemStyle: { borderRadius: [8, 8, 0, 0] },
                 label: { show: true, position: 'top', fontWeight: 'bold', color: COLORS.neutral[700] }
             }]
@@ -371,7 +396,7 @@ async function renderSourceChart() {
         };
 
         chart.setOption(primaryOption);
-        setupDualChartHover('source-productivity-chart', chart, primaryOption, alternateOption);
+        setupDualChartHover(echartsDiv, chart, primaryOption, alternateOption);
         window.addEventListener('resize', () => chart.resize());
 
     } catch (error) {
@@ -394,13 +419,20 @@ async function renderOutletChart() {
         const echartsDiv = document.createElement('div');
         echartsDiv.id = 'outlet-chart-echarts';
         echartsDiv.style.width = '100%';
-        echartsDiv.style.height = '400px';
+        echartsDiv.style.height = `${Math.max(container.offsetHeight || 360, 360)}px`;
         container.replaceChild(echartsDiv, canvasElement);
 
-        const outlets = data.outlets || [
-            { outlet: 'BBC', sentiment: 0.32 },
-            { outlet: 'Guardian', sentiment: 0.28 }
-        ];
+        const outletsRaw = Array.isArray(data.top_10) ? data.top_10
+            : Array.isArray(data.outlets) ? data.outlets
+            : [];
+
+        const outlets = outletsRaw.map(o => ({
+            outlet: o.source || o.outlet || o.name || 'Outlet',
+            sentiment: Number(o.mood_score ?? o.sentiment_score ?? o.sentiment ?? 0)
+        }));
+        if (outlets.length === 0) {
+            outlets.push({ outlet: 'No Data', sentiment: 0 });
+        }
 
         const chart = echarts.init(echartsDiv);
         chartInstances['outlets'] = chart;
@@ -453,7 +485,7 @@ async function renderOutletChart() {
         };
 
         chart.setOption(primaryOption);
-        setupDualChartHover('outlet-sentiment-chart', chart, primaryOption, alternateOption);
+        setupDualChartHover(echartsDiv, chart, primaryOption, alternateOption);
         window.addEventListener('resize', () => chart.resize());
 
     } catch (error) {
@@ -476,12 +508,19 @@ async function renderRhythmChart() {
         const echartsDiv = document.createElement('div');
         echartsDiv.id = 'rhythm-chart-echarts';
         echartsDiv.style.width = '100%';
-        echartsDiv.style.height = '400px';
+        echartsDiv.style.height = `${Math.max(container.offsetHeight || 360, 360)}px`;
         container.replaceChild(echartsDiv, canvasElement);
 
-        const rhythm = data.hourly || [];
-        const hours = rhythm.map((_, i) => i + ':00');
-        const articles = rhythm.map(h => h.articles || 0);
+        const counts = Array.isArray(data.hourly_counts)
+            ? data.hourly_counts
+            : Array.isArray(data.hourly)
+                ? data.hourly.map(h => h.articles ?? h.count ?? 0)
+                : [];
+        if (counts.length === 0) {
+            counts.push(0, 0, 0, 0, 0, 0, 0);
+        }
+        const hours = counts.map((_, i) => `${i}:00`);
+        const articles = counts.map(v => Number(v) || 0);
 
         const chart = echarts.init(echartsDiv);
         chartInstances['rhythm'] = chart;
@@ -547,7 +586,7 @@ async function renderRhythmChart() {
         };
 
         chart.setOption(primaryOption);
-        setupDualChartHover('publishing-rhythm-chart', chart, primaryOption, alternateOption);
+        setupDualChartHover(echartsDiv, chart, primaryOption, alternateOption);
         window.addEventListener('resize', () => chart.resize());
 
     } catch (error) {
@@ -558,11 +597,10 @@ async function renderRhythmChart() {
 // ============================================
 // DUAL-CHART HOVER FUNCTIONALITY
 // ============================================
-function setupDualChartHover(canvasId, chartInstance, primaryOption, alternateOption) {
-    const canvasElement = document.getElementById(canvasId);
-    if (!canvasElement) return;
+function setupDualChartHover(chartElement, chartInstance, primaryOption, alternateOption) {
+    if (!chartElement) return;
 
-    const card = canvasElement.closest('.chart-card');
+    const card = chartElement.closest('.chart-card');
     if (!card) return;
 
     let isPrimary = true;
@@ -587,6 +625,62 @@ function setupDualChartHover(canvasId, chartInstance, primaryOption, alternateOp
 }
 
 // ============================================
+// CHART 7: WORDCLOUD (Keywords)
+// ============================================
+async function renderWordcloudChart() {
+    try {
+        const container = document.getElementById('wordcloud-chart');
+        if (!container) return;
+
+        const response = await fetch('assets/data/wordcloud.json', { cache: 'no-store' });
+        const data = await response.json();
+        const keywords = Array.isArray(data.keywords) ? data.keywords : [];
+
+        const words = keywords
+            .filter(item => item && item.name && Number(item.value) > 0)
+            .map(item => ({ name: item.name, value: Number(item.value) }));
+
+        const chart = echarts.init(container);
+        chartInstances['wordcloud'] = chart;
+
+        const palette = ['#2563eb', '#8b5cf6', '#ec4899', '#f97316', '#14b8a6', '#facc15'];
+        chart.setOption({
+            tooltip: {
+                show: true,
+                formatter: ({ name, value }) => `${name}: ${value}`
+            },
+            series: [{
+                type: 'wordCloud',
+                shape: 'circle',
+                gridSize: 6,
+                sizeRange: [22, 72],
+                rotationRange: [0, 0],
+                textStyle: {
+                    fontFamily: "'Inter', sans-serif",
+                    fontWeight: 600,
+                    color: () => palette[Math.floor(Math.random() * palette.length)]
+                },
+                emphasis: {
+                    textStyle: {
+                        shadowBlur: 12,
+                        shadowColor: 'rgba(31, 41, 55, 0.4)'
+                    }
+                },
+                data: words.length ? words : [
+                    { name: 'Tagtaly', value: 60 },
+                    { name: 'News', value: 45 },
+                    { name: 'Analysis', value: 35 }
+                ]
+            }]
+        });
+
+        window.addEventListener('resize', () => chart.resize());
+    } catch (error) {
+        console.error('Error rendering wordcloud chart:', error);
+    }
+}
+
+// ============================================
 // INITIALIZE ALL CHARTS
 // ============================================
 function initializeCharts() {
@@ -602,6 +696,7 @@ function initializeCharts() {
     renderSourceChart();
     renderOutletChart();
     renderRhythmChart();
+    renderWordcloudChart();
     console.log('Charts initialized successfully');
 }
 
