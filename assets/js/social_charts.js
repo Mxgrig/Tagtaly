@@ -117,7 +117,9 @@ function initEmotionalRollercoaster() {
     fetch('assets/data/sentiment_tracker.json')
         .then(r => r.json())
         .then(data => {
+            console.log('Emotional Rollercoaster data received:', data);
             const myChart = echarts.init(chartDom);
+            console.log('echarts initialized, myChart:', !!myChart);
             const titleEl = document.getElementById('rollercoaster-title');
 
             // Convert dates to short format (Mon, Tue, etc)
@@ -126,6 +128,7 @@ function initEmotionalRollercoaster() {
                 return date.toLocaleDateString('en-GB', { weekday: 'short' });
             });
             const scores = data.mood_scores || MOCK_DATA.emotional.scores;
+            console.log('Converted dates:', dates, 'scores:', scores);
 
             // Primary chart: Line chart
             const renderPrimary = (chart) => {
@@ -147,7 +150,9 @@ function initEmotionalRollercoaster() {
                         itemStyle: { color: '#8b5cf6' }
                     }]
                 };
+                console.log('Setting chart option:', option);
                 chart.setOption(option);
+                console.log('Chart option set');
             };
 
             // Alternate chart: Area chart with filled background
