@@ -46,9 +46,9 @@ body {
 }
 
 .app-header-inner {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -244,7 +244,7 @@ body {
 .article-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2.5rem;
+    padding: 0 1.5rem;
     display: grid;
     grid-template-columns: 1fr var(--sidebar-width);
     gap: 3.5rem;
@@ -540,9 +540,9 @@ body {
 }
 
 .footer-content {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 3rem 2rem 1.5rem;
+    padding: 3rem 1.5rem 1.5rem;
 }
 
 .footer-grid {
