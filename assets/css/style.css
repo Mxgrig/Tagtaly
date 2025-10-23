@@ -37,12 +37,13 @@ body {
 /* ═══════════════════════════════════════════════════════════════════ */
 
 .app-header {
-    background: var(--black);
-    color: var(--white);
+    background: #ffffff;
+    color: var(--gray-900);
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--gray-300);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .app-header-inner {
@@ -60,26 +61,36 @@ body {
     align-items: center;
     gap: 0.75rem;
     text-decoration: none;
-    color: var(--white);
+    color: var(--gray-900);
+    min-width: fit-content;
 }
 
 .brand-logo {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: block;
+    object-fit: contain;
+    background: var(--gray-100);
+    padding: 4px;
 }
 
 .brand-name {
-    font-size: 1.125rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 800;
     letter-spacing: -0.01em;
+    color: var(--gray-900);
+    margin: 0;
+    line-height: 1.2;
 }
 
 .brand-tagline {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.08em;
+    color: var(--gray-700);
+    margin: 0;
+    line-height: 1.2;
 }
 
 .nav-links {
@@ -96,28 +107,25 @@ body {
 }
 
 .nav-link {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--gray-700);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
-    transition: color 0.2s;
+    transition: color 0.2s, border-color 0.2s;
     position: relative;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
 }
 
-.nav-link:hover,
+.nav-link:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
 .nav-link.active {
-    color: var(--white);
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--accent);
-    border-radius: 1px;
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
 }
 
 .header-actions {
