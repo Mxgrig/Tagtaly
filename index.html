@@ -201,7 +201,7 @@
                     <aside class="article-sidebar">
                         <!-- Featured Image -->
                         <div class="sidebar-card">
-                            <img id="pexels-image" src="https://images.unsplash.com/photo-1585776245865-b0fee3ae99ce?w=400&h=300&fit=crop" alt="Editorial imagery" loading="lazy">
+                            <img id="pexels-image" src="" alt="Editorial imagery" loading="lazy" style="width: 100%; height: auto; display: block;">
                         </div>
 
                         <!-- Today's Top Stories -->
@@ -319,19 +319,53 @@
     <!-- Chart Rendering -->
     <script src="assets/js/social_charts.js"></script>
 
-    <!-- Image Loading with Fallbacks -->
+    <!-- Image Loading with Pexels API -->
     <script>
+        const PEXELS_API_KEY = 'SyBIk8U1gkGZMT1fKmTEugxBM2PDwIePdrhegkymeJTdnxViCK20ohpy';
+
+        async function fetchPexelsImage(searchTerm = 'news') {
+            try {
+                const pexelsUrl = `https://api.pexels.com/v1/search?query=${encodeURIComponent(searchTerm)}&per_page=1`;
+                const response = await fetch(pexelsUrl, {
+                    headers: { 'Authorization': PEXELS_API_KEY }
+                });
+
+                if (!response.ok) throw new Error(`Pexels API error: ${response.status}`);
+
+                const data = await response.json();
+                if (data.photos && data.photos.length > 0) {
+                    const photo = data.photos[0];
+                    return {
+                        url: photo.src.landscape,
+                        alt: photo.alt || `Stock photo from Pexels: ${searchTerm}`,
+                        photographer: photo.photographer
+                    };
+                }
+            } catch (error) {
+                console.log('⚠️ Pexels API fetch failed:', error.message);
+            }
+            return null;
+        }
+
         async function loadImages() {
-            // Banner fallback (keep simple for now)
+            // Load hero banner (Unsplash)
             const banner = document.getElementById('hero-banner');
             if (banner) {
                 banner.src = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1600&h=600&fit=crop';
             }
 
-            // Pexels fallback
+            // Load Pexels image for sidebar
             const pexelsImg = document.getElementById('pexels-image');
             if (pexelsImg) {
-                pexelsImg.src = 'https://images.unsplash.com/photo-1585776245865-b0fee3ae99ce?w=400&h=300&fit=crop';
+                const pexelsData = await fetchPexelsImage('news photography');
+                if (pexelsData && pexelsData.url) {
+                    pexelsImg.src = pexelsData.url;
+                    pexelsImg.alt = pexelsData.alt;
+                    console.log('✅ Loaded Pexels image');
+                } else {
+                    pexelsImg.src = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop';
+                    console.log('📸 Using Unsplash fallback');
+                }
             }
         }
 
