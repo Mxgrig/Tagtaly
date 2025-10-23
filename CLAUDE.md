@@ -13,8 +13,17 @@ An automated UK news analysis pipeline that transforms 500+ daily articles into 
 **Status:** 🚀 **Live in Production** (Phase 2 - Automation Complete)
 - **Live URL:** [www.tagtaly.com](https://www.tagtaly.com) (custom domain)
 - **Backup URL:** [tagtaly.dev.pages](https://tagtaly.dev.pages) (Cloudflare Pages)
-- **Repository:** [GitHub](https://github.com/grig/tagtaly) (public)
 - **Automation:** Cron jobs configured for daily execution (see Deployment section)
+
+# GitHub Setup
+## Two-Repository Architecture
+- **#tagtaly** (PRIVATE): Stores source code, Python pipeline, GitHub Actions, secrets, and automation workflows
+- **#tagtaly-pages** (PUBLIC): Serves static pages, points to custom domain www.tagtaly.com via Cloudflare Pages
+
+## Workflow
+1. `#tagtaly` repo runs GitHub Actions at 7 AM UTC → generates JSON charts
+2. Commits generated data to `#tagtaly-pages` repo
+3. `#tagtaly-pages` automatically deployed to www.tagtaly.com via Cloudflare Pages
 
 ---
 
@@ -24,57 +33,59 @@ An automated UK news analysis pipeline that transforms 500+ daily articles into 
 
 ### Architecture
 ```
-GitHub Actions (7 AM UTC)
+#tagtaly (PRIVATE)
+  ↓ GitHub Actions (7 AM UTC)
   ↓ Runs Python pipeline
   ↓ Generates JSON charts
-  ↓ Commits to tagtaly-pages repo
+  ↓ Commits to #tagtaly-pages
   ↓
-Hostinger Server (8 AM UTC)
-  ↓ Auto-pulls latest from GitHub
-  ↓ Website serves fresh data
+#tagtaly-pages (PUBLIC)
+  ↓ Cloudflare Pages
+  ↓ Auto-deployed to www.tagtaly.com
   ↓
 www.tagtaly.com (LIVE ✅)
 ```
+
+### Repository Structure
+**#tagtaly (PRIVATE)** stores:
+- Python source code (news_collector.py, viral_engine.py, etc.)
+- Configuration files (config/)
+- GitHub Actions workflows (.github/workflows/)
+- Secrets and API keys (.env)
+- SQLite database (uk_news.db)
+
+**#tagtaly-pages (PUBLIC)** stores:
+- HTML files (index.html, about.html, privacy.html)
+- Static assets (assets/, social_charts.js)
+- Generated JSON chart data (from #tagtaly GitHub Actions)
+- CNAME file pointing to www.tagtaly.com
 
 ### Recent Changes ✅
 - ✅ Created `json_generator.py` - converts story data to ECharts JSON
 - ✅ Updated `viral_engine.py` - uses JSON generation instead of PNG
 - ✅ Enhanced `news_collector.py` - retry logic + error logging for RSS feeds
 - ✅ Added dual-chart hover in `social_charts.js` - ECharts with variants
-- ✅ Created `vercel.json` - static site deployment config
+- ✅ Two-repository split (#tagtaly private, #tagtaly-pages public)
 
 ### Current Status
-- ⏳ **Hostinger SSH Setup:** Ready to configure auto-pull
-- ⏳ **GitHub Actions Workflow:** Confirmed working, generates JSON daily
-- ⏳ **Custom Domain:** DNS configured, waiting for final deployment
-- ⏳ **Automation:** Need to set up cron on Hostinger to pull from GitHub
-
-### Next Steps
-1. SSH into Hostinger
-2. Clone `tagtaly-pages` repo
-3. Set up cron job: `git pull origin main` daily at 8 AM UTC
-4. Website auto-updates with fresh JSON data
-5. Custom domain goes live
+- ✅ **GitHub Actions Workflow:** Generates JSON daily, pushes to #tagtaly-pages
+- ✅ **Custom Domain:** www.tagtaly.com points to #tagtaly-pages via Cloudflare
+- ✅ **Cloudflare Pages:** Auto-deploys from #tagtaly-pages repo
+- ⏳ **Local Testing:** Verify JSON output matches expected format
 
 ---
 
-## Hostinger SSH Details
-```bash
-# NOTE: Keep these commented for security
-# SSH_KEY: /home/grig/Projects/Complitrack/tools/.ssh/hostinger_key
-# SSH_HOST: u958180753@45.87.81.67
-# SSH_PORT: 65002
-# REMOTE_DIR: ~/domains/www.tagtaly.com/public_html (needs confirmation)
-#
-# Known domains on server:
-#   - complytrack.co.uk
-#   - klenfast.com
-#   - opengovdatahub.com
-#   - www.tagtaly.com (target)
-#
-# Setup command template:
-# ssh -i [key_path] -p [port] [user@host] "cd [dir] && git clone [repo]"
-```
+## Repository Access
+**#tagtaly** (Private)
+- Contains: Python pipeline, configs, secrets
+- Workflow: GitHub Actions runs daily, commits JSON to #tagtaly-pages
+- Access: Private (Grig's account)
+
+**#tagtaly-pages** (Public)
+- Contains: Static HTML, assets, generated JSON
+- Deployment: Cloudflare Pages auto-deploys on push
+- Domain: www.tagtaly.com via CNAME
+- Access: Public (read-only for viewers)
 
 ## Common Commands
 
@@ -278,30 +289,36 @@ CREATE TABLE articles (
 ## Automation & Deployment
 
 ### Production Deployment (Live)
-- **Platform:** Cloudflare Pages + Cron Jobs
-- **Primary Domain:** www.tagtaly.com (custom domain configured via Cloudflare)
+- **Data Generation:** #tagtaly repo (GitHub Actions)
+- **Platform:** Cloudflare Pages (serves #tagtaly-pages repo)
+- **Primary Domain:** www.tagtaly.com (CNAME in #tagtaly-pages)
 - **Backup Domain:** tagtaly.dev.pages (Cloudflare Pages default)
-- **Repository:** Pushed to GitHub (source of truth)
-- **Execution:** Automated via cron jobs on server
+- **Execution:** Automated via GitHub Actions in #tagtaly
+- **Flow:** #tagtaly Actions → generates JSON → pushes to #tagtaly-pages → Cloudflare deploys
 
-### Cron Job Setup
-Cron jobs configured for automated daily pipeline execution:
+### GitHub Actions Workflow **#tagtaly**
+Automated daily execution at 7 AM UTC:
 ```bash
-# Typical cron configuration (run daily at 7 AM)
-0 7 * * * cd /path/to/tagtaly && python main_pipeline.py >> logs/pipeline.log 2>&1
+# Workflow summary:
+1. Install dependencies
+2. Run Python pipeline (news_collector.py → analyzer → story_detector → viral_engine)
+3. Generate JSON charts via json_generator.py
+4. Commit JSON files to #tagtaly-pages repo
+5. Cloudflare Pages auto-deploys to www.tagtaly.com
 ```
 
 Details:
-- Schedule: 7 AM daily (adjust time zone as needed)
-- Logs: Stored in `logs/pipeline.log` (recommended for debugging)
-- Output: Generated charts in `output/viral_charts_[country]_[date]/` folders
-- Database: Persisted in repository for version control
-- GitHub sync: Commit and push updates after each run (optional automation)
+- **Schedule:** 7 AM UTC daily
+- **Logs:** Available in GitHub Actions tab of #tagtaly
+- **Output:** JSON files in #tagtaly-pages/data/ directory
+- **Database:** Persisted in #tagtaly for version control
+- **GitHub sync:** Automatic push to #tagtaly-pages after each run
 
-### GitHub Actions (Backup / Alternative)
-- Workflow file: `daily-workflow.yml`
-- Kept as backup automation option
-- Can re-enable via Actions tab if primary cron fails
+### GitHub Actions (Primary Automation) **#tagtaly**
+- Workflow file: `.github/workflows/daily-workflow.yml` in #tagtaly
+- Runs daily at 7 AM UTC
+- Triggers Python pipeline to generate JSON charts
+- Commits results to #tagtaly-pages
 - Manual trigger: workflow_dispatch event available
 
 ### Local Development Scheduling
@@ -430,4 +447,6 @@ Required Python packages (install via `requirements.txt`):
 - Cron jobs (server-based, see Deployment section)
 - daily-workflow.yml (GitHub Actions backup)
 **Helper scripts:** setup.sh, run.sh
-**Repository:** [github.com/grig/tagtaly](https://github.com/grig/tagtaly) (public GitHub repo)
+**Repositories:**
+- **#tagtaly** (PRIVATE): [github.com/grig/tagtaly](https://github.com/grig/tagtaly) - Python pipeline, GitHub Actions
+- **#tagtaly-pages** (PUBLIC): [github.com/grig/tagtaly-pages](https://github.com/grig/tagtaly-pages) - Static site, served to www.tagtaly.com

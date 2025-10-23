@@ -256,6 +256,66 @@ function initWeeklyWinner() {
     const container = document.getElementById('weekly-winner-chart');
     if (!container) return;
 
+    const renderCard = ({ name, value, color, change, share }) => {
+        const arrow = change !== null && change !== undefined
+            ? (change > 0 ? '▲' : change < 0 ? '▼' : '—')
+            : '';
+        const changeColor = change > 0 ? '#16a34a' : change < 0 ? '#f97316' : '#64748b';
+        const changeBlock = change !== null && change !== undefined
+            ? `<div style="display:flex; flex-direction:column; gap:4px;">
+                    <span style="text-transform:uppercase; font-size:0.65rem; letter-spacing:0.18em; color:#64748b;">Spread vs #2</span>
+                    <span style="font-size:1.1rem; font-weight:700; color:${changeColor};">${arrow} ${Math.abs(change)}%</span>
+               </div>`
+            : '';
+
+        const headerRight = share !== null && share !== undefined
+            ? `<div style="display:flex; align-items:center; gap:8px; text-transform:uppercase; letter-spacing:0.24em; font-size:0.7rem; color:rgba(15,23,42,0.55);">
+                    <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${color};"></span>
+                    ${share}% share
+               </div>`
+            : `<div style="text-transform:uppercase; letter-spacing:0.24em; font-size:0.7rem; color:rgba(15,23,42,0.45); display:flex; align-items:center; gap:8px;">
+                    <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${color};"></span>
+                    Lead Topic
+               </div>`;
+
+        container.innerHTML = `
+            <div style="background: linear-gradient(145deg, #ffffff 0%, #eff6ff 100%); border-radius: 16px; padding: 28px; color: #0f172a; border: 1px solid rgba(37, 99, 235, 0.12); box-shadow: 0 20px 34px rgba(37, 99, 235, 0.18); font-family: 'Inter', sans-serif;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 22px;">
+                    <div style="text-transform: uppercase; letter-spacing: 0.28em; font-size: 0.7rem; color: rgba(15,23,42,0.55);">Weekly Winner</div>
+                    ${headerRight}
+                </div>
+
+                <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+                    <div style="flex:1; min-width:220px;">
+                        <div style="font-size: 2.4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.12;">${name}</div>
+                        <div style="margin-top: 18px; display:flex; gap:24px; align-items:flex-end; flex-wrap: wrap;">
+                            <div style="display:flex; flex-direction:column; gap:4px;">
+                                <span style="text-transform:uppercase; font-size:0.65rem; letter-spacing:0.18em; color:#64748b;">Articles</span>
+                                <span style="font-size:2rem; font-weight:700; color:#0f172a;">${value}</span>
+                            </div>
+                            ${changeBlock}
+                        </div>
+                    </div>
+                    <div style="width:110px; height:110px; border-radius:18px; background: radial-gradient(circle at top, rgba(37,99,235,0.18), transparent 70%); border: 1px solid rgba(37, 99, 235, 0.18); display:flex; align-items:center; justify-content:center;">
+                        <span style="font-size: 40px;">🗞️</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 24px; height: 4px; background: linear-gradient(90deg, ${color}, rgba(37, 99, 235, 0.25), transparent); border-radius: 9999px;"></div>
+            </div>
+        `;
+    };
+
+    const computeChange = (sorted) => {
+        if (!sorted || sorted.length <= 1) return null;
+        const leader = sorted[0].value || 0;
+        const runnerUp = sorted[1].value || 0;
+        if (runnerUp === 0) {
+            return leader > 0 ? 100 : 0;
+        }
+        return Math.round(((leader - runnerUp) / runnerUp) * 100);
+    };
+
     fetch('assets/data/category_dominance.json')
         .then(r => r.json())
         .then(data => {
@@ -268,43 +328,19 @@ function initWeeklyWinner() {
 
             // Calculate percentage change (comparing to second place)
             const sorted = [...categories].sort((a, b) => b.value - a.value);
-            const change = sorted.length > 1
-                ? Math.round(((sorted[0].value - sorted[1].value) / sorted[1].value) * 100)
-                : 0;
+            const change = computeChange(sorted);
 
-            container.innerHTML = `
-                <div style="text-align: center; padding: 10px;">
-                    <div style="
-                        width: 60px;
-                        height: 60px;
-                        background-color: ${topCategory.color};
-                        border-radius: 8px;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                        margin-bottom: 8px;
-                    ">
-                        <span style="font-size: 32px;">📌</span>
-                    </div>
-                    <div style="font-size: 1.5rem; font-weight: 800; color: #f8fafc; line-height: 1.2; margin-bottom: 2px;">${topCategory.name}</div>
-                    <div style="font-size: 0.95rem; color: #cbd5e1;"><strong>${topCategory.value}</strong> articles</div>
-                    ${change > 0 ? `
-                        <div style="
-                            display: inline-block;
-                            background-color: rgba(16, 185, 129, 0.2);
-                            color: #10b981;
-                            padding: 3px 8px;
-                            border-radius: 4px;
-                            font-size: 0.8rem;
-                            font-weight: 600;
-                            margin-top: 6px;
-                        ">
-                            📈 +${change}% vs 2nd
-                        </div>
-                    ` : ''}
-                </div>
-            `;
+            const totalVolume = categories.reduce((sum, item) => sum + (item.value || 0), 0);
+            const share = totalVolume > 0 ? Math.round((topCategory.value / totalVolume) * 100) : null;
+            const accent = topCategory.color || '#22d3ee';
+
+            renderCard({
+                name: topCategory.name,
+                value: topCategory.value,
+                color: accent,
+                change,
+                share
+            });
             console.log('✓ Weekly Winner: Rendering card -', topCategory.name, topCategory.value);
         })
         .catch(() => {
@@ -319,43 +355,18 @@ function initWeeklyWinner() {
 
             // Calculate change
             const sorted = values.map((v, i) => ({ value: v, name: labels[i] })).sort((a, b) => b.value - a.value);
-            const change = sorted.length > 1
-                ? Math.round(((sorted[0].value - sorted[1].value) / sorted[1].value) * 100)
-                : 0;
+            const change = computeChange(sorted);
 
-            container.innerHTML = `
-                <div style="text-align: center; padding: 10px;">
-                    <div style="
-                        width: 60px;
-                        height: 60px;
-                        background-color: ${topColor};
-                        border-radius: 8px;
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                        margin-bottom: 8px;
-                    ">
-                        <span style="font-size: 32px;">📌</span>
-                    </div>
-                    <div style="font-size: 1.5rem; font-weight: 800; color: #f8fafc; line-height: 1.2; margin-bottom: 2px;">${topName}</div>
-                    <div style="font-size: 0.95rem; color: #cbd5e1;"><strong>${topValue}</strong> articles</div>
-                    ${change > 0 ? `
-                        <div style="
-                            display: inline-block;
-                            background-color: rgba(16, 185, 129, 0.2);
-                            color: #10b981;
-                            padding: 3px 8px;
-                            border-radius: 4px;
-                            font-size: 0.8rem;
-                            font-weight: 600;
-                            margin-top: 6px;
-                        ">
-                            📈 +${change}% vs 2nd
-                        </div>
-                    ` : ''}
-                </div>
-            `;
+            const totalVolume = values.reduce((sum, v) => sum + v, 0);
+            const share = totalVolume > 0 ? Math.round((topValue / totalVolume) * 100) : null;
+
+            renderCard({
+                name: topName,
+                value: topValue,
+                color: topColor,
+                change,
+                share
+            });
             console.log('✓ Weekly Winner (fallback): Rendering card');
         });
 }
@@ -1161,7 +1172,7 @@ function initSourceProductivity() {
                 options: {
                     indexAxis: 'y',
                     responsive: true,
-                    maintainAspectRatio: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: { display: false }
                     },
@@ -1187,7 +1198,7 @@ function initSourceProductivity() {
                 options: {
                     indexAxis: 'y',
                     responsive: true,
-                    maintainAspectRatio: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: { display: false }
                     },
@@ -1242,22 +1253,37 @@ function initPublishingRhythm() {
                 chart.setOption(option);
             };
 
-            // Alternate: Vertical bar chart showing peak hours
+            // Alternate: Vertical bar chart showing peak hours (IMPROVED)
             const renderAlternate = (chart) => {
                 const maxValue = Math.max(...hourlyData);
                 const option = {
-                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-                    grid: { left: '3%', right: '10%', bottom: '15%', top: '10%', containLabel: true },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'shadow' },
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        textStyle: { color: '#f1f5f9', fontSize: 13, fontWeight: 600 },
+                        borderColor: '#e2e8f0'
+                    },
+                    grid: { left: '5%', right: '8%', bottom: '18%', top: '8%', containLabel: true },
                     xAxis: {
                         type: 'category',
                         data: hourLabels,
-                        axisLabel: { ...ECHART_TEXT_STYLE, rotate: 45, interval: 0 }
+                        axisLabel: {
+                            ...ECHART_TEXT_STYLE,
+                            rotate: 45,
+                            interval: 0,
+                            fontSize: 12,
+                            fontWeight: 600
+                        },
+                        axisLine: { lineStyle: { color: '#cbd5e1' } }
                     },
                     yAxis: {
                         type: 'value',
-                        name: 'Article Count',
-                        nameTextStyle: { ...ECHART_TEXT_STYLE },
-                        axisLabel: { ...ECHART_TEXT_STYLE }
+                        name: 'Articles Published',
+                        nameTextStyle: { ...ECHART_TEXT_STYLE, fontSize: 14, fontWeight: 700 },
+                        axisLabel: { ...ECHART_TEXT_STYLE, fontSize: 12 },
+                        axisLine: { lineStyle: { color: '#cbd5e1' } },
+                        splitLine: { lineStyle: { color: 'rgba(203, 213, 225, 0.3)' } }
                     },
                     series: [{
                         name: 'Articles',
@@ -1266,16 +1292,20 @@ function initPublishingRhythm() {
                             value: val,
                             itemStyle: {
                                 color: val === maxValue ? '#ef4444' : '#3b82f6',
-                                borderRadius: [4, 4, 0, 0]
+                                borderRadius: [6, 6, 0, 0],
+                                shadowColor: 'rgba(59, 130, 246, 0.3)',
+                                shadowBlur: 8
                             }
                         })),
                         label: {
                             show: true,
                             position: 'top',
                             formatter: '{c}',
-                            fontSize: 10,
-                            color: '#94a3b8'
-                        }
+                            fontSize: 13,
+                            fontWeight: 700,
+                            color: '#0f172a'
+                        },
+                        barWidth: '60%'
                     }]
                 };
                 chart.setOption(option);
@@ -1424,7 +1454,7 @@ function initWordcloud() {
 
             // Primary: Wordcloud
             const renderPrimary = (chartInstance) => {
-                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Visual Cloud (Hover for ranked list)';
+                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Visual Cloud';
 
                 const option = {
                     tooltip: {},
@@ -1437,8 +1467,8 @@ function initWordcloud() {
                         height: '100%',
                         right: null,
                         bottom: null,
-                        gridSize: 10, // Increased spacing for larger text
-                        sizeRange: [24, 56], // Significantly larger: 24px min, 56px max
+                        gridSize: 8, // Slightly tighter spacing for bigger glyphs
+                        sizeRange: [32, 72], // Larger font range for better readability
                         rotationRange: [0, 0], // No rotation - text is straight and readable
                         emphasis: {
                             focus: 'self',
@@ -1462,40 +1492,9 @@ function initWordcloud() {
                 chartInstance.setOption(option);
             };
 
-            // Alternate: Bar chart ranking words
-            const renderAlternate = (chartInstance) => {
-                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Ranked by Frequency (Hover for cloud view)';
-
-                const sortedWords = [...wordData].sort((a, b) => b.value - a.value).slice(0, 15);
-
-                const option = {
-                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-                    grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
-                    xAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
-                    yAxis: {
-                        type: 'category',
-                        data: sortedWords.map(w => w.name),
-                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
-                    },
-                    series: [{
-                        name: 'Frequency',
-                        type: 'bar',
-                        data: sortedWords.map((w, i) => ({
-                            value: w.value,
-                            itemStyle: {
-                                color: `hsl(${(i * 360 / sortedWords.length)}, 70%, 50%)`
-                            }
-                        })),
-                        label: { show: true, position: 'right', formatter: (v) => v.value }
-                    }]
-                };
-                chartInstance.setOption(option);
-            };
-
             console.log('✓ Wordcloud: Rendering primary view with', wordData.length, 'keywords');
             renderPrimary(chart);
-            console.log('✓ Wordcloud: Setting up dual-chart hover');
-            setupDualChartHover('wordcloud-chart', chart, renderPrimary, renderAlternate);
+            console.log('✓ Wordcloud: Displaying cloud only (bar view disabled)');
 
             window.addEventListener('resize', () => chart.resize());
         })
@@ -1516,7 +1515,7 @@ function initWordcloud() {
 
             // Primary: Wordcloud
             const renderPrimary = (chartInstance) => {
-                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Visual Cloud (Hover for ranked list)';
+                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Visual Cloud';
 
                 const option = {
                     tooltip: {},
@@ -1529,8 +1528,8 @@ function initWordcloud() {
                         height: '100%',
                         right: null,
                         bottom: null,
-                        gridSize: 10,
-                        sizeRange: [24, 56],
+                        gridSize: 8,
+                        sizeRange: [32, 72],
                         rotationRange: [0, 0], // Straight text
                         emphasis: {
                             focus: 'self',
@@ -1553,38 +1552,9 @@ function initWordcloud() {
                 chartInstance.setOption(option);
             };
 
-            // Alternate: Bar chart
-            const renderAlternate = (chartInstance) => {
-                if (titleEl) titleEl.textContent = '☁️ Trending Keywords - Ranked by Frequency (Hover for cloud view)';
-
-                const option = {
-                    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-                    grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
-                    xAxis: { type: 'value', axisLabel: { ...ECHART_TEXT_STYLE } },
-                    yAxis: {
-                        type: 'category',
-                        data: mockWords.map(w => w.name),
-                        axisLabel: { ...ECHART_TEXT_STYLE, fontWeight: 'bold' }
-                    },
-                    series: [{
-                        name: 'Frequency',
-                        type: 'bar',
-                        data: mockWords.map((w, i) => ({
-                            value: w.value,
-                            itemStyle: {
-                                color: `hsl(${(i * 360 / mockWords.length)}, 70%, 50%)`
-                            }
-                        })),
-                        label: { show: true, position: 'right', formatter: (v) => v.value }
-                    }]
-                };
-                chartInstance.setOption(option);
-            };
-
             console.log('✓ Wordcloud (fallback): Rendering primary view with', mockWords.length, 'keywords');
             renderPrimary(chart);
-            console.log('✓ Wordcloud (fallback): Setting up dual-chart hover');
-            setupDualChartHover('wordcloud-chart', chart, renderPrimary, renderAlternate);
+            console.log('✓ Wordcloud (fallback): Displaying cloud only (bar view disabled)');
         });
 }
 
