@@ -1,101 +1,65 @@
 {
-  "date": "2025-10-20",
+  "date": "2025-10-23",
   "surges": [
     {
-      "topic": "Climate",
-      "today": 0,
-      "yesterday": 3,
-      "change_pct": -100.0
-    },
-    {
-      "topic": "Gun Control",
-      "today": 0,
-      "yesterday": 6,
-      "change_pct": -100.0
-    },
-    {
-      "topic": "US Healthcare",
-      "today": 0,
+      "topic": "Tech",
+      "today": 10,
       "yesterday": 8,
-      "change_pct": -100.0
-    },
-    {
-      "topic": "NHS",
-      "today": 0,
-      "yesterday": 4,
-      "change_pct": -100.0
-    },
-    {
-      "topic": "Immigration",
-      "today": 0,
-      "yesterday": 5,
-      "change_pct": -100.0
-    },
-    {
-      "topic": "Corporate Drama",
-      "today": 2,
-      "yesterday": 25,
-      "change_pct": -92.0
-    },
-    {
-      "topic": "US Politics",
-      "today": 1,
-      "yesterday": 8,
-      "change_pct": -87.5
-    },
-    {
-      "topic": "Entertainment",
-      "today": 2,
-      "yesterday": 15,
-      "change_pct": -86.7
+      "change_pct": 25.0
     },
     {
       "topic": "Cost of Living",
-      "today": 3,
-      "yesterday": 18,
-      "change_pct": -83.3
+      "today": 10,
+      "yesterday": 8,
+      "change_pct": 25.0
     },
     {
-      "topic": "Science",
-      "today": 5,
-      "yesterday": 26,
-      "change_pct": -80.8
+      "topic": "Corporate Drama",
+      "today": 10,
+      "yesterday": 8,
+      "change_pct": 25.0
     },
     {
-      "topic": "Labor",
-      "today": 1,
-      "yesterday": 5,
-      "change_pct": -80.0
-    },
-    {
-      "topic": "Tech",
-      "today": 96,
-      "yesterday": 437,
-      "change_pct": -78.0
+      "topic": "Other",
+      "today": 10,
+      "yesterday": 8,
+      "change_pct": 25.0
     },
     {
       "topic": "International",
       "today": 10,
-      "yesterday": 42,
-      "change_pct": -76.2
+      "yesterday": 8,
+      "change_pct": 25.0
     },
     {
-      "topic": "Royal Family",
-      "today": 2,
-      "yesterday": 5,
-      "change_pct": -60.0
+      "topic": "Labor",
+      "today": 10,
+      "yesterday": 8,
+      "change_pct": 25.0
+    },
+    {
+      "topic": "Entertainment",
+      "today": 10,
+      "yesterday": 8,
+      "change_pct": 25.0
+    },
+    {
+      "topic": "Climate",
+      "today": 10,
+      "yesterday": 8,
+      "change_pct": 25.0
+    },
+    {
+      "topic": "NHS",
+      "today": 10,
+      "yesterday": 8,
+      "change_pct": 25.0
     },
     {
       "topic": "Brexit",
-      "today": 1,
-      "yesterday": 1,
-      "change_pct": 0.0
-    },
-    {
-      "topic": "UK Politics",
-      "today": 2,
-      "yesterday": 2,
-      "change_pct": 0.0
+      "today": 10,
+      "yesterday": 8,
+      "change_pct": 25.0
     }
   ]
 }
