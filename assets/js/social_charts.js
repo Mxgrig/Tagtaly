@@ -105,12 +105,15 @@ const MOCK_DATA = {
 
 // --- CHART 1: EMOTIONAL ROLLERCOASTER (Line Chart with Dual Hover) ---
 function initEmotionalRollercoaster() {
+    console.log('>>>>> initEmotionalRollercoaster called');
     const chartDom = document.getElementById('emotional-rollercoaster-chart');
+    console.log('chartDom found:', !!chartDom, chartDom);
     if (!chartDom) {
         console.warn('emotional-rollercoaster-chart not found');
         return;
     }
 
+    console.log('Starting fetch for sentiment_tracker.json');
     fetch('assets/data/sentiment_tracker.json')
         .then(r => r.json())
         .then(data => {

@@ -354,26 +354,36 @@
     <!-- Chart Initialization -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Chart initialization starting...');
+            console.log('===== CHART INIT STARTING =====');
             console.log('echarts available:', typeof echarts !== 'undefined');
             console.log('Chart.js available:', typeof Chart !== 'undefined');
+            console.log('ensureChartContainerSizes available:', typeof ensureChartContainerSizes !== 'undefined');
+            console.log('initEmotionalRollercoaster available:', typeof initEmotionalRollercoaster !== 'undefined');
 
             // Ensure containers are properly sized
-            ensureChartContainerSizes();
+            try {
+                ensureChartContainerSizes();
+            } catch(e) {
+                console.error('Error calling ensureChartContainerSizes:', e);
+            }
 
             // Initialize all charts
-            console.log('Initializing individual charts...');
-            initEmotionalRollercoaster();
-            initWeeklyWinner();
-            initSurgeAlert();
-            initMediaDivide();
-            initSentimentShowdown();
-            initCategoryDominance();
-            initSourceProductivity();
-            initPublishingRhythm();
-            initWordcloud();
-            initCrossSourceStories();
-            console.log('All chart init functions called');
+            console.log('===== CALLING INIT FUNCTIONS =====');
+            try {
+                initEmotionalRollercoaster();
+            } catch(e) {
+                console.error('Error in initEmotionalRollercoaster:', e);
+            }
+            try { initWeeklyWinner(); } catch(e) { console.error('initWeeklyWinner error:', e); }
+            try { initSurgeAlert(); } catch(e) { console.error('initSurgeAlert error:', e); }
+            try { initMediaDivide(); } catch(e) { console.error('initMediaDivide error:', e); }
+            try { initSentimentShowdown(); } catch(e) { console.error('initSentimentShowdown error:', e); }
+            try { initCategoryDominance(); } catch(e) { console.error('initCategoryDominance error:', e); }
+            try { initSourceProductivity(); } catch(e) { console.error('initSourceProductivity error:', e); }
+            try { initPublishingRhythm(); } catch(e) { console.error('initPublishingRhythm error:', e); }
+            try { initWordcloud(); } catch(e) { console.error('initWordcloud error:', e); }
+            try { initCrossSourceStories(); } catch(e) { console.error('initCrossSourceStories error:', e); }
+            console.log('===== ALL CHART INIT FUNCTIONS CALLED =====');
         });
     </script>
 </body>
