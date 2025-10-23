@@ -930,7 +930,7 @@
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <div class="chart-card-header-text">
-                            <h3 class="chart-card-title">News Mood</h3>
+                            <h3 class="chart-card-title" id="rollercoaster-title">News Mood</h3>
                             <p class="chart-card-description">Is today's news positive or negative? 7-day trend</p>
                         </div>
                         <div class="chart-share-buttons">
@@ -939,15 +939,15 @@
                             <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('sentiment')">🔗</button>
                         </div>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="sentiment-tracker-chart"></canvas>
+                    <div class="chart-container" style="height: 400px;">
+                        <div id="emotional-rollercoaster-chart" style="width: 100%; height: 100%;"></div>
                     </div>
                 </div>
 
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <div class="chart-card-header-text">
-                            <h3 class="chart-card-title">What's Getting More Attention?</h3>
+                            <h3 class="chart-card-title" id="surge-alert-title">What's Getting More Attention?</h3>
                             <p class="chart-card-description">Topics gaining coverage compared to yesterday</p>
                         </div>
                         <div class="chart-share-buttons">
@@ -956,19 +956,73 @@
                             <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('surges')">🔗</button>
                         </div>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="topic-surges-chart" ></canvas>
+                    <div class="chart-container" style="height: 400px;">
+                        <div id="surge-alert-chart" style="width: 100%; height: 100%;"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- ROW 2: CATEGORY DOMINANCE & SOURCE PRODUCTIVITY -->
+            <!-- ROW 2: WEEKLY WINNER & MEDIA DIVIDE -->
             <div class="charts-grid">
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <div class="chart-card-header-text">
+                            <h3 class="chart-card-title">Weekly Winner</h3>
+                            <p class="chart-card-description">Which category is dominating this week</p>
+                        </div>
+                        <div class="chart-share-buttons">
+                            <button class="chart-share-btn twitter" title="Share on Twitter" onclick="shareChart('winner', 'Weekly Winner Category')">𝕏</button>
+                            <button class="chart-share-btn linkedin" title="Share on LinkedIn" onclick="shareChart('winner', 'Weekly Winner Category', 'linkedin')">💼</button>
+                            <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('winner')">🔗</button>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 400px;">
+                        <div id="weekly-winner-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title" id="media-divide-title">Media Divide</h3>
+                            <p class="chart-card-description">Topic coverage by outlet type</p>
+                        </div>
+                        <div class="chart-share-buttons">
+                            <button class="chart-share-btn twitter" title="Share on Twitter" onclick="shareChart('mediadivide', 'Media Divide Coverage')">𝕏</button>
+                            <button class="chart-share-btn linkedin" title="Share on LinkedIn" onclick="shareChart('mediadivide', 'Media Divide Coverage', 'linkedin')">💼</button>
+                            <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('mediadivide')">🔗</button>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 400px;">
+                        <div id="media-divide-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 3: SENTIMENT SHOWDOWN & CATEGORY DOMINANCE -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
+                            <h3 class="chart-card-title" id="sentiment-showdown-title">Sentiment Showdown</h3>
+                            <p class="chart-card-description">How different topics are being covered</p>
+                        </div>
+                        <div class="chart-share-buttons">
+                            <button class="chart-share-btn twitter" title="Share on Twitter" onclick="shareChart('showdown', 'Sentiment Showdown')">𝕏</button>
+                            <button class="chart-share-btn linkedin" title="Share on LinkedIn" onclick="shareChart('showdown', 'Sentiment Showdown', 'linkedin')">💼</button>
+                            <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('showdown')">🔗</button>
+                        </div>
+                    </div>
+                    <div class="chart-container" style="height: 400px;">
+                        <div id="sentiment-showdown-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-card-header">
+                        <div class="chart-card-header-text">
                             <h3 class="chart-card-title">Types of Stories Today</h3>
-                            <p class="chart-card-description">Money, Lifestyle and Entertainment</p>
+                            <p class="chart-card-description">Topic distribution across coverage</p>
                         </div>
                         <div class="chart-share-buttons">
                             <button class="chart-share-btn twitter" title="Share on Twitter" onclick="shareChart('categories', 'Types of Stories Today')">𝕏</button>
@@ -976,11 +1030,14 @@
                             <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('categories')">🔗</button>
                         </div>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="category-dominance-chart" ></canvas>
+                    <div class="chart-container" style="height: 400px;">
+                        <div id="category-dominance-chart" style="width: 100%; height: 100%;"></div>
                     </div>
                 </div>
+            </div>
 
+            <!-- ROW 4: SOURCE PRODUCTIVITY & PUBLISHING RHYTHM -->
+            <div class="charts-grid">
                 <div class="chart-card">
                     <div class="chart-card-header">
                         <div class="chart-card-header-text">
@@ -993,28 +1050,8 @@
                             <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('sources')">🔗</button>
                         </div>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="source-productivity-chart" ></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ROW 3: OUTLET SENTIMENT & PUBLISHING RHYTHM -->
-            <div class="charts-grid">
-                <div class="chart-card">
-                    <div class="chart-card-header">
-                        <div class="chart-card-header-text">
-                            <h3 class="chart-card-title">Which Outlets Are More Positive?</h3>
-                            <p class="chart-card-description">Comparing editorial tone across news sources</p>
-                        </div>
-                        <div class="chart-share-buttons">
-                            <button class="chart-share-btn twitter" title="Share on Twitter" onclick="shareChart('outlets', 'Which Outlets Are More Positive?')">𝕏</button>
-                            <button class="chart-share-btn linkedin" title="Share on LinkedIn" onclick="shareChart('outlets', 'Which Outlets Are More Positive?', 'linkedin')">💼</button>
-                            <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('outlets')">🔗</button>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="outlet-sentiment-chart" ></canvas>
+                    <div class="chart-container" style="height: 400px;">
+                        <div id="source-productivity-chart" style="width: 100%; height: 100%;"></div>
                     </div>
                 </div>
 
@@ -1030,13 +1067,13 @@
                             <button class="chart-share-btn copy" title="Copy link" onclick="copyChartLink('rhythm')">🔗</button>
                         </div>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="publishing-rhythm-chart" ></canvas>
+                    <div class="chart-container" style="height: 400px;">
+                        <div id="publishing-rhythm-chart" style="width: 100%; height: 100%;"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- ROW 4: HEADLINE HEATMAP (React Island) -->
+            <!-- ROW 5: HEADLINE HEATMAP (Articles) -->
             <div class="charts-grid">
                 <div class="chart-card" style="grid-column: 1 / -1;">
                     <div class="chart-card-header">
@@ -1083,7 +1120,7 @@
                 <div class="chart-card" style="grid-column: 1 / -1;">
                     <div class="chart-card-header">
                         <div class="chart-card-header-text">
-                            <h3 class="chart-card-title">What's Being Talked About?</h3>
+                            <h3 class="chart-card-title" id="wordcloud-title">What's Being Talked About?</h3>
                             <p class="chart-card-description">The most frequently mentioned keywords in today's news</p>
                         </div>
                         <div class="chart-share-buttons">
@@ -1189,7 +1226,7 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2/dist/echarts-wordcloud.min.js" defer></script>
     <script src="assets/js/main.js" defer></script>
-    <script src="assets/js/charts.js" defer></script>
+    <script src="assets/js/social_charts.js" defer></script>
     <script src="assets/js/articles-loader.js" defer></script>
 
 
