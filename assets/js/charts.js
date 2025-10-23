@@ -51,13 +51,16 @@ async function renderSentimentChart() {
         const response = await fetch('assets/data/sentiment_tracker.json', { cache: 'no-store' });
         const data = await response.json();
 
-        const ctx = document.getElementById('sentiment-tracker-chart');
-        if (!ctx) return;
+        const canvasElement = document.getElementById('sentiment-tracker-chart');
+        if (!canvasElement) return;
 
-        // Convert canvas to div for ECharts
-        const container = ctx.parentElement;
-        container.innerHTML = '<div id="sentiment-chart-echarts" style="width:100%; height:400px;"></div>';
-        const echartsDiv = document.getElementById('sentiment-chart-echarts');
+        // Replace canvas with div for ECharts
+        const container = canvasElement.parentElement;
+        const echartsDiv = document.createElement('div');
+        echartsDiv.id = 'sentiment-chart-echarts';
+        echartsDiv.style.width = '100%';
+        echartsDiv.style.height = '400px';
+        container.replaceChild(echartsDiv, canvasElement);
 
         const dates = data.dates || ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
         const scores = data.mood_scores || [42.5, 38.2, 45.8, 52.3, 48.9, 55.2, 50.1];
@@ -68,7 +71,7 @@ async function renderSentimentChart() {
         const primaryOption = {
             tooltip: {
                 trigger: 'axis',
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
                 borderColor: '#fff',
                 textStyle: { color: '#fff', fontSize: 13, fontWeight: 500 }
             },
@@ -104,7 +107,7 @@ async function renderSentimentChart() {
                         { offset: 1, color: 'rgba(139, 92, 246, 0.01)' }
                     ])
                 },
-                emphasis: { itemStyle: { borderWidth: 3 } }
+                emphasis: { itemStyle: { borderWidth: 3, shadowBlur: 10 } }
             }]
         };
 
@@ -141,12 +144,15 @@ async function renderSurgesChart() {
         const response = await fetch('assets/data/topic_surges.json', { cache: 'no-store' });
         const data = await response.json();
 
-        const ctx = document.getElementById('topic-surges-chart');
-        if (!ctx) return;
+        const canvasElement = document.getElementById('topic-surges-chart');
+        if (!canvasElement) return;
 
-        const container = ctx.parentElement;
-        container.innerHTML = '<div id="surges-chart-echarts" style="width:100%; height:400px;"></div>';
-        const echartsDiv = document.getElementById('surges-chart-echarts');
+        const container = canvasElement.parentElement;
+        const echartsDiv = document.createElement('div');
+        echartsDiv.id = 'surges-chart-echarts';
+        echartsDiv.style.width = '100%';
+        echartsDiv.style.height = '400px';
+        container.replaceChild(echartsDiv, canvasElement);
 
         const surges = data.surges || [];
         const topics = surges.map(s => s.topic);
@@ -159,12 +165,12 @@ async function renderSurgesChart() {
         const primaryOption = {
             tooltip: {
                 trigger: 'axis',
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                textStyle: { color: '#fff' },
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                textStyle: { color: '#fff', fontWeight: 600 },
                 formatter: (params) => {
                     if (params.length > 0) {
                         const value = params[0].value;
-                        return `${params[0].name}<br/><strong>${value > 0 ? '+' : ''}${value.toFixed(1)}%</strong>`;
+                        return `<div style="font-weight: 600;">${params[0].name}</div><div style="margin-top: 4px;"><strong style="font-size: 14px;">${value > 0 ? '+' : ''}${value.toFixed(1)}%</strong></div>`;
                     }
                     return '';
                 }
@@ -181,14 +187,14 @@ async function renderSurgesChart() {
                 data: topics,
                 axisLine: { show: false },
                 axisTick: { show: false },
-                axisLabel: { ...TEXT_STYLE, fontWeight: 600, color: COLORS.neutral[700] }
+                axisLabel: { ...TEXT_STYLE, fontWeight: 700, color: COLORS.neutral[700], fontSize: 13 }
             },
             series: [{
                 name: 'Change %',
                 type: 'bar',
                 data: changes.map((v, i) => ({ value: v, itemStyle: { color: colors[i] } })),
-                itemStyle: { borderRadius: [0, 6, 6, 0] },
-                label: { show: true, position: 'right', formatter: '{c}%', fontWeight: 'bold' }
+                itemStyle: { borderRadius: [0, 8, 8, 0] },
+                label: { show: true, position: 'right', formatter: '{c}%', fontWeight: 'bold', color: COLORS.neutral[700] }
             }]
         };
 
@@ -196,10 +202,13 @@ async function renderSurgesChart() {
             ...primaryOption,
             series: [{
                 ...primaryOption.series[0],
-                name: 'Yesterday vs Today',
-                type: 'bar',
+                name: 'Articles Count',
+                data: surges.map((s, i) => ({
+                    value: s.change_pct,
+                    itemStyle: { color: COLORS.primary }
+                })),
                 label: { show: true, position: 'right', formatter: (params) => {
-                    const idx = topics.indexOf(params.name);
+                    const idx = surges.findIndex(s => s.topic === params.name);
                     return surges[idx] ? `${surges[idx].today} articles` : '';
                 }, fontWeight: 'bold' }
             }]
@@ -222,12 +231,15 @@ async function renderCategoryChart() {
         const response = await fetch('assets/data/category_dominance.json', { cache: 'no-store' });
         const data = await response.json();
 
-        const ctx = document.getElementById('category-dominance-chart');
-        if (!ctx) return;
+        const canvasElement = document.getElementById('category-dominance-chart');
+        if (!canvasElement) return;
 
-        const container = ctx.parentElement;
-        container.innerHTML = '<div id="category-chart-echarts" style="width:100%; height:400px;"></div>';
-        const echartsDiv = document.getElementById('category-chart-echarts');
+        const container = canvasElement.parentElement;
+        const echartsDiv = document.createElement('div');
+        echartsDiv.id = 'category-chart-echarts';
+        echartsDiv.style.width = '100%';
+        echartsDiv.style.height = '400px';
+        container.replaceChild(echartsDiv, canvasElement);
 
         const categories = data.categories || [
             { name: 'Tech', count: 234 },
@@ -252,23 +264,24 @@ async function renderCategoryChart() {
         const primaryOption = {
             tooltip: {
                 trigger: 'item',
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                textStyle: { color: '#fff' },
                 formatter: (params) => {
                     if (params.value) {
                         const total = seriesData.reduce((a, b) => a + b.value, 0);
                         const pct = ((params.value / total) * 100).toFixed(1);
-                        return `${params.name}<br/><strong>${params.value}</strong> (${pct}%)`;
+                        return `<div style="font-weight: 600;">${params.name}</div><div style="margin-top: 4px;"><strong>${params.value}</strong> articles (${pct}%)</div>`;
                     }
                     return '';
                 }
             },
-            legend: { bottom: 10, textStyle: { ...TEXT_STYLE, color: COLORS.neutral[700] } },
+            legend: { bottom: 10, textStyle: { ...TEXT_STYLE, color: COLORS.neutral[700], fontSize: 12 } },
             series: [{
                 name: 'Articles',
                 type: 'pie',
                 radius: ['40%', '70%'],
                 data: seriesData,
-                emphasis: { itemStyle: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0, 0, 0, 0.5)' } }
+                emphasis: { itemStyle: { shadowBlur: 15, shadowOffsetX: 0, shadowColor: 'rgba(0, 0, 0, 0.5)' } }
             }]
         };
 
@@ -276,7 +289,7 @@ async function renderCategoryChart() {
             ...primaryOption,
             series: [{
                 ...primaryOption.series[0],
-                radius: ['30%', '80%']
+                radius: ['25%', '85%']
             }]
         };
 
@@ -297,12 +310,15 @@ async function renderSourceChart() {
         const response = await fetch('assets/data/source_productivity.json', { cache: 'no-store' });
         const data = await response.json();
 
-        const ctx = document.getElementById('source-productivity-chart');
-        if (!ctx) return;
+        const canvasElement = document.getElementById('source-productivity-chart');
+        if (!canvasElement) return;
 
-        const container = ctx.parentElement;
-        container.innerHTML = '<div id="source-chart-echarts" style="width:100%; height:400px;"></div>';
-        const echartsDiv = document.getElementById('source-chart-echarts');
+        const container = canvasElement.parentElement;
+        const echartsDiv = document.createElement('div');
+        echartsDiv.id = 'source-chart-echarts';
+        echartsDiv.style.width = '100%';
+        echartsDiv.style.height = '400px';
+        container.replaceChild(echartsDiv, canvasElement);
 
         const sources = data.sources || [
             { source: 'BBC', articles: 87 },
@@ -315,10 +331,11 @@ async function renderSourceChart() {
         const primaryOption = {
             tooltip: {
                 trigger: 'axis',
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                textStyle: { color: '#fff', fontWeight: 600 },
                 formatter: (params) => {
                     if (params.length) {
-                        return `${params[0].name}<br/><strong>${params[0].value} articles</strong>`;
+                        return `<div style="font-weight: 600;">${params[0].name}</div><div style="margin-top: 4px;"><strong style="font-size: 14px;">${params[0].value} articles</strong></div>`;
                     }
                     return '';
                 }
@@ -328,7 +345,7 @@ async function renderSourceChart() {
                 type: 'category',
                 data: sources.map(s => s.source),
                 axisLine: { lineStyle: { color: COLORS.neutral[200] } },
-                axisLabel: { ...TEXT_STYLE, color: COLORS.neutral[600] }
+                axisLabel: { ...TEXT_STYLE, color: COLORS.neutral[600], fontWeight: 600 }
             },
             yAxis: {
                 type: 'value',
@@ -340,8 +357,8 @@ async function renderSourceChart() {
                 name: 'Articles',
                 type: 'bar',
                 data: sources.map(s => ({ value: s.articles, itemStyle: { color: COLORS.primary } })),
-                itemStyle: { borderRadius: [6, 6, 0, 0] },
-                label: { show: true, position: 'top', fontWeight: 'bold' }
+                itemStyle: { borderRadius: [8, 8, 0, 0] },
+                label: { show: true, position: 'top', fontWeight: 'bold', color: COLORS.neutral[700] }
             }]
         };
 
@@ -349,7 +366,7 @@ async function renderSourceChart() {
             ...primaryOption,
             series: [{
                 ...primaryOption.series[0],
-                itemStyle: { color: COLORS.cyan, borderRadius: [6, 6, 0, 0] }
+                itemStyle: { color: COLORS.cyan, borderRadius: [8, 8, 0, 0] }
             }]
         };
 
@@ -370,12 +387,15 @@ async function renderOutletChart() {
         const response = await fetch('assets/data/outlet_sentiment.json', { cache: 'no-store' });
         const data = await response.json();
 
-        const ctx = document.getElementById('outlet-sentiment-chart');
-        if (!ctx) return;
+        const canvasElement = document.getElementById('outlet-sentiment-chart');
+        if (!canvasElement) return;
 
-        const container = ctx.parentElement;
-        container.innerHTML = '<div id="outlet-chart-echarts" style="width:100%; height:400px;"></div>';
-        const echartsDiv = document.getElementById('outlet-chart-echarts');
+        const container = canvasElement.parentElement;
+        const echartsDiv = document.createElement('div');
+        echartsDiv.id = 'outlet-chart-echarts';
+        echartsDiv.style.width = '100%';
+        echartsDiv.style.height = '400px';
+        container.replaceChild(echartsDiv, canvasElement);
 
         const outlets = data.outlets || [
             { outlet: 'BBC', sentiment: 0.32 },
@@ -388,11 +408,12 @@ async function renderOutletChart() {
         const primaryOption = {
             tooltip: {
                 trigger: 'axis',
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                textStyle: { color: '#fff', fontWeight: 600 },
                 formatter: (params) => {
                     if (params.length) {
                         const v = params[0].value;
-                        return `${params[0].name}<br/><strong>${v > 0 ? '+' : ''}${v.toFixed(2)}</strong>`;
+                        return `<div style="font-weight: 600;">${params[0].name}</div><div style="margin-top: 4px;"><strong style="font-size: 14px;">${v > 0 ? '+' : ''}${v.toFixed(2)}</strong></div>`;
                     }
                     return '';
                 }
@@ -402,7 +423,7 @@ async function renderOutletChart() {
                 type: 'category',
                 data: outlets.map(o => o.outlet),
                 axisLine: { lineStyle: { color: COLORS.neutral[200] } },
-                axisLabel: { ...TEXT_STYLE, color: COLORS.neutral[600] }
+                axisLabel: { ...TEXT_STYLE, color: COLORS.neutral[600], fontWeight: 600 }
             },
             yAxis: {
                 type: 'value',
@@ -417,8 +438,8 @@ async function renderOutletChart() {
                     value: o.sentiment,
                     itemStyle: { color: o.sentiment > 0 ? COLORS.success : COLORS.danger }
                 })),
-                itemStyle: { borderRadius: [6, 6, 0, 0] },
-                label: { show: true, position: 'top', fontWeight: 'bold' }
+                itemStyle: { borderRadius: [8, 8, 0, 0] },
+                label: { show: true, position: 'top', fontWeight: 'bold', color: COLORS.neutral[700] }
             }]
         };
 
@@ -427,7 +448,7 @@ async function renderOutletChart() {
             series: [{
                 ...primaryOption.series[0],
                 name: 'Media Bias',
-                label: { show: true, position: 'top', formatter: (params) => outlets[params.dataIndex].outlet }
+                itemStyle: { color: COLORS.primary, borderRadius: [8, 8, 0, 0] }
             }]
         };
 
@@ -448,12 +469,15 @@ async function renderRhythmChart() {
         const response = await fetch('assets/data/publishing_rhythm.json', { cache: 'no-store' });
         const data = await response.json();
 
-        const ctx = document.getElementById('publishing-rhythm-chart');
-        if (!ctx) return;
+        const canvasElement = document.getElementById('publishing-rhythm-chart');
+        if (!canvasElement) return;
 
-        const container = ctx.parentElement;
-        container.innerHTML = '<div id="rhythm-chart-echarts" style="width:100%; height:400px;"></div>';
-        const echartsDiv = document.getElementById('rhythm-chart-echarts');
+        const container = canvasElement.parentElement;
+        const echartsDiv = document.createElement('div');
+        echartsDiv.id = 'rhythm-chart-echarts';
+        echartsDiv.style.width = '100%';
+        echartsDiv.style.height = '400px';
+        container.replaceChild(echartsDiv, canvasElement);
 
         const rhythm = data.hourly || [];
         const hours = rhythm.map((_, i) => i + ':00');
@@ -465,10 +489,11 @@ async function renderRhythmChart() {
         const primaryOption = {
             tooltip: {
                 trigger: 'axis',
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                textStyle: { color: '#fff', fontWeight: 600 },
                 formatter: (params) => {
                     if (params.length) {
-                        return `${params[0].name}<br/><strong>${params[0].value} articles</strong>`;
+                        return `<div style="font-weight: 600;">${params[0].name}</div><div style="margin-top: 4px;"><strong style="font-size: 14px;">${params[0].value} articles</strong></div>`;
                     }
                     return '';
                 }
@@ -500,7 +525,8 @@ async function renderRhythmChart() {
                         { offset: 0, color: 'rgba(59, 130, 246, 0.3)' },
                         { offset: 1, color: 'rgba(59, 130, 246, 0.01)' }
                     ])
-                }
+                },
+                emphasis: { itemStyle: { borderWidth: 3, shadowBlur: 10 } }
             }]
         };
 
@@ -532,11 +558,11 @@ async function renderRhythmChart() {
 // ============================================
 // DUAL-CHART HOVER FUNCTIONALITY
 // ============================================
-function setupDualChartHover(containerId, chartInstance, primaryOption, alternateOption) {
-    const container = document.getElementById(containerId)?.parentElement;
-    if (!container) return;
+function setupDualChartHover(canvasId, chartInstance, primaryOption, alternateOption) {
+    const canvasElement = document.getElementById(canvasId);
+    if (!canvasElement) return;
 
-    const card = container.closest('.chart-card');
+    const card = canvasElement.closest('.chart-card');
     if (!card) return;
 
     let isPrimary = true;
@@ -569,12 +595,14 @@ function initializeCharts() {
         return;
     }
 
+    console.log('Initializing Tagtaly charts...');
     renderSentimentChart();
     renderSurgesChart();
     renderCategoryChart();
     renderSourceChart();
     renderOutletChart();
     renderRhythmChart();
+    console.log('Charts initialized successfully');
 }
 
 // Run on document ready
