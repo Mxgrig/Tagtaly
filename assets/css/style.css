@@ -115,7 +115,6 @@ body {
     font-size: 0.95rem;
     transition: color 0.2s, border-color 0.2s;
     position: relative;
-    padding-bottom: 4px;
     border-bottom: 2px solid transparent;
 }
 
