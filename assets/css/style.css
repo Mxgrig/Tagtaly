@@ -318,15 +318,15 @@ body {
 
 .chart-container {
     padding: 2rem;
-    min-height: 300px;
+    min-height: 450px;
 }
 
 .chart-container--compact {
-    min-height: 250px;
+    min-height: 320px;
 }
 
 .chart-container--wordcloud {
-    min-height: 400px;
+    min-height: 500px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════ */
