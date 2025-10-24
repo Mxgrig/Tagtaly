@@ -1,40 +1,38 @@
 {
-  "headline": "\ud83c\uddfa\ud83c\uddf8 Donald Trump mentioned 2.8x more than Andrew Tate this week",
-  "type": "horizontal_bar",
-  "chart_type": "people_race_primary",
+  "headline": "\ud83c\udf0d What Global outlets are REALLY covering this week",
+  "type": "media_bars",
+  "chart_type": "media_bias_primary",
   "data": [
     {
-      "name": "Donald Trump",
-      "value": 96
+      "source": "CNN",
+      "topic": "Tech",
+      "count": 24
     },
     {
-      "name": "Andrew Tate",
-      "value": 34
+      "source": "CNN Entertainment",
+      "topic": "Other",
+      "count": 12
     },
     {
-      "name": "Joe Biden",
-      "value": 7
+      "source": "Fox News",
+      "topic": "Other",
+      "count": 8
     },
     {
-      "name": "Jeff Bezos",
-      "value": 6
+      "source": "Guardian",
+      "topic": "Tech",
+      "count": 100
     },
     {
-      "name": "Prince Harry",
-      "value": 5
+      "source": "Guardian Life",
+      "topic": "Tech",
+      "count": 18
     },
     {
-      "name": "Taylor Swift",
-      "value": 5
-    },
-    {
-      "name": "Kim Kardashian",
-      "value": 4
-    },
-    {
-      "name": "Elon Musk",
-      "value": 3
+      "source": "Independent",
+      "topic": "Tech",
+      "count": 16
     }
   ],
-  "virality_score": 5.647058823529412
+  "virality_score": 8
 }
