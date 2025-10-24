@@ -285,6 +285,19 @@ jobs:
           "
 
       # ============================================
+      # STEP 5.5: FETCH FRESH IMAGES DAILY
+      # ============================================
+      - name: Fetch fresh images from APIs
+        env:
+          NYTIMES_API_KEY: ${{ secrets.NYTIMES_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: |
+          echo "🖼️  Fetching fresh images from external APIs..."
+          cd src
+          python image_fetcher.py
+          echo "✓ Image fetching complete"
+
+      # ============================================
       # STEP 6: COPY ADDITIONAL DATA FILES
       # ============================================
       - name: Sync all assets/data files to docs
@@ -292,7 +305,7 @@ jobs:
           echo "🔄 Syncing all source data files..."
           mkdir -p docs/assets/data
 
-          # Copy all JSON files from assets/data
+          # Copy all JSON files from assets/data (including fresh images)
           cp -v assets/data/*.json docs/assets/data/ 2>/dev/null || true
 
           # Copy country-specific chart folders
@@ -361,8 +374,8 @@ Automated daily update of all page components:
 - Charts: Generated country-specific viral charts (UK, US, Global)
 - Dashboard: Updated sentiment_tracker, topic_surges, category_dominance
 - Word Cloud: Generated fresh keywords from today's headlines
+- Images: ✨ Fetched fresh images from NYTimes & Pexels APIs
 - Metadata: Updated page dates to reflect current date
-- Images: Page images updated (via frontend)
 
 Data timestamp: ${DATE}
 
