@@ -4,23 +4,43 @@
   "categories": [
     {
       "name": "Tech",
-      "count": 173
+      "count": 247
     },
     {
       "name": "Other",
-      "count": 103
+      "count": 158
     },
     {
       "name": "International",
-      "count": 15
+      "count": 22
     },
     {
       "name": "Cost of Living",
-      "count": 12
+      "count": 16
+    },
+    {
+      "name": "US Politics",
+      "count": 13
     },
     {
       "name": "Corporate Drama",
-      "count": 11
+      "count": 12
+    },
+    {
+      "name": "Science",
+      "count": 8
+    },
+    {
+      "name": "Labor",
+      "count": 6
+    },
+    {
+      "name": "UK Politics",
+      "count": 5
+    },
+    {
+      "name": "US Healthcare",
+      "count": 4
     }
   ]
 }
