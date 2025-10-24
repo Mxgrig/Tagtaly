@@ -1283,7 +1283,14 @@ function initSourceProductivity() {
                 throw new Error('Canvas context is not available');
             }
 
-            new Chart(canvas, {
+            // Get parent container dimensions
+            const parent = canvas.parentElement;
+            const width = parent.clientWidth;
+            const height = parent.clientHeight;
+
+            console.log('Canvas dimensions:', { width, height });
+
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -1291,6 +1298,8 @@ function initSourceProductivity() {
                         label: 'Articles Published',
                         data: values,
                         backgroundColor: '#3b82f6',
+                        borderColor: '#3b82f6',
+                        borderWidth: 0,
                         borderRadius: 4,
                         borderSkipped: false
                     }]
@@ -1300,10 +1309,24 @@ function initSourceProductivity() {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false }
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            padding: 12,
+                            titleColor: '#fff',
+                            bodyColor: '#fff'
+                        }
                     },
                     scales: {
-                        x: { beginAtZero: true }
+                        x: {
+                            beginAtZero: true,
+                            ticks: { color: '#6b7280' },
+                            grid: { color: '#e5e7eb' }
+                        },
+                        y: {
+                            ticks: { color: '#6b7280' },
+                            grid: { display: false }
+                        }
                     }
                 }
             });
