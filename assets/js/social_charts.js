@@ -1252,15 +1252,37 @@ function initCategoryDominance() {
 // --- CHART 7: SOURCE PRODUCTIVITY (Horizontal Bar) ---
 function initSourceProductivity() {
     const canvas = document.getElementById('source-productivity-chart');
-    if (!canvas) return;
+    if (!canvas) {
+        console.warn('source-productivity-chart canvas not found');
+        return;
+    }
+
+    // Wait for Chart.js to load
+    if (typeof Chart === 'undefined') {
+        console.warn('Chart.js not loaded, retrying in 100ms...');
+        setTimeout(initSourceProductivity, 100);
+        return;
+    }
 
     fetchDashboardJson('source_productivity.json')
         .then(r => r.json())
         .then(data => {
+            if (!data || !data.top_sources) {
+                throw new Error('Invalid data structure: missing top_sources');
+            }
+
             const sources = (data.top_sources || []).slice(0, 8);
             const labels = sources.map(s => s.source || 'Unknown');
             const values = sources.map(s => s.count || 0);
-            
+
+            console.log('✓ Source productivity chart data loaded:', labels);
+
+            // Ensure canvas context is available
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+                throw new Error('Canvas context is not available');
+            }
+
             new Chart(canvas, {
                 type: 'bar',
                 data: {
@@ -1285,32 +1307,46 @@ function initSourceProductivity() {
                     }
                 }
             });
+            console.log('✓ Source productivity chart rendered successfully');
         })
-        .catch(() => {
-            new Chart(canvas, {
-                type: 'bar',
-                data: {
-                    labels: MOCK_DATA.sources.labels,
-                    datasets: [{
-                        label: 'Articles Published',
-                        data: MOCK_DATA.sources.data,
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 4,
-                        borderSkipped: false
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
+        .catch((error) => {
+            console.warn('⚠️ Failed to load source_productivity.json, using mock data:', error);
+
+            // Ensure Chart is available before rendering mock data
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js still not available, cannot render mock data');
+                return;
+            }
+
+            try {
+                new Chart(canvas, {
+                    type: 'bar',
+                    data: {
+                        labels: MOCK_DATA.sources.labels,
+                        datasets: [{
+                            label: 'Articles Published',
+                            data: MOCK_DATA.sources.data,
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 4,
+                            borderSkipped: false
+                        }]
                     },
-                    scales: {
-                        x: { beginAtZero: true }
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { beginAtZero: true }
+                        }
                     }
-                }
-            });
+                });
+                console.log('✓ Rendered mock source productivity data');
+            } catch (chartError) {
+                console.error('Error rendering source productivity chart:', chartError);
+            }
         });
 }
 
