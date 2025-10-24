@@ -425,16 +425,23 @@ function initWeeklyWinner() {
         .then(data => {
             const categories = data.categories || [];
 
+            // Normalize data: handle both 'value' and 'count' properties
+            const normalized = categories.map(cat => ({
+                name: cat.name,
+                value: cat.value !== undefined ? cat.value : cat.count || 0,
+                color: cat.color || '#3b82f6'
+            }));
+
             // Find top category (highest value)
-            const topCategory = categories.length > 0
-                ? categories.reduce((a, b) => a.value > b.value ? a : b)
+            const topCategory = normalized.length > 0
+                ? normalized.reduce((a, b) => a.value > b.value ? a : b)
                 : { name: 'Unknown', value: 0, color: '#3b82f6' };
 
             // Calculate percentage change (comparing to second place)
-            const sorted = [...categories].sort((a, b) => b.value - a.value);
+            const sorted = [...normalized].sort((a, b) => b.value - a.value);
             const change = computeChange(sorted);
 
-            const totalVolume = categories.reduce((sum, item) => sum + (item.value || 0), 0);
+            const totalVolume = normalized.reduce((sum, item) => sum + (item.value || 0), 0);
             const share = totalVolume > 0 ? Math.round((topCategory.value / totalVolume) * 100) : null;
             const accent = topCategory.color || '#22d3ee';
 
