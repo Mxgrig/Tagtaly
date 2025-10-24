@@ -130,10 +130,11 @@ class DataProvider {
         const ukArticles = articles.filter(a => a.country === 'UK').length;
         const usArticles = articles.filter(a => a.country === 'US').length;
 
-        // Topic distribution
+        // Topic distribution (use display_topic if available, otherwise use topic)
         const topicCounts = {};
         articles.forEach(a => {
-            const topic = a.topic || 'Other';
+            // Use display_topic for "Other" category, otherwise use topic
+            const topic = (a.topic === 'Other' && a.display_topic) ? a.display_topic : (a.topic || 'Other');
             topicCounts[topic] = (topicCounts[topic] || 0) + 1;
         });
         

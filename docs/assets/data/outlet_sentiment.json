@@ -1,74 +1,109 @@
 {
-  "top_10": [
+  "date": "2025-10-24",
+  "outlets": [
     {
-      "source": "US Magazine",
-      "positive": 9,
-      "neutral": 9,
-      "negative": 1,
-      "mood_score": 42
+      "outlet": "Guardian",
+      "articles": 164,
+      "positive": 75,
+      "neutral": 70,
+      "negative": 19,
+      "positive_pct": 45
     },
     {
-      "source": "Independent",
-      "positive": 2,
-      "neutral": 5,
-      "negative": 0,
-      "mood_score": 29
-    },
-    {
-      "source": "Fox News",
-      "positive": 8,
-      "neutral": 13,
-      "negative": 4,
-      "mood_score": 16
-    },
-    {
-      "source": "Guardian",
-      "positive": 20,
-      "neutral": 15,
+      "outlet": "Fox News",
+      "articles": 60,
+      "positive": 21,
+      "neutral": 25,
       "negative": 14,
-      "mood_score": 12
+      "positive_pct": 35
     },
     {
-      "source": "Sky News",
-      "positive": 2,
-      "neutral": 5,
-      "negative": 1,
-      "mood_score": 12
-    },
-    {
-      "source": "BBC",
-      "positive": 5,
-      "neutral": 22,
-      "negative": 2,
-      "mood_score": 10
-    },
-    {
-      "source": "NY Times",
-      "positive": 1,
-      "neutral": 11,
+      "outlet": "NY Times",
+      "articles": 55,
+      "positive": 22,
+      "neutral": 28,
       "negative": 5,
-      "mood_score": -24
+      "positive_pct": 40
     },
     {
-      "source": "E! News",
+      "outlet": "Independent",
+      "articles": 53,
+      "positive": 15,
+      "neutral": 30,
+      "negative": 8,
+      "positive_pct": 28
+    },
+    {
+      "outlet": "Metro Lifestyle",
+      "articles": 40,
+      "positive": 18,
+      "neutral": 18,
+      "negative": 4,
+      "positive_pct": 45
+    },
+    {
+      "outlet": "NY Times Style",
+      "articles": 35,
+      "positive": 25,
+      "neutral": 10,
+      "negative": 0,
+      "positive_pct": 71
+    },
+    {
+      "outlet": "Washington Post",
+      "articles": 28,
+      "positive": 5,
+      "neutral": 18,
+      "negative": 5,
+      "positive_pct": 17
+    },
+    {
+      "outlet": "NPR",
+      "articles": 26,
+      "positive": 5,
+      "neutral": 19,
+      "negative": 2,
+      "positive_pct": 19
+    },
+    {
+      "outlet": "Sky News",
+      "articles": 16,
+      "positive": 2,
+      "neutral": 12,
+      "negative": 2,
+      "positive_pct": 12
+    },
+    {
+      "outlet": "Guardian Life",
+      "articles": 9,
+      "positive": 5,
+      "neutral": 3,
+      "negative": 1,
+      "positive_pct": 55
+    },
+    {
+      "outlet": "NY Times Travel",
+      "articles": 9,
+      "positive": 3,
+      "neutral": 4,
+      "negative": 2,
+      "positive_pct": 33
+    },
+    {
+      "outlet": "Telegraph Travel",
+      "articles": 3,
+      "positive": 2,
+      "neutral": 1,
+      "negative": 0,
+      "positive_pct": 66
+    },
+    {
+      "outlet": "NPR Food",
+      "articles": 2,
       "positive": 0,
-      "neutral": 5,
-      "negative": 3,
-      "mood_score": -38
+      "neutral": 2,
+      "negative": 0,
+      "positive_pct": 0
     }
-  ],
-  "most_positive": {
-    "source": "US Magazine",
-    "positive": 9,
-    "neutral": 9,
-    "negative": 1,
-    "mood_score": 42
-  },
-  "most_negative": {
-    "source": "E! News",
-    "positive": 0,
-    "neutral": 5,
-    "negative": 3,
-    "mood_score": -38
-  }
+  ]
 }

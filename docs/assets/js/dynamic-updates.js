@@ -127,6 +127,9 @@ function loadLiveHeadlines(data) {
             const articleDate = dataProvider.formatDate(article.published_date || article.fetched_at);
             const sentiment = article.sentiment || 'neutral';
             const sentimentBadge = sentiment === 'positive' ? '😊' : sentiment === 'negative' ? '😞' : '😐';
+            
+            // Use display_topic if available (shows subcategory for "Other" category)
+            const displayTopic = article.display_topic || article.topic || 'General';
 
             const element = document.createElement('div');
             element.className = 'headline-item';
@@ -137,7 +140,7 @@ function loadLiveHeadlines(data) {
                     <span class="sentiment-badge" title="${sentiment}">${sentimentBadge}</span>
                 </div>
                 <p class="headline-text">${article.headline}</p>
-                <p class="headline-topic"><span class="topic-tag">${article.topic || 'General'}</span></p>
+                <p class="headline-topic"><span class="topic-tag">${displayTopic}</span></p>
             `;
             container.appendChild(element);
         });
