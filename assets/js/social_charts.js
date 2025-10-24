@@ -1289,6 +1289,13 @@ function initSourceProductivity() {
             const height = parent.clientHeight;
 
             console.log('Canvas dimensions:', { width, height });
+            // CRITICAL FIX: Set explicit canvas dimensions before Chart.js init
+            canvas.style.width = "100%";
+            canvas.style.height = "100%";
+
+            // Also set actual width/height attributes for proper canvas rendering
+            canvas.width = width;
+            canvas.height = height;
 
             new Chart(ctx, {
                 type: 'bar',
