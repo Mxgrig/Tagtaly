@@ -1,0 +1,44 @@
+{
+  "headline": "\ud83c\udf0d What Global outlets are REALLY covering this week",
+  "type": "bias_indicator",
+  "chart_type": "media_bias_alternate",
+  "data": [
+    {
+      "source": "BBC",
+      "focus": "Other",
+      "intensity": 2.8,
+      "bias_color": "positive"
+    },
+    {
+      "source": "BBC Lifestyle",
+      "focus": "Other",
+      "intensity": 1.4,
+      "bias_color": "positive"
+    },
+    {
+      "source": "CNN",
+      "focus": "Tech",
+      "intensity": 2.7,
+      "bias_color": "positive"
+    },
+    {
+      "source": "CNN Entertainment",
+      "focus": "Other",
+      "intensity": 1.4,
+      "bias_color": "positive"
+    },
+    {
+      "source": "E! News",
+      "focus": "Tech",
+      "intensity": 2.1,
+      "bias_color": "positive"
+    },
+    {
+      "source": "Evening Standard Food",
+      "focus": "Tech",
+      "intensity": 0.4,
+      "bias_color": "neutral"
+    }
+  ],
+  "virality_score": 8
+}

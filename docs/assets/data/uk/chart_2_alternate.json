@@ -1,0 +1,44 @@
+{
+  "headline": "\ud83c\uddec\ud83c\udde7 What United Kingdom outlets are REALLY covering this week",
+  "type": "bias_indicator",
+  "chart_type": "media_bias_alternate",
+  "data": [
+    {
+      "source": "BBC",
+      "focus": "Other",
+      "intensity": 2.8,
+      "bias_color": "positive"
+    },
+    {
+      "source": "BBC Lifestyle",
+      "focus": "Other",
+      "intensity": 1.4,
+      "bias_color": "positive"
+    },
+    {
+      "source": "Evening Standard Food",
+      "focus": "Tech",
+      "intensity": 0.4,
+      "bias_color": "neutral"
+    },
+    {
+      "source": "Guardian",
+      "focus": "Tech",
+      "intensity": 33.8,
+      "bias_color": "positive"
+    },
+    {
+      "source": "Guardian Life",
+      "focus": "Tech",
+      "intensity": 2.0,
+      "bias_color": "positive"
+    },
+    {
+      "source": "Independent",
+      "focus": "Tech",
+      "intensity": 4.8,
+      "bias_color": "positive"
+    }
+  ],
+  "virality_score": 8
+}

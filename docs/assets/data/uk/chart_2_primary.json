@@ -1,0 +1,38 @@
+{
+  "headline": "\ud83c\uddec\ud83c\udde7 What United Kingdom outlets are REALLY covering this week",
+  "type": "media_bars",
+  "chart_type": "media_bias_primary",
+  "data": [
+    {
+      "source": "BBC",
+      "topic": "Other",
+      "count": 28
+    },
+    {
+      "source": "BBC Lifestyle",
+      "topic": "Other",
+      "count": 14
+    },
+    {
+      "source": "Evening Standard Food",
+      "topic": "Tech",
+      "count": 4
+    },
+    {
+      "source": "Guardian",
+      "topic": "Tech",
+      "count": 338
+    },
+    {
+      "source": "Guardian Life",
+      "topic": "Tech",
+      "count": 20
+    },
+    {
+      "source": "Independent",
+      "topic": "Tech",
+      "count": 48
+    }
+  ],
+  "virality_score": 8
+}

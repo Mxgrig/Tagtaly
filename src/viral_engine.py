@@ -63,7 +63,13 @@ def create_charts_for_country(country, date_str):
         int: Number of JSON chart pairs created
     """
     detector = StoryDetector(country=country)
-    json_generator = JSONChartGenerator()
+
+    # Create country-specific output directory
+    country_code = country.lower() if country else 'global'
+    output_dir = f"social_dashboard/assets/data/{country_code}"
+    os.makedirs(output_dir, exist_ok=True)
+
+    json_generator = JSONChartGenerator(output_dir=output_dir)
 
     country_name = get_country_config(country)['name'] if country else 'Global'
     print(f"\n🔍 Hunting for {country_name} viral story angles...")
@@ -83,7 +89,7 @@ def create_charts_for_country(country, date_str):
     charts_created = json_generator.generate_all_from_stories(stories[:4], country)
 
     print(f"   🎉 {charts_created} JSON charts created for {country_name}")
-    print(f"   📁 Location: social_dashboard/assets/data/")
+    print(f"   📁 Location: {output_dir}/")
 
     return charts_created
 
@@ -115,8 +121,11 @@ def generate_viral_content():
     total_charts += global_count
 
     print(f"\n✨ COMPLETE! Total {total_charts} interactive JSON charts generated!")
-    print(f"\n📂 Output location: social_dashboard/assets/data/")
-    print(f"📋 JSON files created: chart_1_primary.json, chart_1_alternate.json, ...")
+    print(f"\n📂 Output location: social_dashboard/assets/data/[country]/")
+    print(f"   - social_dashboard/assets/data/uk/")
+    print(f"   - social_dashboard/assets/data/us/")
+    print(f"   - social_dashboard/assets/data/global/")
+    print(f"📋 Each folder contains: chart_1_primary.json, chart_1_alternate.json, ...")
     print(f"🎨 Charts render in: social_dashboard/index.html with ECharts")
 
 if __name__ == "__main__":
