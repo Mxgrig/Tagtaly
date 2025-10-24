@@ -1,65 +1,69 @@
 {
+  "date": "2025-10-24",
   "top_sources": [
     {
-      "rank": 1,
       "source": "Guardian",
-      "count": 49,
-      "percentage": 28.5
+      "count": 164,
+      "positive": 75,
+      "neutral": 70,
+      "negative": 19,
+      "positive_pct": 45
     },
     {
-      "rank": 2,
-      "source": "BBC",
-      "count": 29,
-      "percentage": 16.9
-    },
-    {
-      "rank": 3,
       "source": "Fox News",
-      "count": 25,
-      "percentage": 14.5
+      "count": 60,
+      "positive": 21,
+      "neutral": 25,
+      "negative": 14,
+      "positive_pct": 35
     },
     {
-      "rank": 4,
-      "source": "US Magazine",
-      "count": 19,
-      "percentage": 11.0
-    },
-    {
-      "rank": 5,
       "source": "NY Times",
-      "count": 17,
-      "percentage": 9.9
+      "count": 55,
+      "positive": 22,
+      "neutral": 28,
+      "negative": 5,
+      "positive_pct": 40
     },
     {
-      "rank": 6,
-      "source": "Sky News",
-      "count": 8,
-      "percentage": 4.7
-    },
-    {
-      "rank": 7,
-      "source": "E! News",
-      "count": 8,
-      "percentage": 4.7
-    },
-    {
-      "rank": 8,
       "source": "Independent",
-      "count": 7,
-      "percentage": 4.1
+      "count": 53,
+      "positive": 15,
+      "neutral": 30,
+      "negative": 8,
+      "positive_pct": 28
     },
     {
-      "rank": 9,
+      "source": "Metro Lifestyle",
+      "count": 40,
+      "positive": 18,
+      "neutral": 18,
+      "negative": 4,
+      "positive_pct": 45
+    },
+    {
+      "source": "NY Times Style",
+      "count": 35,
+      "positive": 25,
+      "neutral": 10,
+      "negative": 0,
+      "positive_pct": 71
+    },
+    {
+      "source": "Washington Post",
+      "count": 28,
+      "positive": 5,
+      "neutral": 18,
+      "negative": 5,
+      "positive_pct": 17
+    },
+    {
       "source": "NPR",
-      "count": 3,
-      "percentage": 1.7
-    },
-    {
-      "rank": 10,
-      "source": "Guardian Life",
-      "count": 3,
-      "percentage": 1.7
+      "count": 26,
+      "positive": 5,
+      "neutral": 19,
+      "negative": 2,
+      "positive_pct": 19
     }
-  ],
-  "total_sources": 13
+  ]
 }
