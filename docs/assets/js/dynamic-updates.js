@@ -321,7 +321,7 @@ async function updateAllPageContent() {
         updateAllStatistics(data);
         loadLiveHeadlines(data);
         renderWordCloud(data);
-        renderOutletChart(data);
+        await renderOutletChart(data);
         updateSentimentCharts(data);
         updateTrendingTopics(data);
 
@@ -337,68 +337,72 @@ async function updateAllPageContent() {
 }
 
 /**
- * Render outlet/source productivity chart
+ * Render outlet/source productivity chart (async)
  */
-function renderOutletChart(data) {
+async function renderOutletChart(data) {
     try {
+        const container = document.getElementById('source-productivity-chart');
+        if (!container) {
+            console.warn('⚠️ Outlet chart container not found');
+            return;
+        }
+
         // Fetch outlet_sentiment.json
-        fetch('assets/data/outlet_sentiment.json', { cache: 'no-store' })
-            .then(r => r.json())
-            .then(outletData => {
-                if (!outletData.outlets || outletData.outlets.length === 0) {
-                    console.warn('⚠️ No outlet data available');
-                    return;
-                }
+        const response = await fetch('assets/data/outlet_sentiment.json', { cache: 'no-store' });
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        const outletData = await response.json();
 
-                const container = document.getElementById('source-productivity-chart');
-                if (!container) {
-                    console.warn('⚠️ Outlet chart container not found');
-                    return;
-                }
+        if (!outletData.outlets || outletData.outlets.length === 0) {
+            console.warn('⚠️ No outlet data available');
+            container.innerHTML = '<div style="padding: 20px; color: #6b7280;">No outlet data available</div>';
+            return;
+        }
 
-                // Clear container
-                container.innerHTML = '';
+        // Clear container
+        container.innerHTML = '';
 
-                // Create chart data for top outlets
-                const topOutlets = outletData.outlets.slice(0, 10);
-                const chartContainer = document.createElement('div');
-                chartContainer.style.cssText = 'padding: 20px; overflow-y: auto; height: 100%;';
+        // Create chart data for top outlets
+        const topOutlets = outletData.outlets.slice(0, 10);
+        const chartContainer = document.createElement('div');
+        chartContainer.style.cssText = 'padding: 20px; overflow-y: auto; height: 100%;';
 
-                topOutlets.forEach((outlet, index) => {
-                    const row = document.createElement('div');
-                    row.style.cssText = `
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 12px 0;
-                        border-bottom: 1px solid #e5e7eb;
-                        font-size: 14px;
-                    `;
+        topOutlets.forEach((outlet, index) => {
+            const row = document.createElement('div');
+            row.style.cssText = `
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 0;
+                border-bottom: 1px solid #e5e7eb;
+                font-size: 14px;
+            `;
 
-                    const barWidth = (outlet.articles / topOutlets[0].articles) * 100;
-                    const sentimentColor = outlet.positive_pct > 60 ? '#10b981' : outlet.positive_pct > 40 ? '#f59e0b' : '#ef4444';
+            const barWidth = (outlet.articles / topOutlets[0].articles) * 100;
+            const sentimentColor = outlet.positive_pct > 60 ? '#10b981' : outlet.positive_pct > 40 ? '#f59e0b' : '#ef4444';
 
-                    row.innerHTML = `
-                        <div style="width: 30%; font-weight: 600;">${outlet.outlet}</div>
-                        <div style="width: 50%;">
-                            <div style="background: #e5e7eb; border-radius: 4px; overflow: hidden; height: 24px; position: relative;">
-                                <div style="background: ${sentimentColor}; height: 100%; width: ${barWidth}%; transition: width 0.3s ease;"></div>
-                                <span style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-weight: 600; color: ${barWidth > 50 ? 'white' : '#374151'}; font-size: 12px;">${outlet.articles}</span>
-                            </div>
-                        </div>
-                        <div style="width: 20%; text-align: right; font-weight: 600; color: ${sentimentColor};">${outlet.positive_pct}%</div>
-                    `;
-                    chartContainer.appendChild(row);
-                });
+            row.innerHTML = `
+                <div style="width: 30%; font-weight: 600;">${outlet.outlet}</div>
+                <div style="width: 50%;">
+                    <div style="background: #e5e7eb; border-radius: 4px; overflow: hidden; height: 24px; position: relative;">
+                        <div style="background: ${sentimentColor}; height: 100%; width: ${barWidth}%; transition: width 0.3s ease;"></div>
+                        <span style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-weight: 600; color: ${barWidth > 50 ? 'white' : '#374151'}; font-size: 12px;">${outlet.articles}</span>
+                    </div>
+                </div>
+                <div style="width: 20%; text-align: right; font-weight: 600; color: ${sentimentColor};">${outlet.positive_pct}%</div>
+            `;
+            chartContainer.appendChild(row);
+        });
 
-                container.appendChild(chartContainer);
-                console.log(`📊 Outlet chart rendered with ${topOutlets.length} outlets`);
-            })
-            .catch(err => {
-                console.error('Error loading outlet data:', err);
-            });
+        container.appendChild(chartContainer);
+        console.log(`📊 Outlet chart rendered with ${topOutlets.length} outlets`);
     } catch (error) {
         console.error('Error rendering outlet chart:', error);
+        const container = document.getElementById('source-productivity-chart');
+        if (container) {
+            container.innerHTML = `<div style="padding: 20px; color: #ef4444;">Error loading outlet data: ${error.message}</div>`;
+        }
     }
 }
 
