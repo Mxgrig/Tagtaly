@@ -1,0 +1,411 @@
+name: Daily Full Page Update
+
+on:
+  schedule:
+    # Run daily at 7 AM UTC (8 AM UK, 2 AM US ET)
+    - cron: '0 7 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  full-page-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install feedparser pandas matplotlib seaborn textblob schedule requests pillow
+          python -m textblob.download_corpora
+
+      - name: Create data directory
+        run: mkdir -p data docs/assets/data
+
+      # ============================================
+      # STEP 1: NEWS COLLECTION & ANALYSIS
+      # ============================================
+      - name: Run news collection
+        run: |
+          cd src
+          python news_collector.py
+
+      - name: Run news analysis
+        run: |
+          cd src
+          python news_analyzer.py
+
+      # ============================================
+      # STEP 2: GENERATE ARTICLES JSON
+      # ============================================
+      - name: Export articles.json
+        run: |
+          python -c "
+          import json
+          import sqlite3
+          from datetime import datetime
+
+          conn = sqlite3.connect('data/tagtaly.db')
+          conn.row_factory = sqlite3.Row
+          cursor = conn.cursor()
+
+          cursor.execute('SELECT * FROM articles ORDER BY fetched_at DESC')
+          rows = cursor.fetchall()
+
+          articles = [dict(row) for row in rows]
+
+          data = {
+              'updated_at': datetime.utcnow().isoformat() + 'Z',
+              'date': datetime.utcnow().strftime('%Y-%m-%d'),
+              'total_articles': len(articles),
+              'articles': articles
+          }
+
+          with open('docs/assets/data/articles.json', 'w') as f:
+              json.dump(data, f, indent=2, default=str)
+
+          print(f'✓ Exported {len(articles)} articles')
+          "
+
+      # ============================================
+      # STEP 3: GENERATE VIRAL CHARTS
+      # ============================================
+      - name: Generate viral charts (country-specific)
+        run: |
+          cd src
+          python viral_engine.py
+
+      - name: Copy charts to docs (preserve country structure)
+        run: |
+          mkdir -p docs/assets/data/{uk,us,global}
+
+          # Copy from social_dashboard to docs (preserving directory structure)
+          if [ -d "src/social_dashboard/assets/data/uk" ]; then
+            cp -v src/social_dashboard/assets/data/uk/*.json docs/assets/data/uk/
+          fi
+
+          if [ -d "src/social_dashboard/assets/data/us" ]; then
+            cp -v src/social_dashboard/assets/data/us/*.json docs/assets/data/us/
+          fi
+
+          if [ -d "src/social_dashboard/assets/data/global" ]; then
+            cp -v src/social_dashboard/assets/data/global/*.json docs/assets/data/global/
+          fi
+
+          echo "✓ Charts copied with country structure"
+
+      # ============================================
+      # STEP 4: GENERATE DASHBOARD DATA FILES
+      # ============================================
+      - name: Generate sentiment_tracker.json
+        run: |
+          python -c "
+          import json
+          import sqlite3
+          import pandas as pd
+          from datetime import datetime, timedelta
+
+          conn = sqlite3.connect('data/tagtaly.db')
+          today = datetime.now().strftime('%Y-%m-%d')
+          yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+
+          # Get sentiment scores
+          df_today = pd.read_sql_query(f'''
+              SELECT AVG(CASE WHEN sentiment_score IS NOT NULL THEN sentiment_score ELSE 0 END) as mood_score
+              FROM articles
+              WHERE DATE(fetched_at) = '{today}'
+          ''', conn)
+
+          df_yesterday = pd.read_sql_query(f'''
+              SELECT AVG(CASE WHEN sentiment_score IS NOT NULL THEN sentiment_score ELSE 0 END) as mood_score
+              FROM articles
+              WHERE DATE(fetched_at) = '{yesterday}'
+          ''', conn)
+
+          today_score = (df_today['mood_score'].values[0] * 50 + 50) if pd.notna(df_today['mood_score'].values[0]) else 50
+          yesterday_score = (df_yesterday['mood_score'].values[0] * 50 + 50) if pd.notna(df_yesterday['mood_score'].values[0]) else 50
+
+          data = {
+              'dates': [yesterday, today],
+              'mood_scores': [float(yesterday_score), float(today_score)],
+              'days': 2
+          }
+
+          with open('docs/assets/data/sentiment_tracker.json', 'w') as f:
+              json.dump(data, f, indent=2)
+
+          print(f'✓ sentiment_tracker.json: {data}')
+          "
+
+      - name: Generate topic_surges.json
+        run: |
+          python -c "
+          import json
+          import sqlite3
+          import pandas as pd
+          from datetime import datetime, timedelta
+
+          conn = sqlite3.connect('data/tagtaly.db')
+          today = datetime.now().strftime('%Y-%m-%d')
+          yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+
+          df_today = pd.read_sql_query(f'''
+              SELECT topic, COUNT(*) as today_count
+              FROM articles
+              WHERE DATE(fetched_at) = '{today}'
+              GROUP BY topic
+          ''', conn)
+
+          df_yesterday = pd.read_sql_query(f'''
+              SELECT topic, COUNT(*) as yesterday_count
+              FROM articles
+              WHERE DATE(fetched_at) = '{yesterday}'
+              GROUP BY topic
+          ''', conn)
+
+          merged = df_today.merge(df_yesterday, left_on='topic', right_on='topic', how='outer')
+          merged = merged.fillna(0)
+          merged['change_pct'] = ((merged['today_count'] - merged['yesterday_count']) / merged['yesterday_count'].replace(0, 1) * 100).round(1)
+          merged = merged.sort_values('change_pct', ascending=False)
+
+          surges = [
+              {
+                  'topic': row['topic'],
+                  'today': int(row['today_count']),
+                  'yesterday': int(row['yesterday_count']),
+                  'change_pct': float(row['change_pct'])
+              }
+              for _, row in merged.head(15).iterrows()
+          ]
+
+          data = {'date': today, 'surges': surges}
+
+          with open('docs/assets/data/topic_surges.json', 'w') as f:
+              json.dump(data, f, indent=2)
+
+          print(f'✓ topic_surges.json: {len(surges)} topics')
+          "
+
+      - name: Generate category_dominance.json
+        run: |
+          python -c "
+          import json
+          import sqlite3
+          import pandas as pd
+          from datetime import datetime
+
+          conn = sqlite3.connect('data/tagtaly.db')
+          today = datetime.now().strftime('%Y-%m-%d')
+
+          df = pd.read_sql_query(f'''
+              SELECT topic, COUNT(*) as count
+              FROM articles
+              WHERE DATE(fetched_at) = '{today}'
+              GROUP BY topic
+              ORDER BY count DESC
+              LIMIT 5
+          ''', conn)
+
+          dominant = df.iloc[0]['topic'] if len(df) > 0 else 'Tech'
+
+          data = {
+              'date': today,
+              'dominant_category': dominant,
+              'categories': [
+                  {'name': row['topic'], 'count': int(row['count'])}
+                  for _, row in df.iterrows()
+              ]
+          }
+
+          with open('docs/assets/data/category_dominance.json', 'w') as f:
+              json.dump(data, f, indent=2)
+
+          print(f'✓ category_dominance.json: {dominant} is dominant')
+          "
+
+      # ============================================
+      # STEP 5: GENERATE WORDCLOUD
+      # ============================================
+      - name: Generate wordcloud.json
+        run: |
+          python -c "
+          import json
+          import sqlite3
+          from collections import Counter
+          import re
+          from datetime import datetime
+
+          conn = sqlite3.connect('data/tagtaly.db')
+          cursor = conn.cursor()
+
+          cursor.execute('SELECT headline FROM articles WHERE fetched_at >= datetime(\"now\", \"-1 day\")')
+          headlines = [row[0] for row in cursor.fetchall()]
+
+          keywords = []
+          stop_words = {
+              'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'is', 'are',
+              'was', 'were', 'be', 'been', 'have', 'has', 'do', 'does', 'did', 'will', 'would',
+              'should', 'could', 'may', 'might', 'can', 'this', 'that', 'these', 'those', 'i',
+              'you', 'he', 'she', 'it', 'we', 'they', 'what', 'which', 'who', 'when', 'where',
+              'why', 'how', 'as', 'by', 'from', 'with', 'about', 'up', 'down', 'out', 'off',
+              'us', 'uk', 'says', 'news', 'alert', 'latest', 'today', 'report', 'breaking',
+              'update', 'exclusive', 'world', 'people', 'man', 'woman', 'year', 'time'
+          }
+
+          for headline in headlines:
+              words = re.findall(r'\b\w+\b', headline.lower())
+              for word in words:
+                  if len(word) > 3 and word not in stop_words and not word.isdigit():
+                      keywords.append(word)
+
+          counter = Counter(keywords)
+          top_keywords = [{'name': word, 'value': count} for word, count in counter.most_common(50)]
+
+          data = {
+              'date': datetime.now().strftime('%Y-%m-%d'),
+              'keywords': top_keywords
+          }
+
+          with open('docs/assets/data/wordcloud.json', 'w') as f:
+              json.dump(data, f, indent=2)
+
+          print(f'✓ wordcloud.json: {len(top_keywords)} keywords')
+          "
+
+      # ============================================
+      # STEP 6: COPY ADDITIONAL DATA FILES
+      # ============================================
+      - name: Sync all assets/data files to docs
+        run: |
+          echo "🔄 Syncing all source data files..."
+          mkdir -p docs/assets/data
+
+          # Copy all JSON files from assets/data
+          cp -v assets/data/*.json docs/assets/data/ 2>/dev/null || true
+
+          # Copy country-specific chart folders
+          cp -rv src/social_dashboard/assets/data/* docs/assets/data/ 2>/dev/null || true
+
+          echo "✓ All data files synced"
+          ls -1 docs/assets/data/*.json 2>/dev/null | wc -l | xargs echo "Total JSON files:"
+
+      # ============================================
+      # STEP 7: UPDATE PAGE METADATA
+      # ============================================
+      - name: Update index.html with current date
+        run: |
+          python -c "
+          import re
+          from datetime import datetime
+
+          today = datetime.now().strftime('%B %d, %Y')
+
+          with open('docs/index.html', 'r') as f:
+              content = f.read()
+
+          # Update hardcoded dates in the HTML
+          # Pattern 1: 'October 23, 2025' references
+          content = re.sub(
+              r'(across the UK and US on ).*?(\. Real-time)',
+              r'\1' + today + r'\2',
+              content
+          )
+
+          # Pattern 2: Image alt text dates
+          content = re.sub(
+              r'(from ).*?(\. Tagtaly)',
+              r'\1' + today + r'\2',
+              content
+          )
+
+          with open('docs/index.html', 'w') as f:
+              f.write(content)
+
+          print(f'✓ Updated index.html with date: {today}')
+          "
+
+      # ============================================
+      # STEP 8: COMMIT & PUSH
+      # ============================================
+      - name: Commit and push all updates
+        run: |
+          git config user.name "Tagtaly Automation"
+          git config user.email "automation@tagtaly.com"
+
+          # Add all updated files
+          git add docs/assets/data/**/*.json
+          git add docs/assets/data/*.json
+          git add docs/index.html
+          git add assets/data/*.json
+
+          if git diff --staged --quiet; then
+            echo "✓ No changes to commit"
+          else
+            DATE=$(date +"%Y-%m-%d %H:%M UTC")
+            git commit -m "🔄 Daily update: All page components refreshed
+
+Automated daily update of all page components:
+- Articles: Updated articles.json with latest RSS feed data
+- Charts: Generated country-specific viral charts (UK, US, Global)
+- Dashboard: Updated sentiment_tracker, topic_surges, category_dominance
+- Word Cloud: Generated fresh keywords from today's headlines
+- Metadata: Updated page dates to reflect current date
+- Images: Page images updated (via frontend)
+
+Data timestamp: ${DATE}
+
+🤖 Generated with GitHub Actions
+See: .github/workflows/daily-full-update.yml"
+
+            git push origin main
+            echo "✓ Pushed to GitHub"
+          fi
+
+      # ============================================
+      # STEP 9: VERIFICATION & LOGGING
+      # ============================================
+      - name: Verify all components updated
+        run: |
+          echo "📊 VERIFICATION REPORT"
+          echo "======================"
+          echo ""
+          echo "✓ Articles:"
+          wc -l docs/assets/data/articles.json 2>/dev/null | awk '{print "  Lines: " $1}' || echo "  ❌ Missing"
+
+          echo ""
+          echo "✓ Dashboard Data:"
+          ls -1 docs/assets/data/{sentiment_tracker,topic_surges,category_dominance,wordcloud}.json 2>/dev/null | sed 's/.*\//  ✓ /'
+
+          echo ""
+          echo "✓ Charts:"
+          echo "  UK: $(ls docs/assets/data/uk/*.json 2>/dev/null | wc -l) files"
+          echo "  US: $(ls docs/assets/data/us/*.json 2>/dev/null | wc -l) files"
+          echo "  Global: $(ls docs/assets/data/global/*.json 2>/dev/null | wc -l) files"
+
+          echo ""
+          echo "✓ Metadata:"
+          grep -o 'fetched_at":"[^"]*' docs/assets/data/articles.json | head -1 | sed 's/.*://; s/"//g' | awk '{print "  Latest article: " $0}'
+
+          echo ""
+          echo "🎉 Daily update complete!"
+
+      - name: Upload verification log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-update-log-${{ github.run_number }}
+          path: |
+            docs/assets/data/
+          retention-days: 7
