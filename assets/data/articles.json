@@ -13,7 +13,7 @@
       "fetched_at": "2025-10-22T07:23:50.399482",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -28,7 +28,7 @@
       "fetched_at": "2025-10-22T07:23:50.399457",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "neutral",
       "sentiment_score": -0.0017045454545454586,
       "viral_score": 10.0
@@ -43,7 +43,7 @@
       "fetched_at": "2025-10-22T07:23:50.399433",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "negative",
       "sentiment_score": -0.2333333333333333,
       "viral_score": 10.0
@@ -58,7 +58,7 @@
       "fetched_at": "2025-10-22T07:23:50.399418",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 17.0
@@ -88,7 +88,7 @@
       "fetched_at": "2025-10-22T07:23:50.399356",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.08333333333333333,
       "viral_score": 15.0
@@ -103,7 +103,7 @@
       "fetched_at": "2025-10-22T07:23:50.399309",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.19545454545454546,
       "viral_score": 0.0
@@ -118,7 +118,7 @@
       "fetched_at": "2025-10-22T07:23:50.399289",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.5125,
       "viral_score": 15.0
@@ -133,7 +133,7 @@
       "fetched_at": "2025-10-22T07:23:50.399243",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.02662337662337661,
       "viral_score": 0.0
@@ -253,7 +253,7 @@
       "fetched_at": "2025-10-22T07:23:50.334733",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": -0.021666666666666667,
       "viral_score": 10.0
@@ -328,7 +328,7 @@
       "fetched_at": "2025-10-22T07:23:50.334672",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.17222222222222225,
       "viral_score": 10.0
@@ -373,7 +373,7 @@
       "fetched_at": "2025-10-22T07:23:50.334641",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.6,
       "viral_score": 0.0
@@ -388,7 +388,7 @@
       "fetched_at": "2025-10-22T07:23:50.334631",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -403,7 +403,7 @@
       "fetched_at": "2025-10-22T07:23:50.334622",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.3242424242424242,
       "viral_score": 15.0
@@ -433,7 +433,7 @@
       "fetched_at": "2025-10-22T07:23:50.334593",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "neutral",
       "sentiment_score": -0.026666666666666672,
       "viral_score": 0.0
@@ -448,7 +448,7 @@
       "fetched_at": "2025-10-22T07:23:50.334579",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.37916666666666665,
       "viral_score": 10.0
@@ -478,7 +478,7 @@
       "fetched_at": "2025-10-22T07:23:50.334548",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "negative",
       "sentiment_score": -0.21250000000000002,
       "viral_score": 0.0
@@ -553,7 +553,7 @@
       "fetched_at": "2025-10-22T07:23:50.334461",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.3,
       "viral_score": 10.0
@@ -598,7 +598,7 @@
       "fetched_at": "2025-10-22T07:23:50.334168",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": -0.05555555555555556,
       "viral_score": 7.0
@@ -658,7 +658,7 @@
       "fetched_at": "2025-10-22T07:23:50.122280",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.3333333333333333,
       "viral_score": 0.0
@@ -673,7 +673,7 @@
       "fetched_at": "2025-10-22T07:23:50.122270",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": -0.1,
       "viral_score": 0.0
@@ -898,7 +898,7 @@
       "fetched_at": "2025-10-22T07:23:50.053102",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.05555555555555555,
       "viral_score": 10.0
@@ -928,7 +928,7 @@
       "fetched_at": "2025-10-22T07:23:50.053041",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "neutral",
       "sentiment_score": 0.03333333333333333,
       "viral_score": 0.0
@@ -943,7 +943,7 @@
       "fetched_at": "2025-10-22T07:23:50.053031",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -1033,7 +1033,7 @@
       "fetched_at": "2025-10-22T07:23:50.052961",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.03333333333333333,
       "viral_score": 15.0
@@ -1078,7 +1078,7 @@
       "fetched_at": "2025-10-22T07:23:50.052930",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "negative",
       "sentiment_score": -0.4,
       "viral_score": 16.0
@@ -1093,7 +1093,7 @@
       "fetched_at": "2025-10-22T07:23:50.052917",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.4666666666666666,
       "viral_score": 0.0
@@ -1153,7 +1153,7 @@
       "fetched_at": "2025-10-22T07:23:50.052875",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.29,
       "viral_score": 0.0
@@ -1168,7 +1168,7 @@
       "fetched_at": "2025-10-22T07:23:50.052859",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.25,
       "viral_score": 10.0
@@ -1183,7 +1183,7 @@
       "fetched_at": "2025-10-22T07:23:50.052848",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": 0.1,
       "viral_score": 10.0
@@ -1213,7 +1213,7 @@
       "fetched_at": "2025-10-22T07:23:50.052828",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.14772727272727273,
       "viral_score": 10.0
@@ -1243,7 +1243,7 @@
       "fetched_at": "2025-10-22T07:23:50.052798",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "negative",
       "sentiment_score": -0.22121212121212122,
       "viral_score": 0.0
@@ -1258,7 +1258,7 @@
       "fetched_at": "2025-10-22T07:23:50.052784",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.25,
       "viral_score": 10.0
@@ -1273,7 +1273,7 @@
       "fetched_at": "2025-10-22T07:23:50.052773",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -1288,7 +1288,7 @@
       "fetched_at": "2025-10-22T07:23:50.052754",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 10.0
@@ -1318,7 +1318,7 @@
       "fetched_at": "2025-10-22T07:23:50.052724",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "negative",
       "sentiment_score": -0.2,
       "viral_score": 0.0
@@ -1348,7 +1348,7 @@
       "fetched_at": "2025-10-22T07:23:50.052702",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Education",
       "sentiment": "positive",
       "sentiment_score": 0.21212121212121213,
       "viral_score": 20.0
@@ -1378,7 +1378,7 @@
       "fetched_at": "2025-10-22T07:23:50.052675",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Education",
       "sentiment": "positive",
       "sentiment_score": 0.22,
       "viral_score": 17.0
@@ -1393,7 +1393,7 @@
       "fetched_at": "2025-10-22T07:23:50.052664",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.14962121212121213,
       "viral_score": 10.0
@@ -1408,7 +1408,7 @@
       "fetched_at": "2025-10-22T07:23:50.052653",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "neutral",
       "sentiment_score": 0.061212121212121204,
       "viral_score": 0.0
@@ -1468,7 +1468,7 @@
       "fetched_at": "2025-10-22T07:23:50.052579",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.275,
       "viral_score": 0.0
@@ -1483,7 +1483,7 @@
       "fetched_at": "2025-10-22T07:23:50.052543",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.55,
       "viral_score": 10.0
@@ -1498,7 +1498,7 @@
       "fetched_at": "2025-10-22T07:23:50.052526",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.55,
       "viral_score": 10.0
@@ -1543,7 +1543,7 @@
       "fetched_at": "2025-10-22T07:23:50.052175",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.28409090909090906,
       "viral_score": 10.0
@@ -1573,7 +1573,7 @@
       "fetched_at": "2025-10-22T07:23:49.959038",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Science & Medical",
       "sentiment": "positive",
       "sentiment_score": 0.3090909090909091,
       "viral_score": 0.0
@@ -1783,7 +1783,7 @@
       "fetched_at": "2025-10-22T07:23:49.753704",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "negative",
       "sentiment_score": -0.3,
       "viral_score": 18.0
@@ -1813,7 +1813,7 @@
       "fetched_at": "2025-10-22T07:23:49.753674",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": -0.08499999999999999,
       "viral_score": 22.0
@@ -1858,7 +1858,7 @@
       "fetched_at": "2025-10-22T07:23:49.753643",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.4125,
       "viral_score": 0.0
@@ -1888,7 +1888,7 @@
       "fetched_at": "2025-10-22T07:23:49.753614",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": 0.06818181818181818,
       "viral_score": 10.0
@@ -1933,7 +1933,7 @@
       "fetched_at": "2025-10-22T07:23:49.753583",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.05,
       "viral_score": 17.0
@@ -2008,7 +2008,7 @@
       "fetched_at": "2025-10-22T07:23:49.753476",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": 0.03409090909090909,
       "viral_score": 0.0
@@ -2098,7 +2098,7 @@
       "fetched_at": "2025-10-22T07:23:49.548978",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Science & Medical",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 22.0
@@ -2158,7 +2158,7 @@
       "fetched_at": "2025-10-22T07:23:49.548938",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -2173,7 +2173,7 @@
       "fetched_at": "2025-10-22T07:23:49.548927",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": -0.012500000000000002,
       "viral_score": 12.0
@@ -2383,7 +2383,7 @@
       "fetched_at": "2025-10-22T07:23:39.369940",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.275,
       "viral_score": 17.0
@@ -2563,7 +2563,7 @@
       "fetched_at": "2025-10-22T07:23:39.369791",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.25,
       "viral_score": 10.0
@@ -2593,7 +2593,7 @@
       "fetched_at": "2025-10-22T07:23:39.369770",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -2638,7 +2638,7 @@
       "fetched_at": "2025-10-22T07:23:39.369737",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 12.0
@@ -2758,7 +2758,7 @@
       "fetched_at": "2025-10-22T07:23:39.236255",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": -0.06833333333333333,
       "viral_score": 10.0
@@ -2788,7 +2788,7 @@
       "fetched_at": "2025-10-22T07:23:39.236234",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.07424242424242423,
       "viral_score": 0.0
@@ -2923,7 +2923,7 @@
       "fetched_at": "2025-10-22T07:23:39.236139",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -2938,7 +2938,7 @@
       "fetched_at": "2025-10-22T07:23:39.236128",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.11666666666666667,
       "viral_score": 0.0
@@ -2983,7 +2983,7 @@
       "fetched_at": "2025-10-22T07:23:39.236092",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.4,
       "viral_score": 10.0
@@ -3073,7 +3073,7 @@
       "fetched_at": "2025-10-22T07:23:39.236009",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -3223,7 +3223,7 @@
       "fetched_at": "2025-10-22T07:23:39.235879",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "negative",
       "sentiment_score": -0.125,
       "viral_score": 10.0
@@ -3358,7 +3358,7 @@
       "fetched_at": "2025-10-22T07:23:39.235786",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.014545454545454539,
       "viral_score": 10.0
@@ -3388,7 +3388,7 @@
       "fetched_at": "2025-10-22T07:23:39.235766",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.3,
       "viral_score": 37.0
@@ -3508,7 +3508,7 @@
       "fetched_at": "2025-10-22T07:23:39.235659",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Science & Medical",
       "sentiment": "neutral",
       "sentiment_score": 0.0740909090909091,
       "viral_score": 10.0
@@ -3568,7 +3568,7 @@
       "fetched_at": "2025-10-22T07:23:39.235620",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.75,
       "viral_score": 32.0
@@ -3583,7 +3583,7 @@
       "fetched_at": "2025-10-22T07:23:39.235610",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "negative",
       "sentiment_score": -0.6,
       "viral_score": 10.0
@@ -3628,7 +3628,7 @@
       "fetched_at": "2025-10-22T07:23:39.235563",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "neutral",
       "sentiment_score": -0.1,
       "viral_score": 0.0
@@ -3643,7 +3643,7 @@
       "fetched_at": "2025-10-22T07:23:39.235544",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.22954545454545455,
       "viral_score": 17.0
@@ -3703,7 +3703,7 @@
       "fetched_at": "2025-10-22T07:23:39.235489",
       "country": "US",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -3823,7 +3823,7 @@
       "fetched_at": "2025-10-22T07:23:38.280999",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -3913,7 +3913,7 @@
       "fetched_at": "2025-10-22T07:23:38.280931",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -3988,7 +3988,7 @@
       "fetched_at": "2025-10-22T07:23:38.280871",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.43333333333333335,
       "viral_score": 10.0
@@ -4018,7 +4018,7 @@
       "fetched_at": "2025-10-22T07:23:38.280850",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.04999999999999999,
       "viral_score": 10.0
@@ -4093,7 +4093,7 @@
       "fetched_at": "2025-10-22T07:23:38.280769",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "negative",
       "sentiment_score": -0.16666666666666666,
       "viral_score": 0.0
@@ -4123,7 +4123,7 @@
       "fetched_at": "2025-10-22T07:23:38.280747",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.5454545454545454,
       "viral_score": 15.0
@@ -4138,7 +4138,7 @@
       "fetched_at": "2025-10-22T07:23:38.280727",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": -0.1,
       "viral_score": 10.0
@@ -4168,7 +4168,7 @@
       "fetched_at": "2025-10-22T07:23:38.280683",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "positive",
       "sentiment_score": 0.45,
       "viral_score": 10.0
@@ -4198,7 +4198,7 @@
       "fetched_at": "2025-10-22T07:23:38.280442",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 20.0
@@ -4273,7 +4273,7 @@
       "fetched_at": "2025-10-22T07:23:36.650289",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -4318,7 +4318,7 @@
       "fetched_at": "2025-10-22T07:23:36.650257",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 25.0
@@ -4363,7 +4363,7 @@
       "fetched_at": "2025-10-22T07:23:36.650228",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.6785714285714286,
       "viral_score": 25.0
@@ -4378,7 +4378,7 @@
       "fetched_at": "2025-10-22T07:23:36.650218",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.5541666666666667,
       "viral_score": 10.0
@@ -4393,7 +4393,7 @@
       "fetched_at": "2025-10-22T07:23:36.650207",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 0.0
@@ -4438,7 +4438,7 @@
       "fetched_at": "2025-10-22T07:23:36.650178",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 10.0
@@ -4483,7 +4483,7 @@
       "fetched_at": "2025-10-22T07:23:36.650146",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 17.0
@@ -4498,7 +4498,7 @@
       "fetched_at": "2025-10-22T07:23:36.650136",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.75,
       "viral_score": 15.0
@@ -4588,7 +4588,7 @@
       "fetched_at": "2025-10-22T07:23:36.650057",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.8,
       "viral_score": 22.0
@@ -4603,7 +4603,7 @@
       "fetched_at": "2025-10-22T07:23:36.650047",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.37878787878787873,
       "viral_score": 5.0
@@ -4633,7 +4633,7 @@
       "fetched_at": "2025-10-22T07:23:36.650027",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.5833333333333334,
       "viral_score": 10.0
@@ -4663,7 +4663,7 @@
       "fetched_at": "2025-10-22T07:23:36.650008",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 15.0
@@ -4678,7 +4678,7 @@
       "fetched_at": "2025-10-22T07:23:36.649998",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.39999999999999997,
       "viral_score": 15.0
@@ -4693,7 +4693,7 @@
       "fetched_at": "2025-10-22T07:23:36.649986",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -4708,7 +4708,7 @@
       "fetched_at": "2025-10-22T07:23:36.649963",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.6333333333333333,
       "viral_score": 25.0
@@ -4723,7 +4723,7 @@
       "fetched_at": "2025-10-22T07:23:36.649954",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.475,
       "viral_score": 25.0
@@ -4798,7 +4798,7 @@
       "fetched_at": "2025-10-22T07:23:36.649905",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.3166666666666667,
       "viral_score": 10.0
@@ -4813,7 +4813,7 @@
       "fetched_at": "2025-10-22T07:23:36.649895",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.3333333333333333,
       "viral_score": 10.0
@@ -4843,7 +4843,7 @@
       "fetched_at": "2025-10-22T07:23:36.649874",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 10.0
@@ -4858,7 +4858,7 @@
       "fetched_at": "2025-10-22T07:23:36.649864",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.7380952380952381,
       "viral_score": 25.0
@@ -4903,7 +4903,7 @@
       "fetched_at": "2025-10-22T07:23:36.649833",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.7166666666666667,
       "viral_score": 25.0
@@ -4993,7 +4993,7 @@
       "fetched_at": "2025-10-22T07:23:36.649771",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.85,
       "viral_score": 0.0
@@ -5038,7 +5038,7 @@
       "fetched_at": "2025-10-22T07:23:36.649742",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.2222222222222222,
       "viral_score": 10.0
@@ -5053,7 +5053,7 @@
       "fetched_at": "2025-10-22T07:23:36.649732",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.9,
       "viral_score": 25.0
@@ -5068,7 +5068,7 @@
       "fetched_at": "2025-10-22T07:23:36.649722",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 25.0
@@ -5083,7 +5083,7 @@
       "fetched_at": "2025-10-22T07:23:36.649712",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 25.0
@@ -5113,7 +5113,7 @@
       "fetched_at": "2025-10-22T07:23:36.649692",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.25,
       "viral_score": 10.0
@@ -5128,7 +5128,7 @@
       "fetched_at": "2025-10-22T07:23:36.649681",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.46428571428571436,
       "viral_score": 10.0
@@ -5143,7 +5143,7 @@
       "fetched_at": "2025-10-22T07:23:36.649671",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.6,
       "viral_score": 25.0
@@ -5158,7 +5158,7 @@
       "fetched_at": "2025-10-22T07:23:36.649661",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.6,
       "viral_score": 0.0
@@ -5173,7 +5173,7 @@
       "fetched_at": "2025-10-22T07:23:36.649652",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.25,
       "viral_score": 10.0
@@ -5188,7 +5188,7 @@
       "fetched_at": "2025-10-22T07:23:36.649642",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.6875,
       "viral_score": 0.0
@@ -5203,7 +5203,7 @@
       "fetched_at": "2025-10-22T07:23:36.649632",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.6071428571428571,
       "viral_score": 15.0
@@ -5218,7 +5218,7 @@
       "fetched_at": "2025-10-22T07:23:36.649622",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.5666666666666667,
       "viral_score": 0.0
@@ -5248,7 +5248,7 @@
       "fetched_at": "2025-10-22T07:23:36.649603",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 0.0
@@ -5263,7 +5263,7 @@
       "fetched_at": "2025-10-22T07:23:36.649593",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.5555555555555556,
       "viral_score": 15.0
@@ -5293,7 +5293,7 @@
       "fetched_at": "2025-10-22T07:23:36.649571",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.6666666666666666,
       "viral_score": 25.0
@@ -5323,7 +5323,7 @@
       "fetched_at": "2025-10-22T07:23:36.649545",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.033333333333333326,
       "viral_score": 10.0
@@ -5338,7 +5338,7 @@
       "fetched_at": "2025-10-22T07:23:36.649535",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.55,
       "viral_score": 20.0
@@ -5368,7 +5368,7 @@
       "fetched_at": "2025-10-22T07:23:36.649514",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.5375000000000001,
       "viral_score": 25.0
@@ -5398,7 +5398,7 @@
       "fetched_at": "2025-10-22T07:23:36.649493",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.65,
       "viral_score": 15.0
@@ -5413,7 +5413,7 @@
       "fetched_at": "2025-10-22T07:23:36.649483",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.3333333333333333,
       "viral_score": 0.0
@@ -5443,7 +5443,7 @@
       "fetched_at": "2025-10-22T07:23:36.649462",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.54,
       "viral_score": 25.0
@@ -5458,7 +5458,7 @@
       "fetched_at": "2025-10-22T07:23:36.649452",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.75,
       "viral_score": 25.0
@@ -5488,7 +5488,7 @@
       "fetched_at": "2025-10-22T07:23:36.649432",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.7083333333333333,
       "viral_score": 25.0
@@ -5533,7 +5533,7 @@
       "fetched_at": "2025-10-22T07:23:36.649394",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.475,
       "viral_score": 15.0
@@ -5563,7 +5563,7 @@
       "fetched_at": "2025-10-22T07:23:36.649370",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.31,
       "viral_score": 10.0
@@ -5593,7 +5593,7 @@
       "fetched_at": "2025-10-22T07:23:36.649346",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.75,
       "viral_score": 10.0
@@ -5608,7 +5608,7 @@
       "fetched_at": "2025-10-22T07:23:36.649335",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.7833333333333333,
       "viral_score": 10.0
@@ -5623,7 +5623,7 @@
       "fetched_at": "2025-10-22T07:23:36.649325",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -5638,7 +5638,7 @@
       "fetched_at": "2025-10-22T07:23:36.649315",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 10.0
@@ -5653,7 +5653,7 @@
       "fetched_at": "2025-10-22T07:23:36.649306",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.875,
       "viral_score": 10.0
@@ -5668,7 +5668,7 @@
       "fetched_at": "2025-10-22T07:23:36.649295",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.5291666666666667,
       "viral_score": 15.0
@@ -5698,7 +5698,7 @@
       "fetched_at": "2025-10-22T07:23:36.649275",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.23333333333333334,
       "viral_score": 0.0
@@ -5713,7 +5713,7 @@
       "fetched_at": "2025-10-22T07:23:36.649264",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 25.0
@@ -5728,7 +5728,7 @@
       "fetched_at": "2025-10-22T07:23:36.649249",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.6000000000000001,
       "viral_score": 15.0
@@ -5833,7 +5833,7 @@
       "fetched_at": "2025-10-22T07:23:36.649170",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "positive",
       "sentiment_score": 0.30999999999999994,
       "viral_score": 10.0
@@ -5848,7 +5848,7 @@
       "fetched_at": "2025-10-22T07:23:36.649160",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 25.0
@@ -5863,7 +5863,7 @@
       "fetched_at": "2025-10-22T07:23:36.649147",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 10.0
@@ -5908,7 +5908,7 @@
       "fetched_at": "2025-10-22T07:23:36.649075",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 15.0
@@ -5938,7 +5938,7 @@
       "fetched_at": "2025-10-22T07:23:36.649044",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.75,
       "viral_score": 15.0
@@ -5953,7 +5953,7 @@
       "fetched_at": "2025-10-22T07:23:36.649032",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.38333333333333336,
       "viral_score": 15.0
@@ -5968,7 +5968,7 @@
       "fetched_at": "2025-10-22T07:23:36.649018",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.6785714285714286,
       "viral_score": 25.0
@@ -6028,7 +6028,7 @@
       "fetched_at": "2025-10-22T07:23:36.257914",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 22.0
@@ -6043,7 +6043,7 @@
       "fetched_at": "2025-10-22T07:23:36.257904",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.4,
       "viral_score": 10.0
@@ -6073,7 +6073,7 @@
       "fetched_at": "2025-10-22T07:23:36.257885",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 25.0
@@ -6103,7 +6103,7 @@
       "fetched_at": "2025-10-22T07:23:36.257866",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 25.0
@@ -6163,7 +6163,7 @@
       "fetched_at": "2025-10-22T07:23:36.257827",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.75,
       "viral_score": 25.0
@@ -6193,7 +6193,7 @@
       "fetched_at": "2025-10-22T07:23:36.257808",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -6238,7 +6238,7 @@
       "fetched_at": "2025-10-22T07:23:36.257778",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 25.0
@@ -6253,7 +6253,7 @@
       "fetched_at": "2025-10-22T07:23:36.257768",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -6283,7 +6283,7 @@
       "fetched_at": "2025-10-22T07:23:36.257748",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 10.0
@@ -6298,7 +6298,7 @@
       "fetched_at": "2025-10-22T07:23:36.257732",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.16,
       "viral_score": 10.0
@@ -6343,7 +6343,7 @@
       "fetched_at": "2025-10-22T07:23:36.257702",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.4,
       "viral_score": 10.0
@@ -6358,7 +6358,7 @@
       "fetched_at": "2025-10-22T07:23:36.257693",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -6373,7 +6373,7 @@
       "fetched_at": "2025-10-22T07:23:36.257683",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.35714285714285715,
       "viral_score": 10.0
@@ -6418,7 +6418,7 @@
       "fetched_at": "2025-10-22T07:23:36.257653",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 15.0
@@ -6508,7 +6508,7 @@
       "fetched_at": "2025-10-22T07:23:36.257595",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -6538,7 +6538,7 @@
       "fetched_at": "2025-10-22T07:23:36.257576",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.2,
       "viral_score": 0.0
@@ -6568,7 +6568,7 @@
       "fetched_at": "2025-10-22T07:23:36.257556",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 25.0
@@ -6583,7 +6583,7 @@
       "fetched_at": "2025-10-22T07:23:36.257547",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.3,
       "viral_score": 10.0
@@ -6658,7 +6658,7 @@
       "fetched_at": "2025-10-22T07:23:36.257489",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 15.0
@@ -6673,7 +6673,7 @@
       "fetched_at": "2025-10-22T07:23:36.257479",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "neutral",
       "sentiment_score": -0.1,
       "viral_score": 0.0
@@ -6718,7 +6718,7 @@
       "fetched_at": "2025-10-22T07:23:36.257446",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 25.0
@@ -6733,7 +6733,7 @@
       "fetched_at": "2025-10-22T07:23:36.257435",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.2,
       "viral_score": 0.0
@@ -6808,7 +6808,7 @@
       "fetched_at": "2025-10-22T07:23:36.257382",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.21428571428571427,
       "viral_score": 10.0
@@ -6838,7 +6838,7 @@
       "fetched_at": "2025-10-22T07:23:36.257362",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 25.0
@@ -6853,7 +6853,7 @@
       "fetched_at": "2025-10-22T07:23:36.257353",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 32.0
@@ -6928,7 +6928,7 @@
       "fetched_at": "2025-10-22T07:23:36.257304",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -7018,7 +7018,7 @@
       "fetched_at": "2025-10-22T07:23:36.257242",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.25,
       "viral_score": 10.0
@@ -7078,7 +7078,7 @@
       "fetched_at": "2025-10-22T07:23:36.257194",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.13636363636363635,
       "viral_score": 0.0
@@ -7108,7 +7108,7 @@
       "fetched_at": "2025-10-22T07:23:36.257173",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -7153,7 +7153,7 @@
       "fetched_at": "2025-10-22T07:23:36.257138",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 0.0
@@ -7168,7 +7168,7 @@
       "fetched_at": "2025-10-22T07:23:36.257126",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 15.0
@@ -7243,7 +7243,7 @@
       "fetched_at": "2025-10-22T07:23:36.257053",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.3333333333333333,
       "viral_score": 22.0
@@ -7273,7 +7273,7 @@
       "fetched_at": "2025-10-22T07:23:36.257034",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 22.0
@@ -7288,7 +7288,7 @@
       "fetched_at": "2025-10-22T07:23:36.257024",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 15.0
@@ -7303,7 +7303,7 @@
       "fetched_at": "2025-10-22T07:23:36.257014",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.16666666666666666,
       "viral_score": 15.0
@@ -7318,7 +7318,7 @@
       "fetched_at": "2025-10-22T07:23:36.257005",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.6666666666666666,
       "viral_score": 15.0
@@ -7348,7 +7348,7 @@
       "fetched_at": "2025-10-22T07:23:36.256985",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": -0.04999999999999999,
       "viral_score": 15.0
@@ -7363,7 +7363,7 @@
       "fetched_at": "2025-10-22T07:23:36.256975",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 15.0
@@ -7378,7 +7378,7 @@
       "fetched_at": "2025-10-22T07:23:36.256964",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 1.0,
       "viral_score": 27.0
@@ -7393,7 +7393,7 @@
       "fetched_at": "2025-10-22T07:23:36.256937",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.5,
       "viral_score": 10.0
@@ -7468,7 +7468,7 @@
       "fetched_at": "2025-10-22T07:23:36.256839",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -7498,7 +7498,7 @@
       "fetched_at": "2025-10-22T07:23:36.256617",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.3,
       "viral_score": 10.0
@@ -7633,7 +7633,7 @@
       "fetched_at": "2025-10-22T07:23:35.622265",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.34356060606060607,
       "viral_score": 10.0
@@ -7753,7 +7753,7 @@
       "fetched_at": "2025-10-22T07:23:35.622111",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.10166666666666666,
       "viral_score": 10.0
@@ -7933,7 +7933,7 @@
       "fetched_at": "2025-10-22T07:23:35.621614",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.45833333333333337,
       "viral_score": 35.0
@@ -7948,7 +7948,7 @@
       "fetched_at": "2025-10-22T07:23:35.426833",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.275,
       "viral_score": 15.0
@@ -7978,7 +7978,7 @@
       "fetched_at": "2025-10-22T07:23:35.426804",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "neutral",
       "sentiment_score": 0.016666666666666666,
       "viral_score": 10.0
@@ -7993,7 +7993,7 @@
       "fetched_at": "2025-10-22T07:23:35.426792",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -8053,7 +8053,7 @@
       "fetched_at": "2025-10-22T07:23:35.426750",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Education",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -8173,7 +8173,7 @@
       "fetched_at": "2025-10-22T07:23:35.426669",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Science & Medical",
       "sentiment": "negative",
       "sentiment_score": -0.10583333333333333,
       "viral_score": 10.0
@@ -8188,7 +8188,7 @@
       "fetched_at": "2025-10-22T07:23:35.426659",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "positive",
       "sentiment_score": 0.17857142857142858,
       "viral_score": 20.0
@@ -8368,7 +8368,7 @@
       "fetched_at": "2025-10-22T07:23:35.426538",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Science & Medical",
       "sentiment": "positive",
       "sentiment_score": 0.24375000000000002,
       "viral_score": 10.0
@@ -8413,7 +8413,7 @@
       "fetched_at": "2025-10-22T07:23:35.426506",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -8443,7 +8443,7 @@
       "fetched_at": "2025-10-22T07:23:35.426484",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.225,
       "viral_score": 10.0
@@ -8533,7 +8533,7 @@
       "fetched_at": "2025-10-22T07:23:35.426386",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -8593,7 +8593,7 @@
       "fetched_at": "2025-10-22T07:23:35.426315",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.18409090909090908,
       "viral_score": 10.0
@@ -8833,7 +8833,7 @@
       "fetched_at": "2025-10-22T07:23:35.117677",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "negative",
       "sentiment_score": -0.4,
       "viral_score": 22.0
@@ -8908,7 +8908,7 @@
       "fetched_at": "2025-10-22T07:23:35.117628",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -9043,7 +9043,7 @@
       "fetched_at": "2025-10-22T07:23:35.117544",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 7.0
@@ -9133,7 +9133,7 @@
       "fetched_at": "2025-10-22T07:23:35.117486",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "neutral",
       "sentiment_score": 0.03333333333333333,
       "viral_score": 0.0
@@ -9208,7 +9208,7 @@
       "fetched_at": "2025-10-22T07:23:35.117439",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Education",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -9553,7 +9553,7 @@
       "fetched_at": "2025-10-22T07:23:35.117207",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.1,
       "viral_score": 10.0
@@ -9793,7 +9793,7 @@
       "fetched_at": "2025-10-22T07:23:35.117008",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -9808,7 +9808,7 @@
       "fetched_at": "2025-10-22T07:23:35.116999",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.3,
       "viral_score": 10.0
@@ -9883,7 +9883,7 @@
       "fetched_at": "2025-10-22T07:23:35.116949",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Science & Medical",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -9898,7 +9898,7 @@
       "fetched_at": "2025-10-22T07:23:35.116938",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 17.0
@@ -9913,7 +9913,7 @@
       "fetched_at": "2025-10-22T07:23:35.116929",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 7.0
@@ -9958,7 +9958,7 @@
       "fetched_at": "2025-10-22T07:23:35.116898",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 7.0
@@ -9988,7 +9988,7 @@
       "fetched_at": "2025-10-22T07:23:35.116877",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -10048,7 +10048,7 @@
       "fetched_at": "2025-10-22T07:23:35.116837",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": 0.06818181818181818,
       "viral_score": 0.0
@@ -10153,7 +10153,7 @@
       "fetched_at": "2025-10-22T07:23:35.116764",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "negative",
       "sentiment_score": -0.2,
       "viral_score": 0.0
@@ -10258,7 +10258,7 @@
       "fetched_at": "2025-10-22T07:23:35.116690",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Community & Local",
       "sentiment": "positive",
       "sentiment_score": 0.11111111111111112,
       "viral_score": 10.0
@@ -10273,7 +10273,7 @@
       "fetched_at": "2025-10-22T07:23:35.116680",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "negative",
       "sentiment_score": -0.2,
       "viral_score": 17.0
@@ -10303,7 +10303,7 @@
       "fetched_at": "2025-10-22T07:23:35.116659",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Education",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -10318,7 +10318,7 @@
       "fetched_at": "2025-10-22T07:23:35.116649",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Education",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 10.0
@@ -10483,7 +10483,7 @@
       "fetched_at": "2025-10-22T07:23:34.504328",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 0.0
@@ -10498,7 +10498,7 @@
       "fetched_at": "2025-10-22T07:23:34.504309",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "positive",
       "sentiment_score": 0.6333333333333333,
       "viral_score": 10.0
@@ -10513,7 +10513,7 @@
       "fetched_at": "2025-10-22T07:23:34.504279",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Education",
       "sentiment": "positive",
       "sentiment_score": 0.4,
       "viral_score": 10.0
@@ -10543,7 +10543,7 @@
       "fetched_at": "2025-10-22T07:23:34.504046",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "negative",
       "sentiment_score": -0.5,
       "viral_score": 25.0
@@ -10633,7 +10633,7 @@
       "fetched_at": "2025-10-22T07:23:33.995317",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.0,
       "viral_score": 25.0
@@ -10798,7 +10798,7 @@
       "fetched_at": "2025-10-22T07:23:33.995190",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.2899814471243043,
       "viral_score": 5.0
@@ -10948,7 +10948,7 @@
       "fetched_at": "2025-10-22T07:23:33.995058",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.2101080747955748,
       "viral_score": 0.0
@@ -10993,7 +10993,7 @@
       "fetched_at": "2025-10-22T07:23:33.995024",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.1,
       "viral_score": 10.0
@@ -11083,7 +11083,7 @@
       "fetched_at": "2025-10-22T07:23:33.994948",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "positive",
       "sentiment_score": 0.42499999999999993,
       "viral_score": 17.0
@@ -11098,7 +11098,7 @@
       "fetched_at": "2025-10-22T07:23:33.994935",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Lifestyle & Wellness",
       "sentiment": "neutral",
       "sentiment_score": 0.07455555555555556,
       "viral_score": 18.0
@@ -11158,7 +11158,7 @@
       "fetched_at": "2025-10-22T07:23:33.994885",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Food & Cooking",
       "sentiment": "negative",
       "sentiment_score": -0.19285714285714287,
       "viral_score": 10.0
@@ -11383,7 +11383,7 @@
       "fetched_at": "2025-10-22T07:23:33.994702",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.22164115646258506,
       "viral_score": 17.0
@@ -11503,7 +11503,7 @@
       "fetched_at": "2025-10-22T07:23:33.994600",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "positive",
       "sentiment_score": 0.14650856389986824,
       "viral_score": 22.0
@@ -11563,7 +11563,7 @@
       "fetched_at": "2025-10-22T07:23:33.994553",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.02142857142857144,
       "viral_score": 10.0
@@ -11578,7 +11578,7 @@
       "fetched_at": "2025-10-22T07:23:33.994542",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": -0.012523983952555382,
       "viral_score": 10.0
@@ -11713,7 +11713,7 @@
       "fetched_at": "2025-10-22T07:23:33.994429",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "neutral",
       "sentiment_score": -0.03090277777777778,
       "viral_score": 20.0
@@ -11833,7 +11833,7 @@
       "fetched_at": "2025-10-22T07:23:33.994340",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "neutral",
       "sentiment_score": -0.06969696969696972,
       "viral_score": 18.0
@@ -11848,7 +11848,7 @@
       "fetched_at": "2025-10-22T07:23:33.994327",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Travel & Culture",
       "sentiment": "positive",
       "sentiment_score": 0.14702380952380953,
       "viral_score": 32.0
@@ -11893,7 +11893,7 @@
       "fetched_at": "2025-10-22T07:23:33.994295",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Entertainment",
       "sentiment": "neutral",
       "sentiment_score": 0.06666666666666667,
       "viral_score": 0.0
@@ -11983,7 +11983,7 @@
       "fetched_at": "2025-10-22T07:23:33.994229",
       "country": "UK",
       "scope": "LOCAL",
-      "topic": "Other",
+      "topic": "Sports",
       "sentiment": "positive",
       "sentiment_score": 0.15,
       "viral_score": 10.0

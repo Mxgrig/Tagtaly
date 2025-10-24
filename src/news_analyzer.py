@@ -45,6 +45,7 @@ def classify_topic(text, country_code):
     """Classify topic using country-specific OR global keywords"""
     text_lower = text.lower()
     scores = {}
+    subcategory_scores = {}  # Track subcategories separately
 
     # Check global topics first
     global_topics = get_global_topics()
@@ -66,15 +67,36 @@ def classify_topic(text, country_code):
     for topic_category, subcategories in VIRAL_TOPICS.items():
         for subcategory, keywords in subcategories.items():
             score = sum(1 for keyword in keywords if keyword in text_lower)
+
+            # Track subcategories for "Other" category SEPARATELY
+            if topic_category == 'Other':
+                subcategory_scores[subcategory] = score
+                # DON'T add to main scores for "Other" - only track main categories
+                continue
+
+            # Add to main category scores for non-"Other" topics
             if topic_category in scores:
                 scores[topic_category] += score
             else:
                 scores[topic_category] = score
 
-    # Return topic with highest score
+    # Return topic with highest score (excluding "Other")
     if scores:
-        max_topic = max(scores, key=scores.get)
-        return max_topic if scores[max_topic] > 0 else 'Other'
+        # Remove "Other" temporarily to check other categories
+        other_score = scores.pop('Other', 0)
+
+        if scores:  # If there are non-"Other" topics with matches
+            max_topic = max(scores, key=scores.get)
+            if scores[max_topic] > 0:
+                return max_topic
+
+    # If no main category matched, return best subcategory from "Other"
+    if subcategory_scores:
+        best_subcategory = max(subcategory_scores, key=subcategory_scores.get)
+        # Return the subcategory if it has at least 1 match
+        if subcategory_scores[best_subcategory] >= 1:
+            return best_subcategory
+
     return 'Other'
 
 def analyze_sentiment(text):

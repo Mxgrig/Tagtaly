@@ -30,6 +30,18 @@ VIRAL_TOPICS = {
     'Labor': {
         'Strikes': ['strike', 'industrial action', 'union', 'walkout', 'picket'],
         'Conditions': ['amazon warehouse', 'gig economy', 'zero hours', 'worker rights']
+    },
+
+    # Tier 5: General Categories (Catch-all with subcategories)
+    'Other': {
+        'Entertainment': ['film', 'movie', 'tv', 'television', 'celebrity', 'actor', 'actress', 'music', 'concert', 'award', 'oscar', 'grammy', 'broadway', 'phantom of the opera', 'netflix', 'hulu', 'streaming', 'director', 'producer', 'hollywood', 'disney', 'marvel', 'star wars', 'harry potter', 'superhero'],
+        'Sports': ['football', 'soccer', 'rugby', 'cricket', 'tennis', 'golf', 'olympic', 'championship', 'match', 'game', 'player', 'team', 'league', 'coach', 'season', 'tournament', 'nfl', 'nba', 'nhl'],
+        'Food & Cooking': ['food', 'cooking', 'recipe', 'chef', 'restaurant', 'cuisine', 'diet', 'nutrition', 'meal', 'cook', 'kitchen', 'baker', 'bread', 'pasta', 'cheese', 'pizza', 'burger', 'taco', 'sushi', 'noodle', 'pumpkin', 'grocery'],
+        'Lifestyle & Wellness': ['lifestyle', 'fitness', 'wellness', 'health', 'exercise', 'yoga', 'meditation', 'sleep', 'stress', 'mental health', 'beauty', 'fashion', 'style', 'home', 'interior', 'garden', 'diy'],
+        'Travel & Culture': ['travel', 'holiday', 'vacation', 'destination', 'tour', 'culture', 'heritage', 'history', 'tradition', 'festival', 'celebration', 'art', 'museum', 'historic'],
+        'Science & Medical': ['health', 'science', 'medical', 'doctor', 'hospital', 'vaccine', 'virus', 'disease', 'research', 'study', 'breakthrough', 'pharmaceutical', 'drug', 'cancer', 'covid', 'clinical'],
+        'Education': ['school', 'university', 'college', 'education', 'student', 'teacher', 'exam', 'qualification', 'learning', 'graduation', 'course', 'academy'],
+        'Community & Local': ['community', 'local', 'council', 'neighborhood', 'charity', 'volunteer', 'social', 'public service', 'event', 'civic']
     }
 }
 
