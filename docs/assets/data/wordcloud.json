@@ -3,178 +3,54 @@
   "keywords": [
     {
       "name": "trump",
-      "value": 48
+      "value": 31
     },
     {
-      "name": "how",
-      "value": 29
-    },
-    {
-      "name": "over",
-      "value": 22
-    },
-    {
-      "name": "what",
-      "value": 22
-    },
-    {
-      "name": "you",
-      "value": 18
-    },
-    {
-      "name": "about",
-      "value": 17
-    },
-    {
-      "name": "her",
-      "value": 14
-    },
-    {
-      "name": "london",
+      "name": "your",
       "value": 13
-    },
-    {
-      "name": "review",
-      "value": 13
-    },
-    {
-      "name": "their",
-      "value": 12
-    },
-    {
-      "name": "they",
-      "value": 12
-    },
-    {
-      "name": "his",
-      "value": 12
-    },
-    {
-      "name": "live",
-      "value": 11
-    },
-    {
-      "name": "could",
-      "value": 11
-    },
-    {
-      "name": "week",
-      "value": 11
-    },
-    {
-      "name": "house",
-      "value": 11
     },
     {
       "name": "best",
       "value": 11
     },
     {
+      "name": "house",
+      "value": 10
+    },
+    {
       "name": "gambling",
-      "value": 10
+      "value": 9
     },
     {
-      "name": "just",
-      "value": 10
+      "name": "review",
+      "value": 9
     },
     {
-      "name": "face",
-      "value": 10
+      "name": "their",
+      "value": 8
+    },
+    {
+      "name": "back",
+      "value": 8
+    },
+    {
+      "name": "london",
+      "value": 8
     },
     {
       "name": "federal",
-      "value": 9
+      "value": 7
     },
     {
-      "name": "down",
-      "value": 9
-    },
-    {
-      "name": "white",
-      "value": 9
-    },
-    {
-      "name": "there",
-      "value": 9
-    },
-    {
-      "name": "england",
-      "value": 9
-    },
-    {
-      "name": "illegal",
-      "value": 8
-    },
-    {
-      "name": "life",
-      "value": 8
-    },
-    {
-      "name": "here",
-      "value": 8
-    },
-    {
-      "name": "why",
-      "value": 8
-    },
-    {
-      "name": "louvre",
-      "value": 8
-    },
-    {
-      "name": "heist",
-      "value": 8
-    },
-    {
-      "name": "say",
-      "value": 8
+      "name": "than",
+      "value": 7
     },
     {
       "name": "stop",
-      "value": 8
+      "value": 7
     },
     {
       "name": "election",
-      "value": 8
-    },
-    {
-      "name": "don",
-      "value": 8
-    },
-    {
-      "name": "europe",
-      "value": 8
-    },
-    {
-      "name": "gaza",
-      "value": 8
-    },
-    {
-      "name": "nba",
-      "value": 7
-    },
-    {
-      "name": "off",
-      "value": 7
-    },
-    {
-      "name": "york",
-      "value": 7
-    },
-    {
-      "name": "workers",
-      "value": 7
-    },
-    {
-      "name": "family",
-      "value": 7
-    },
-    {
-      "name": "now",
-      "value": 7
-    },
-    {
-      "name": "against",
       "value": 7
     },
     {
@@ -186,20 +62,144 @@
       "value": 7
     },
     {
+      "name": "white",
+      "value": 7
+    },
+    {
       "name": "china",
       "value": 7
     },
     {
-      "name": "world",
+      "name": "england",
       "value": 7
     },
     {
-      "name": "grooming",
-      "value": 7
+      "name": "louvre",
+      "value": 6
+    },
+    {
+      "name": "make",
+      "value": 6
+    },
+    {
+      "name": "illegal",
+      "value": 6
+    },
+    {
+      "name": "children",
+      "value": 6
+    },
+    {
+      "name": "reform",
+      "value": 6
+    },
+    {
+      "name": "king",
+      "value": 5
+    },
+    {
+      "name": "york",
+      "value": 5
+    },
+    {
+      "name": "face",
+      "value": 5
+    },
+    {
+      "name": "like",
+      "value": 5
+    },
+    {
+      "name": "fashion",
+      "value": 5
+    },
+    {
+      "name": "many",
+      "value": 5
+    },
+    {
+      "name": "heist",
+      "value": 5
+    },
+    {
+      "name": "canada",
+      "value": 5
+    },
+    {
+      "name": "alleged",
+      "value": 5
+    },
+    {
+      "name": "letitia",
+      "value": 5
+    },
+    {
+      "name": "james",
+      "value": 5
+    },
+    {
+      "name": "bank",
+      "value": 5
+    },
+    {
+      "name": "against",
+      "value": 5
+    },
+    {
+      "name": "ballroom",
+      "value": 5
+    },
+    {
+      "name": "guilty",
+      "value": 5
+    },
+    {
+      "name": "scandal",
+      "value": 5
+    },
+    {
+      "name": "europe",
+      "value": 5
+    },
+    {
+      "name": "look",
+      "value": 5
+    },
+    {
+      "name": "weekend",
+      "value": 5
+    },
+    {
+      "name": "labour",
+      "value": 5
     },
     {
       "name": "andrew",
-      "value": 7
+      "value": 5
+    },
+    {
+      "name": "winter",
+      "value": 4
+    },
+    {
+      "name": "street",
+      "value": 4
+    },
+    {
+      "name": "love",
+      "value": 4
+    },
+    {
+      "name": "everything",
+      "value": 4
+    },
+    {
+      "name": "lily",
+      "value": 4
+    },
+    {
+      "name": "food",
+      "value": 4
     }
   ]
 }

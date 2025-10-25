@@ -3,93 +3,93 @@
   "surges": [
     {
       "topic": "Tech",
-      "today": 247,
-      "yesterday": 242,
-      "change_pct": 2
+      "today": 173,
+      "yesterday": 0,
+      "change_pct": 17300.0
     },
     {
       "topic": "Other",
-      "today": 158,
-      "yesterday": 153,
-      "change_pct": 3
+      "today": 103,
+      "yesterday": 0,
+      "change_pct": 10300.0
     },
     {
       "topic": "International",
-      "today": 22,
-      "yesterday": 17,
-      "change_pct": 29
+      "today": 15,
+      "yesterday": 0,
+      "change_pct": 1500.0
     },
     {
       "topic": "Cost of Living",
-      "today": 16,
-      "yesterday": 11,
-      "change_pct": 45
-    },
-    {
-      "topic": "US Politics",
-      "today": 13,
-      "yesterday": 8,
-      "change_pct": 62
+      "today": 12,
+      "yesterday": 0,
+      "change_pct": 1200.0
     },
     {
       "topic": "Corporate Drama",
-      "today": 12,
-      "yesterday": 7,
-      "change_pct": 71
+      "today": 11,
+      "yesterday": 0,
+      "change_pct": 1100.0
+    },
+    {
+      "topic": "US Politics",
+      "today": 9,
+      "yesterday": 0,
+      "change_pct": 900.0
     },
     {
       "topic": "Science",
-      "today": 8,
-      "yesterday": 3,
-      "change_pct": 167
+      "today": 5,
+      "yesterday": 0,
+      "change_pct": 500.0
     },
     {
       "topic": "Labor",
-      "today": 6,
-      "yesterday": 1,
-      "change_pct": 500
+      "today": 4,
+      "yesterday": 0,
+      "change_pct": 400.0
     },
     {
       "topic": "UK Politics",
-      "today": 5,
-      "yesterday": 1,
-      "change_pct": 400
-    },
-    {
-      "topic": "US Healthcare",
-      "today": 4,
-      "yesterday": 1,
-      "change_pct": 300
+      "today": 3,
+      "yesterday": 0,
+      "change_pct": 300.0
     },
     {
       "topic": "Gun Control",
-      "today": 3,
-      "yesterday": 1,
-      "change_pct": 200
+      "today": 2,
+      "yesterday": 0,
+      "change_pct": 200.0
     },
     {
       "topic": "Entertainment",
-      "today": 2,
-      "yesterday": 1,
-      "change_pct": 100
-    },
-    {
-      "topic": "Royal Family",
       "today": 1,
-      "yesterday": 1,
-      "change_pct": 0
-    },
-    {
-      "topic": "Tech Entertainment",
-      "today": 1,
-      "yesterday": 1,
-      "change_pct": 0
+      "yesterday": 0,
+      "change_pct": 100.0
     },
     {
       "topic": "NHS",
       "today": 1,
-      "yesterday": 1,
-      "change_pct": 0
+      "yesterday": 0,
+      "change_pct": 100.0
+    },
+    {
+      "topic": "Royal Family",
+      "today": 1,
+      "yesterday": 0,
+      "change_pct": 100.0
+    },
+    {
+      "topic": "Tech Entertainment",
+      "today": 1,
+      "yesterday": 0,
+      "change_pct": 100.0
+    },
+    {
+      "topic": "US Healthcare",
+      "today": 1,
+      "yesterday": 0,
+      "change_pct": 100.0
     }
   ]
 }
